@@ -1,0 +1,65 @@
+body
+{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    height: 100vh;
+}
+
+#header, #footer
+{
+    background-color: #6ace00;
+    text-align: center;
+    padding: 10px;
+}
+
+#menu
+{
+    background-color: #eee;
+    text-align: center;
+    padding: 10px;
+}
+
+main
+{
+    flex: 1;
+    display: flex;
+}
+
+#sec
+{
+    display: flex;
+    flex: 1;
+}
+
+#left, #right
+{
+    background-color: #ddd;
+    width: 25%;
+    padding: 10px;
+}
+
+#mid
+{
+    background-color: #f9f9f9;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#b1, #b2
+{
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#b1
+{
+    background-color: #aaf;
+}
+
+#b2
+{
+    background-color: #afa;
+}
