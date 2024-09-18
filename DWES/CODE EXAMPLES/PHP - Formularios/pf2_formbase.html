@@ -1,0 +1,160 @@
+<HTML>
+<HEAD> <TITLE> FORMULARIO BASE </TITLE>
+</HEAD>
+<BODY>
+<!-- Un formulario debe empezar siempre con una etiqueta de este tipo 
+      <form ...>en el que será obligatorio indicar con esta sintaxis
+	 action='nombre.extension'
+	 nombre.extension debe contener el nombre (o la ruta completa
+	 en el caso de que estuviera en un directorio o hosting distinto
+	 del que alberga el documento que contiene el formulario desde
+	 el que se realiza la petición
+
+	 es opcional incluir method que puede tener dos valores
+	 method='GET' ó method='POST', por defecto (cuando no se indica)
+	 el envio se realizará usando method='GET'
+      
+	 también es opcional -a los efectos de PHP- incluir name
+	 ese valor es útil cuando se incluyen scripts del lado del cliente
+	 del tipo JavaScript  //-->
+
+<form name='mi_formulario' action='f2_formbase.php' method='GET'>
+<!-- Pueden incluirse textos dentro del formulario -->
+Escribe tu nombre:
+
+<!-- Uno de los tipos de campos posibles es el tipo texto
+     su sintaxis (hablamos de HTML) requiere la etiqueta
+	 <input type='text'> que indica el contenido del texto
+	 esa etiqueta debe incluir obligatoriamente un name='nombre'
+	 el nombre a usar serán caracteres alfabéticos, sin tildes
+	 ni eñes y sin espacios. Salvo excepciones que comentaremos
+	 no puede usarse el mismo nombre para dos campos distintos
+	 el value='' puede no contener nada entre las comillas
+	 tal como ocurre aquí o contener el texto que por defecto queremos
+	 que aparezca en ese campo al cargar el formulario.
+	 el size=xx es opcional. Su utilidad es la de ajustar el
+	 tamaño de la ventana al número de caracteres que se indiquen //-->
+
+<input type='text' name='nombre' value='' size=15><br>
+Escribe tu clave:
+
+<!--  <input type='password'> solo se diferencia del anterior
+       en que en el momento de rellenarlo se sustituyen los carecteres
+	   visualizados (no el contenido) por asteriscos //-->
+
+<input type='password' name='clave' value=''><br>
+Elige tu color de coche favorito:<br>
+
+<!--  Los <input type='radio'> permite optar entre varios
+         valores posibles. Habrá que repetirlos tantas veces como
+	opciones queramos habilitar.
+	Todos los input –correspondientes a la misma opción–
+	deben tener el mismo nombre (name)
+	value='loquesea' deberá tener un valor
+	distinto en cada uno de ellos. Ese valor (loquesea)
+	será transferido a través del formulario
+	Si queremos que una opción aparezca marcada (por defecto)
+	al cargar el formulario, deberemos incluir en su etiqueta
+	la palabra checked
+	los contenidos de value no se visualizan en el navegador
+	por lo que conviene incluir una descripción de los 
+	valores después de cerrar la etiqueta de cada input   
+	Al enviar el formulario solo se transmite el value
+	correspondiente a la opción seleccionada   //-->
+
+
+<input type='radio' name='color' value='Rojo'>Rojo</br>
+<input type='radio' checked name='color' value='Verde'>Verde</br>
+<input type='radio' name='color' value='Azul'>Azul</br>
+Elige los extras:<br>
+
+<!--  Cada uno de los <input type='checkbox'>
+     requiere un nombre distinto (name) y un valor (value)
+	 permite optar entre varios
+     Esos valor (loquesea)
+	serám transferido a través del formulario
+	cuando la casilla de verificación esté marcada 
+	Si queremos que una casilla aparezca marcada (por defecto)
+	al cargar el formulario, deberemos incluir en su etiqueta
+	la palabra checked
+	los contenidos de value tampoco aquí
+	se visualizan en el navegador
+	por lo que conviene incluir una descripción de los 
+	valores después de cerrar la etiqueta de cada input   
+	Al enviar el formulario solo se transmite los value
+	correspondiente a la opcion marcadas   //-->
+
+<input type='checkbox' name="acondicionado" value="Aire">
+                                               Aire acondicionado<br>
+<input type='checkbox' checked name="tapiceria" value="Tapicieria">
+                                              Tapiceria en piel<br>
+<input type='checkbox' name="llantas" value="aluminio">
+                                              Llantas de aluminio<br>
+¿Cual es el precio máximo<br>
+que estarías dispuesto a pagar?
+
+<!--  La etiqueta <input type='select'>
+     requiere un nombre 
+     y requiere también una etiqueta de cierre
+	 </select>
+	 Entre ambas -apertura y cierre-
+	 deben incluirse las diferentes opciones
+	 entre las de etiquetas
+	 <option>valor<option> 
+	Al enviar el formulario se transmite lo
+	contenido después de opción 
+	en la opción seleccionada 
+    si dentro de una etiqueta option 
+	escribimos selected será esa
+	la que aparezca por defecto al cargarse el formulario//-->
+
+<select name="precio">
+<Option>Menos de 6.000 euros</option>
+<Option>6.001 - 8.000 euros</option>
+<Option selected >8.001 - 10.000 euros</option>
+<Option>10.001 - 12.000 euros</option>
+<Option>12.001 - 14.000 euros</option>
+<Option>Más de 14.000 euros</option>
+</select>
+<!-- Las áreas de texto deben tener una etiqueta de apertura
+      <textarea name='checkbox'>
+	  seguida de una etiqueta de cierre </textarea>
+	  Dentro de la etiqueta de apertura puede incluirse
+	  rows=xx (indicará el número de filas)
+	  cols=yy (indicará el ancho expresado en número de caracteres)
+	  y opcionalmente un value='lo que sea...'
+	  que puede contener el texto que -por defecto-
+	  pretendemos que aparezca en ese espacio
+	  en el momento de cargar rl formulario   //-->
+
+<br> Escribe aquí cualquier otro comentario:<br>
+<textarea rows=5 cols=50 name='texto'></textarea><br>
+
+<!-- El <input type='hidden'>
+	   permite insertar en un formulario una valor oculto
+	   que no requiere ser cumplimentado por el usuario
+	   y que no aparece visible en el documento
+	   requiere un name y un value //-->
+
+<input type="hidden" name='oculto' value='Esto iría oculto'><br>
+
+<!-- El <input type='submit'>
+	   es el encargado de ejecutar la action
+	   incluida en la etiqueta de apertura del formulario
+	   que en este caso sería la llamada
+	   a la página que se indica en la action
+	   El texto que incluyamos en value='enviar...' 
+	   será el que se visualice en el propio botón de envio    //-->
+
+<input type="submit" value="enviar">
+<!-- El <input type='reset'>
+	   permite borrar todos los contenidos
+	   del formulario y reestablecer los valores
+	   por defecto de cada campo //-->
+
+<input type="reset" value="borrar">
+<!-- La etiqueta </form>
+	   es la etiqueta de cierre del formulario   //-->
+</FORM>
+</BODY>
+</HTML>
