@@ -2,19 +2,19 @@ window.onload = inicio;
 
 function inicio()
 {
-    document.formula.hacer.onclick=funcionHacer;
+    document.form.hacer.onclick=funcionHacer;
 }
 
 function funcionHacer()
 {
-    let nom = document.formula.nombre.value;
+    let nom = document.form.nombre.value;
     
-    let ape = document.formula.apellidos.value;
+    let ape = document.form.apellidos.value;
 
     let completo = nom + " " + ape;
-    document.formula.completo.value = completo;
+    document.form.completo.value = completo;
     
-    let todas= document.formula.povincias;
+    let todas= document.form.provincias;
     let valores= "";
     for(let i = 0; i < todas.length; i++)
     {
@@ -23,5 +23,5 @@ function funcionHacer()
             valores += todas[i].value + "\n";
         }
     }
-    document.formula.misprovincias.value=valores;
+    document.form.misprovincias.value=valores;
 }
