@@ -2,62 +2,60 @@ window.onload = inicio;
 
 function inicio()
 {
-    document.form.convertir.onclick=converter;
+    document.form.comprobar.onclick=comprobar;
 }
 
-function decToBin(dec)
+function comprobar()
 {
-    let aux = '';
+    let cadena = document.form.cadena.value.toLowerCase();
+    let i = 0;
+    let vocales = 0;
+    let consonantes = 0;
 
-    while (dec > 0)
+    let contadorA = 0;
+    let contadorE = 0;
+    let contadorI = 0;
+    let contadorO = 0;
+    let contadorU = 0;
+
+    document.form.a.value = 0;
+    document.form.e.value = 0;
+    document.form.i.value = 0;
+    document.form.o.value = 0;
+    document.form.u.value = 0;
+    document.form.vocales.value = 0;
+    document.form.consonantes.value = 0;
+
+    while (i < cadena.length)
     {
-        aux = (dec % 2) + aux;
-        dec = Math.floor(dec/2); 
+        let char = cadena[i];
+
+        if (char === 'a' || char === 'e' || char === 'i' || char === 'o' || char === 'u')
+        {
+            vocales++;
+            if (char === 'a') 
+                contadorA++;
+            if (char === 'e') 
+                contadorE++;
+            if (char === 'i') 
+                contadorI++;
+            if (char === 'o') 
+                contadorO++;
+            if (char === 'u') 
+                contadorU++;
+        } 
+        else if (char >= 'b' && char <= 'z' && 
+            char !== 'e' && char !== 'i' && char !== 'o' && char !== 'u')
+                consonantes++;
+        i++;
     }
-    while (aux.length < 8)
-        aux = '0' + aux;
-    return (aux);
-}
-
-function decToOct(dec)
-{
-    let aux = '';
-
-    while (dec > 0)
-    {
-        aux = (dec % 8) + aux;
-        dec = Math.floor(dec/8); 
-    }
-    while (aux.length < 3)
-        aux = '0' + aux;
-    return (aux);
-}
-
-function decToHex(dec)
-{
-    let hex = dec.toString(16).toUpperCase();
-    while (hex.length < 2)
-    {
-        hex = '0' + hex;
-    }
-    return hex;
-}
-
-function converter()
-{
-    let dec = Number(document.form.decimal.value);
     
-    if(!isNaN(dec))
-    {
-        let bin = decToBin(dec);
-        document.form.binario.value = bin;
-
-        let oct = decToOct(dec);
-        document.form.octal.value = oct;
-
-        let hex = decToHex(dec);
-        document.form.hexadecimal.value = hex;
-    }
-    else 
-        alert("Ingrese un numero");
+    document.form.a.value = contadorA;
+    document.form.e.value = contadorE;
+    document.form.i.value = contadorI;
+    document.form.o.value = contadorO;
+    document.form.u.value = contadorU;
+    document.form.vocales.value = vocales;
+    document.form.consonantes.value = consonantes;
 }
+
