@@ -1,0 +1,75 @@
+
+#historia p {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#cuerpo div span{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+h3 + div {
+    font-family: Tahoma, sans-serif;
+    text-transform:  uppercase;
+}
+
+#historia ol > li {
+    color: #1C5C25;
+}
+
+li {
+    color: #520909;
+}
+
+@media (max-width < 400px) {
+    #historia p {
+        font-size: 9pt;
+        color: red;
+    }
+
+    #cuerpo div span {
+        font-size: 10pt;
+        color: blue;
+    }
+
+    h3 + div {
+        font-size: 10pt;
+        color: green;
+    }
+}
+
+@media (min-width >= 400px) and (max-width < 800px) {
+    #historia p {
+        font-size: 11pt;
+        color: green;
+    }
+
+    #cuerpo div span {
+        font-size: 11pt;
+        color: red;
+    }
+
+    h3 + div {
+        font-size: 12pt;
+        color: red;
+    }
+}
+
+@media (min-width >= 800px) {
+    #historia p {
+        font-size: 13pt;
+        color: blue;
+    }
+
+    #cuerpo div span {
+        font-size: 12pt;
+        color: green;
+    }
+
+    h3 + div {
+        font-size: 14pt;
+        color: blue;
+    }
+}
