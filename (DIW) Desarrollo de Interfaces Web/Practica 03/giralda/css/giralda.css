@@ -1,0 +1,54 @@
+@font-face
+{
+    font-family: 'Coldbrringer';
+    src: url('../../Coldbringer.ttf') format('truetype');
+}
+
+/* Estilos generales para los párrafos hijos del identificador 'campanas' */
+#campanas > div > p
+{
+    font-family: Verdana, sans-serif;
+    text-transform: uppercase;
+}
+
+@media (max-width < 500px)
+{
+    #campanas > div > p {
+        font-size: 9pt;
+        color: brown;
+    }
+
+    #veleta p + p {
+        font-family: 'Coldbrringer', sans-serif;
+        font-size: 10pt;
+        color: maroon;
+    }
+}
+
+@media (min-width >= 500px) and (max-width < 1000px)
+{
+    #campanas > div > p {
+        font-size: 10pt;
+        color: gray;
+    }
+
+    #veleta p + p {
+        font-family: 'Coldbrringer', sans-serif;
+        font-size: 11pt;
+        color: pink;
+    }
+}
+
+@media (min-width >= 1000px)
+{
+    #campanas > div > p {
+        font-size: 11pt;
+        color: coral;
+    }
+
+    #veleta p + p {
+        font-family: 'Coldbrringer', sans-serif;
+        font-size: 12pt;
+        color: #D85E20;
+    }
+}

@@ -1,8 +1,9 @@
-
+/* Parrafos <p> descendientes del id="historia" */
 #historia p {
     font-family: 'Times New Roman', Times, serif;
 }
 
+/* Parrafos <span> nietos o mas descendientes del parrafo <div> con id="cuerpo" */
 #cuerpo div span{
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-weight: bold;
@@ -10,11 +11,13 @@
     text-decoration: underline;
 }
 
+/* etiquetas <div> hermanos inmediatos de etiquetas <h3> */
 h3 + div {
     font-family: Tahoma, sans-serif;
     text-transform:  uppercase;
 }
 
+/* Todos los <li> que sean hijos de un <ol> y que sean descendientes del id="historia" */
 #historia ol > li {
     color: #1C5C25;
 }
