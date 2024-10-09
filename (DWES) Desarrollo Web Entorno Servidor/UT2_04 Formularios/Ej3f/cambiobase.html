@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversión de Números Decimales</title>
+</head>
+<body>
+    <h1>Convertir Número Decimal</h1>
+    <form action="cambiobase.php" method="post">
+        Número Decimal: <input type="number" name="dec" required><br><br>
+        Convertir a: <br>
+        <input type="radio" name="op" value="bin"> Binario <br>
+        <input type="radio" name="op" value="octal"> Octal <br>
+        <input type="radio" name="op" value="hex"> Hexadecimal <br>
+        <input type="radio" name="op" value="todos"> Todos los sistemas <br><br>
+
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Borrar">
+    </form>
+</body>
+</html>
