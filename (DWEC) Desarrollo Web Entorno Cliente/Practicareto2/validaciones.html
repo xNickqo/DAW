@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="author" content="tu nombre" />
 		<script src="js/validaciones.js" type="text/javascript"> </script>
+		<script src="js/validarFormulario.js" type="text/javascript"> </script>
 	</head>
 	<body>
 		<header>
@@ -26,11 +27,38 @@
 
 							<label>nifcif</label>
 							<input type="text" name="nifcif" /> <br />
-							
-							<button type="button" onclick="validarFormulario()">Validar</button>
 
+							<br />
+							<br />
+
+							<label>Codigo del banco</label>
+							<input type="text" name="codigoBanco" /> <br />
+
+							<label>Numero de la Sucursal</label>
+							<input type="text" name="numSucursal" /> <br />
+
+							<label>Numero de cuenta</label>
+							<input type="text" name="numCuenta" /> <br />
+
+							<input type="text" name="codigoControl" placeholder="Codigo de Control" readonly style="width: 300px;"/> <br />
+							
+							<br />
+							<br />
+
+							<label>Codigo de cuenta (IBAN)</label>
+							<input type="text" name="codigoCuenta" /> <br />
+							<input type="text" name="iban" placeholder="IBAN" readonly style="width: 300px;"/> <br />
+							<br />
+							<br />
+
+							<label>Comprobar IBAN </label>
+							<input type="text" name="codigoIBAN" /> <br />
+
+							<br />
+							<br />
+							<input value="validar" type="submit" />
 							<br>
-    						<div id="mensajeErrores" style="color: red;"></div> <!-- Contenedor para errores -->
+    						<div id="mensajeErrores" style="color: red;"></div>
 						</form>
 					</div>
 				</article>

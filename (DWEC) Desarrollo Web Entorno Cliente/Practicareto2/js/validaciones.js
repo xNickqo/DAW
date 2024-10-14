@@ -171,54 +171,98 @@ function NIFCIF(dato)
         return 'C2';
     }
 
-
     return 0;
 }
 
-function validarFormulario(){
-    let error = '';
+function codigosControl(codigoBanco, numSucursal, numCuenta)
+{
+    if (codigoBanco.length !== 4 || numSucursal.length !== 4 || numCuenta.length !== 10)
+        return "Error en el tamaño de las variables";
 
-    //Nif
-    let nif = document.formu.nif.value.trim().toUpperCase();
-    let res_esNif = esNif(nif);
-    if (res_esNif === 1) {
-        error += "Se ha introducido un NIF correcto<br>";
-    } else if (res_esNif === 2) {
-        error += "Se ha introducido un NIF erróneo. El carácter de control es erróneo<br>";
-    } else if (res_esNif === 3) {
-        error += "Se ha introducido un DNI, se ha pasado un número de entre 6 y 8 dígitos con un valor mínimo de 100000<br>";
-    } else if (res_esNif === 0) {
-        error += "Se ha introducido un dato no válido. No es NIF ni DNI<br>";
+    let numero1 = 0;
+    numero1 += parseInt(codigoBanco[0]) * 4;
+    numero1 += parseInt(codigoBanco[1]) * 8;
+    numero1 += parseInt(codigoBanco[2]) * 5;
+    numero1 += parseInt(codigoBanco[3]) * 10;
+
+    let numero2 = 0;
+    numero2 += parseInt(numSucursal[0]) * 9;
+    numero2 += parseInt(numSucursal[1]) * 7;
+    numero2 += parseInt(numSucursal[2]) * 3;
+    numero2 += parseInt(numSucursal[3]) * 6;
+
+    let total = numero1 + numero2;
+    let resto = total % 11;
+    let primero = 11 - resto;
+    if(primero === 10)
+        primero = 1;
+    else
+        primero = 0;
+
+    let numero3 = 0;
+    numero3 += parseInt(numCuenta[0]) * 1;
+    numero3 += parseInt(numCuenta[1]) * 2;
+    numero3 += parseInt(numCuenta[2]) * 4;
+    numero3 += parseInt(numCuenta[3]) * 8;
+    numero3 += parseInt(numCuenta[4]) * 5;
+    numero3 += parseInt(numCuenta[5]) * 10;
+    numero3 += parseInt(numCuenta[6]) * 9;
+    numero3 += parseInt(numCuenta[7]) * 7;
+    numero3 += parseInt(numCuenta[8]) * 3;
+    numero3 += parseInt(numCuenta[9]) * 6;
+
+    let resto3 = numero3 % 11;
+    let segundo = 11 - resto3;
+    if (segundo === 10) {
+        segundo = 1;
+    } else if (segundo === 11) {
+        segundo = 0;
+    }
+    return String(primero) + String(segundo);
+}
+
+function calculoIBANEspanya(codigoCuenta)
+{
+    if (codigoCuenta.length !== 20)
+        return "Error en el tamaño de las variables";
+
+    let calc = codigoCuenta + '142800';
+    let resto = parseFloat(calc) % 97;
+    let codigoControl = 98 - resto;
+    codigoControl = String(codigoControl).padStart(2, '0');
+
+    let iban = 'ES' + codigoControl + codigoCuenta;
+    
+    return iban;
+}
+
+function comprobarIBAN(codigoIBAN)
+{
+    if (codigoIBAN.length > 34)
+        return "Error: IBAN muy largo";
+
+    let letras = codigoIBAN.substring(0, 4)
+    let calc = codigoIBAN.substring(4) + letras;
+    
+    let i = 0;
+    let numericIban = '';
+    while (i < calc.length)
+    {
+        if (isDigit(calc[i]))
+            numericIban += calc[i];
+        else if (isLetter(calc[i]))
+        {
+            let letterValue = calc[i].charCodeAt(0) - 55;
+            numericIban += letterValue.toString();
+        }
+        else
+            return false;
+        i++;
     }
 
-    //Cif
-    let cif = document.formu.cif.value.trim().toUpperCase(); 
-    let res_esCif = esCif(cif);
-    if (res_esCif === 1) {
-        error += "Se ha introducido un CIF correcto<br>";
-    } else if (res_esCif === 2) {
-        error += "Se ha introducido un CIF erróneo. El carácter de control es erróneo<br>";
-    } else if (res_esCif === 0) {
-        error += "Se ha introducido un dato no válido. No es CIF<br>";
-    }
+    let remainder = parseFloat(numericIban) % 97;
+    if (remainder !== 1)
+        return false;
 
-    let nifcif = document.formu.nifcif.value.trim().toUpperCase();
-    let res_esNifCif = NIFCIF(nifcif);
-    if (res_esNifCif === 'C1') {
-        error += "Se ha introducido un CIF correcto<br>";
-    } else if (res_esNifCif === 'C2') {
-        error += "Se ha introducido un CIF erróneo. El carácter de control es erróneo<br>";
-    } else if (res_esNifCif === 'N1') {
-        error += "Se ha introducido un NIF correcto<br>";
-    } else if (res_esNifCif === 'N2') {
-        error += "Se ha introducido un NIF erróneo. El carácter de control es erróneo<br>";
-    } else if (res_esNifCif === 'N3') {
-        error += "Se ha introducido un DNI, se ha pasado un número de entre 6 y 8 dígitos con un valor mínimo de 100000<br>";
-    } else if (res_esNifCif === 0) {
-        error += "Se ha introducido un dato no válido. No es CIF<br>";
-    }
-
-
-    // Mostrar mensajes de error
-    document.getElementById('mensajeErrores').innerHTML = error;
+    return true;
 }
