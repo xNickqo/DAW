@@ -252,8 +252,7 @@ function comprobarIBAN(codigoIBAN)
             numericIban += calc[i];
         else if (isLetter(calc[i]))
         {
-            let letterValue = calc[i].charCodeAt(0) - 55;
-            numericIban += letterValue.toString();
+            numericIban += calc[i].charCodeAt(0) - 55;;
         }
         else
             return false;
@@ -265,4 +264,204 @@ function comprobarIBAN(codigoIBAN)
         return false;
 
     return true;
+}
+
+function razonNombre(cadena)
+{
+    let correcto = true;
+    let resultado = "";
+
+    if(cadena.length < 1)
+        resultado = "El nombre/razon social no es correcta, < 1 caracter";
+    else
+    {
+        if(!isLetter(cadena[0]))
+        {
+            resultado = "El nombre/razon social no es correcta, No comienza por una letra";
+            correcto = false;
+        }
+
+        let i = 1;
+        while (correcto && i < cadena.length - 1)
+        {
+            let char = cadena[i];
+    
+            if (!isLetter(char) && !isDigit(char))
+            {
+                if (char !== 'º' && char !== 'ª' && char !== '-' && char !== '.')
+                {
+                    correcto = false;
+                    resultado = "El nombre/razon social no es correcta, caracter/es invalidos";
+                }
+            }
+            i++;
+        }
+
+        if (correcto)
+        {
+            let lastChar = cadena[i];
+            if (!isLetter(lastChar) && !isDigit(lastChar))
+            {
+                if (lastChar !== '.')
+                    resultado = "El nombre/razon social no es correcta, debe acabar en punto, letra o caracter";
+            }
+        }
+    }
+    return resultado;
+}
+
+function CodigoEmpresa(codigo)
+{
+    let correcto = true;
+    let resultado = "";
+
+    if(codigo.length < 5 || codigo.length > 10)
+        resultado = "El codigo de la empresa no es correcto, caracter no comprendido entre 5-10";
+    else
+    {
+        let i = 0;
+        while(correcto && i < codigo.length)
+        {
+            if(!isLetter(codigo[i]) && !isDigit(codigo[i]))
+            {
+                correcto=false;
+                resultado = "El codigo de la empresa no es correcto, no es ni una letra ni un numero";
+            }
+            i++;
+        }
+    }
+    return resultado;
+}
+
+function f_direccion(cadena)
+{
+    let correcto = true;
+    let resultado = "";
+
+    if(cadena.length < 1)
+        resultado = "la direccion no es correcta, < 1 caracter";
+    else
+    {
+        if(!isLetter(cadena[0]))
+        {
+            resultado = "La direccion no es correcta, No comienza por una letra";
+            correcto = false;
+        }
+
+        //i = segunda letra
+        let i = 1;
+        while (correcto && i < cadena.length - 1)
+        {
+            let char = cadena[i];
+    
+            if (!isLetter(char) && !isDigit(char))
+            {
+                if (char !== 'º' && char !== 'ª' && char !== '-' && char !== '.' && char !== '/')
+                {
+                    correcto = false;
+                    resultado = "La direccion no es correcta, caracter/es invalidos";
+                }
+            }
+            i++;
+        }
+
+        //i = cadena.lenght - 1
+        if (correcto)
+        {
+            let lastChar = cadena[i];
+            if (!isLetter(lastChar) && !isDigit(lastChar))
+                resultado = "La direccion no es correcta, debe acabar en letra o caracter";
+        }
+    }
+    return resultado;
+}
+
+function f_localidad(cadena)
+{
+    let correcto = true;
+    let resultado = "";
+
+    if(cadena.length < 1)
+        resultado = "la direccion no es correcta, < 1 caracter";
+    else
+    {
+        if(!isLetter(cadena[0]) && !isLetter(cadena[cadena.length - 1]))
+        {
+            resultado = "La direccion no es correcta, No comienza y termina por una letra";
+            correcto = false;
+        }
+
+        //i = segunda letra
+        let i = 1;
+        while (correcto && i < cadena.length - 1)
+        {
+            let char = cadena[i];
+    
+            if (!isLetter(char))
+            {
+                if (char !== ' ')
+                {
+                    correcto = false;
+                    resultado = "La direccion no es correcta, caracter/es invalidos";
+                }
+            }
+            i++;
+        }
+    }
+    return resultado;
+}
+
+function comprobarCodigoPostal(codigoPostal)
+{
+    let resultado = "";
+    if(codigoPostal < 1000 || codigoPostal > 52999)
+    {
+        resultado = "El codigo postal no es correcto";
+    }
+    else
+    {
+        saberProvincia(codigoPostal);
+    }
+    return resultado;
+}
+
+function saberProvincia(codigoPostal)
+{
+    let provinciaa = "";
+    let codigoPostalCadena = codigoPostal.toString();
+    let encontrado = false;
+    let provincias =   ["Álava", "Albacete","Alicante","Almeria","Ávila","Badajoz", 
+                        "Islas Baleares","Barcelona","Burgos","Cáceres","Cádiz",
+                        "Castellón","Ciudad Real","Córdoba","A Coruña","Cuenca",
+                        "Girona","Granada","Guadalajara","Gipuzkoa","Huelva",
+                        "Huesca", "Jaén","León","Lleida","La Rioja","Lugo",
+                        "Madrid","Málaga", "Murcia","Navarra","Ourense","Asturias",
+                        "Palencia","Las Palmas", "Pontevedra","Salamanca",
+                        "Santa Cruz de Tenerife", "Cantabria", "Segovia", 
+                        "Sevilla", "Soria","Tarragona", "Teruel", "Toledo", 
+                        "Valencia", "Valladolid","Bizkaia","Zamora", "Zaragoza", 
+                        "Ceuta","Melilla"];
+
+    let i = 1;
+    while(!encontrado && i <= 52)
+    {
+        if(i < 10)
+        {
+            if((codigoPostalCadena[0]+codigoPostalCadena[1]) == ("0" + i.toString()))
+            {
+                provinciaa = provincias[i - 1];
+                encontrado = true;
+            }
+        }
+        else
+        {
+            if((codigoPostalCadena[0]+codigoPostalCadena[1]) == (i.toString()))
+            {
+                provinciaa = provincias[i - 1];
+                encontrado = true;
+            }
+        }
+        i += 1;
+    }
+    document.formulario.provincia.value = provinciaa;
 }

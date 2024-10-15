@@ -1,0 +1,15 @@
+body
+{
+    background-color: blue;
+    color: white;
+    margin: 20px;
+}
+
+input {
+    margin-top: 3px;
+}
+
+input[readonly]{
+    background-color: rgb(182, 182, 182);
+    cursor:not-allowed;
+}
