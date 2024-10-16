@@ -41,17 +41,22 @@
         switch ($operacion)
         {
             case 'all':
-                while (($linea = fgets($archivo)) !== false)
+                while (!feof($archivo)) {
+                    $linea = fgets($archivo);
+                    if ($linea === false)
+                        break;
                     echo htmlspecialchars($linea) . "<br>";
-
+                }
                 break;
 
             case 'line':
                 $numlinea = (int)$_POST['numlinea'];
 
                 $i = 1;
-                while (($linea = fgets($archivo)) !== false)
-                {
+                while (!feof($archivo)) {
+                    $linea = fgets($archivo);
+                    if ($linea === false)
+                        break;
                     if ($i == $numlinea)
                     {
                         echo htmlspecialchars($linea) . "<br>";
@@ -70,8 +75,13 @@
 
                 for ($i = 0; $i < $numlineas; $i++)
                 {
-                    if (($linea = fgets($archivo)) !== false)
+                    if (!feof($archivo))
+                    {
+                        $linea = fgets($archivo);
+                        if ($linea === false)
+                            break;
                         echo htmlspecialchars($linea) . "<br>";
+                    }
                     else
                         break;
                 }
