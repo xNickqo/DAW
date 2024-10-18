@@ -1,0 +1,66 @@
+body {
+    background-color: #c2ad85;
+}
+
+#inicio {
+    margin: 14px;
+    border: 1px solid red;
+    padding: 5px;
+    outline: yellow solid 2px;
+    background-color: blue;
+}
+
+#historia {
+    border-top: 2px double orange;
+    border-bottom: 1px dotted yellow;
+    border-left: 3px dashed maroon;
+    border-right: 1px  outset #A292A4;
+    padding: 5px 3px 2px 7px;
+    box-shadow: -3px 3px 10px #4a5860;
+    outline: 5px solid #7C0707;
+    background-clip: padding-box;
+    background-color: #b2eba9;
+    margin: 20px 15px 10px 30px;
+}
+
+#universidad {
+    margin: 14px 24px;
+    border: 5px solid blue;
+    padding: 7px 11px;
+    outline: 3px solid red;
+    background-clip: content-box;
+    background-color: green;
+}
+
+#conchas {
+    margin: 10px 20px;
+    border: 3px solid green;
+    padding: 5px 7px;
+    outline: 1px solid grey;
+    background-image: url("../imagenes/casa-conchas-salamanca.jpg");
+    background-repeat: no-repeat;
+    background-origin: content-box;
+}
+
+#nueva {
+    margin: 17px;
+    border: 4px solid violet;
+    padding: 8px;
+    outline: 1px solid orange;
+    background-image: url(../imagenes/catedral-nueva.jpg);
+    background-repeat: no-repeat;
+    background-origin: content-box;
+}
+
+#vieja {
+    margin: 15px 11px 11px 15px;
+    border-top: 5px solid maroon;
+    border-left: 5px solid maroon;
+    border-bottom: 4px solid orange;
+    border-right: 5px solid orange;
+    padding: 9px 8px 8px 9px;
+    outline: 3px solid yellow;
+    background-image: url(../imagenes/catedral-vieja.jpg);
+    background-repeat: no-repeat;
+    background-origin: content-box;
+}
