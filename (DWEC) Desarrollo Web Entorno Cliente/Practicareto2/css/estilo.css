@@ -5,11 +5,23 @@ body
     margin: 20px;
 }
 
-input {
+#mensajeErrores
+{
+    display: none;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    color: red;
+}
+
+input
+{
     margin-top: 3px;
 }
 
-input[readonly]{
+input[readonly]
+{
     background-color: rgb(182, 182, 182);
     cursor:not-allowed;
 }

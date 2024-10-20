@@ -19,22 +19,22 @@
 			<section>
 				<article>
 					<div>
-						<h1> Fromulario de recojidad de datos de la empresa</h1>
+						<h1> Fromulario de recogida de datos de la empresa</h1>
 						<form name="formu" method="post">
-							<!-- <label>nif</label>
-							<input type="text" name="nif" /> <br />
+							<!-- <label for="nif">nif</label>
+							<input type="text" name="nif" id="nif" /> <br />
 
-							<label>cif</label>
-							<input type="text" name="cif" /> <br /> -->
+							<label for="cif">cif</label>
+							<input type="text" name="cif" id="cif"/> <br /> -->
 
-							<label>Razón Social/Apellidos y Nombre</label>
-							<input type="text" name="razon_nombre" /> <br />
+							<label for="razon_nombre">Razón Social/Apellidos y Nombre</label>
+							<input type="text" name="razon_nombre" id="razon_nombre"/> <br />
 
-							<label>Código de la empresa</label>
-							<input type="text" name="codigoEmpresa" /> <br />
+							<label for="codigoEmpresa">Código de la empresa</label>
+							<input type="text" name="codigoEmpresa" id="codigoEmpresa"/> <br />
 
-							<label>Cif/Nif de la empresa</label>
-							<input type="text" name="nifcif" /> <br />
+							<label for="nifcif">Cif/Nif de la empresa</label>
+							<input type="text" name="nifcif" id="nifcif"/> <br />
 
 							<fieldset>
 								<legend>Tipo de persona</legend>
@@ -44,50 +44,50 @@
 
 							<fieldset>
 								<legend>Domicilio Social/Particular </legend>
-								<label>Dirección </label>
-									<input type="text" name="direccion">
-								<label>Telefono </label>
-									<input type="text" name="telefono">
+								<label for="direccion">Dirección </label>
+									<input type="text" name="direccion" id="direccion">
+								<label for="telefono">Telefono </label>
+									<input type="text" name="telefono" id="telefono">
 								<br>
-								<label>Localidad </label>
-									<input type="text" name="localidad">
-								<label>Codigo postal </label>
-									<input type="number" name="codigoPostal">
+								<label for="localidad">Localidad </label>
+									<input type="text" name="localidad" id="localidad">
+								<label for="codigoPostal">Codigo postal </label>
+									<input type="number" name="codigoPostal" id="codigoPostal">
 								<br>
-								<label>Provincia </label>
-									<input type="text" name="provincia" readonly>
+								<label for="provincia">Provincia </label>
+									<input type="text" name="provincia" id="provincia" readonly>
 							</fieldset>
 
 							<fieldset>
 								<legend>Datos Bancarios</legend>
-								<label>Codigo del banco</label>
-									<input type="text" name="codigoBanco" /> <br />
-								<label>Numero de la Sucursal</label>
-									<input type="text" name="numSucursal" /> <br />
-								<label>Código Control </label>
-									<input type="text" name="codigoControl" readonly/> <br />
-								<label>Numero de cuenta</label>
-									<input type="text" name="numCuenta" /> <br />
-								<!-- <label>IBAN </label>
+								<label for="codigoBanco">Codigo del banco</label>
+									<input type="text" name="codigoBanco" id="codigoBanco"/> <br />
+								<label for="numSucursal">Numero de la Sucursal</label>
+									<input type="text" name="numSucursal" id="numSucursal"/> <br />
+								<label for="codigoControl">Código Control </label>
+									<input type="text" name="codigoControl" id="codigoControl" readonly/> <br />
+								<label for="numCuenta">Numero de cuenta</label>
+									<input type="text" name="numCuenta" id="numCuenta"/> <br />
+								<!-- <label for="">IBAN </label>
 									<input type="text" name=""><br>
-								<label>Codigo de cuenta (IBAN)</label>
+								<label for="">Codigo de cuenta (IBAN)</label>
 									<input type="text" name="codigoCuenta" /> <br />
 									<input type="text" name="iban" placeholder="IBAN" readonly style="width: 300px;"/> <br /> -->
-								<label>IBAN </label>
-									<input type="text" name="codigoIBAN"/> <br />
+								<label for="codigoIBAN">IBAN </label>
+									<input type="text" name="codigoIBAN" id="codigoIBAN"/> <br />
 							</fieldset>
 							<br>		
-							<label>Fecha de la constitucion de la empresa</label>
-							<input type="text" name="fechaConstitucionEmpresa" placeholder="dia/mes/año">
+							<label for="fechaConstitucionEmpresa">Fecha de la constitucion de la empresa</label>
+							<input type="text" name="fechaConstitucionEmpresa" id="fechaConstitucionEmpresa" placeholder="dia/mes/año">
 							<br>			
-							<label>Numero de trabajadores de la empresa</label>
-							<input type="number" name="numTrabajadoresEmpresa">
+							<label for="numTrabajadoresEmpresa">Numero de trabajadores de la empresa</label>
+							<input type="number" name="numTrabajadoresEmpresa" id="numTrabajadoresEmpresa">
 							<br>			
-							<label>Numero de fabricas de la empresa</label>
-							<input type="number" name="numFabricasEmpresa">
+							<label for="numFabricasEmpresa">Numero de fabricas de la empresa</label>
+							<input type="number" name="numFabricasEmpresa" id="numFabricasEmpresa">
 							<br>	
-							<label>Comunidades en las que hay empresas</label>
-							<select name="comunidades" size="5" multiple="">
+							<label for="comunidades">Comunidades en las que hay empresas</label>
+							<select name="comunidades" id="comunidades" size="5" multiple="">
 								<option value="andalucia">Andalucía</option>
 								<option value="aragon">Aragón</option>
 								<option value="asturias">Asturias</option>
@@ -138,7 +138,7 @@
 							<input value="Validar" type="submit" />
 							<input value="Limpiar" type="reset" />
 							<br>
-    						<div id="mensajeErrores" style="color: red;"></div>
+    						<div id="mensajeErrores"></div>
 						</form>
 					</div>
 				</article>

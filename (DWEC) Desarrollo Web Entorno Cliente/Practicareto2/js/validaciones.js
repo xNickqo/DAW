@@ -8,8 +8,7 @@ function isLetter(caracter) {
     return caracter >= 'A' && caracter <= 'Z';
 }
 
-function esNif(nif)
-{
+function esNif(nif) {
     let controlChars = "TRWAGMYFPDXBNJZSQVHLCKE";
 
     // 1ª Forma: 8 dígitos + letra de control
@@ -84,7 +83,7 @@ function esNif(nif)
     return 0;
 }
 
-function esCif(cif){
+function esCif(cif) {
     let lettersIfNumber = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'U', 'V'];
     let lettersIfLetter = ['P', 'Q', 'R', 'S', 'W'];
 
@@ -94,14 +93,12 @@ function esCif(cif){
     if (!lettersIfNumber.includes(cif[0]) && !lettersIfLetter.includes(cif[0]))
         return 0
 
-    let numeros = parseInt(cif.substring(1, 8), 10);
-
     let sumaImpares = 0;
     let sumaPares = 0;
-    let i = 0;
-    while (i < 7)
+    let i = 1;
+    while (i < 8)
     {
-        let digito = parseInt(cif[i + 1], 10);
+        let digito = parseInt(cif[i], 10);
         if (i % 2 === 0)
         {
             let aux = digito * 2;
@@ -110,9 +107,7 @@ function esCif(cif){
             sumaImpares += aux;
         }
         else
-        {
             sumaPares += digito;
-        }
         i++;
     }
 
@@ -149,8 +144,7 @@ function esCif(cif){
     return 0;
 }
 
-function NIFCIF(dato)
-{
+function NIFCIF(dato) {
     dato = dato.trim().toUpperCase();
 
     // Comprobar si es un NIF
@@ -176,8 +170,13 @@ function NIFCIF(dato)
 
 function codigosControl(codigoBanco, numSucursal, numCuenta)
 {
+    // Validar que sean numéricos
+    if (isNaN(codigoBanco) || isNaN(numSucursal) || isNaN(numCuenta))
+        return "El código del banco, la sucursal y el número de cuenta deben ser numéricos.<br>";
+
+    //Validar la longitud de los campos
     if (codigoBanco.length !== 4 || numSucursal.length !== 4 || numCuenta.length !== 10)
-        return "Error en el tamaño de las variables";
+        return "Error en el tamaño de las variables <br>";
 
     let numero1 = 0;
     numero1 += parseInt(codigoBanco[0]) * 4;
@@ -221,10 +220,9 @@ function codigosControl(codigoBanco, numSucursal, numCuenta)
     return String(primero) + String(segundo);
 }
 
-function calculoIBANEspanya(codigoCuenta)
-{
+function calculoIBANEspanya(codigoCuenta) {
     if (codigoCuenta.length !== 20)
-        return "Error en el tamaño de las variables";
+        return "Error en el tamaño de las variables <br>";
 
     let calc = codigoCuenta + '142800';
     let resto = parseFloat(calc) % 97;
@@ -236,10 +234,9 @@ function calculoIBANEspanya(codigoCuenta)
     return iban;
 }
 
-function comprobarIBAN(codigoIBAN)
-{
+function comprobarIBAN(codigoIBAN) {
     if (codigoIBAN.length > 34)
-        return "Error: IBAN muy largo";
+        return "Error: IBAN muy largo <br>";
 
     let letras = codigoIBAN.substring(0, 4)
     let calc = codigoIBAN.substring(4) + letras;
@@ -250,39 +247,34 @@ function comprobarIBAN(codigoIBAN)
     {
         if (isDigit(calc[i]))
             numericIban += calc[i];
-        else if (isLetter(calc[i]))
+        else if (isLetter(calc[i])) 
         {
-            numericIban += calc[i].charCodeAt(0) - 55;;
+            numericIban += (calc[i].charCodeAt(0) - 55).toString();
         }
         else
             return false;
         i++;
     }
-
-    let remainder = parseFloat(numericIban) % 97;
-    if (remainder !== 1)
+    
+    let remainder = BigInt(numericIban) % BigInt(97);
+    if (remainder !== BigInt(1))
         return false;
 
     return true;
 }
 
-function razonNombre(cadena)
-{
-    let correcto = true;
+function razonNombre(cadena) {
     let resultado = "";
 
     if(cadena.length < 1)
-        resultado = "El nombre/razon social no es correcta, < 1 caracter";
+        resultado = "El nombre/razon social no es correcta, < 1 caracter <br>";
     else
     {
         if(!isLetter(cadena[0]))
-        {
-            resultado = "El nombre/razon social no es correcta, No comienza por una letra";
-            correcto = false;
-        }
+            resultado = "El nombre/razon social no es correcta, No comienza por una letra <br>";
 
         let i = 1;
-        while (correcto && i < cadena.length - 1)
+        while (i < cadena.length - 1)
         {
             let char = cadena[i];
     
@@ -290,42 +282,37 @@ function razonNombre(cadena)
             {
                 if (char !== 'º' && char !== 'ª' && char !== '-' && char !== '.')
                 {
-                    correcto = false;
-                    resultado = "El nombre/razon social no es correcta, caracter/es invalidos";
+                    resultado = "El nombre/razon social no es correcta, caracter/es invalidos <br>";
+                    break ;
                 }
             }
             i++;
         }
 
-        if (correcto)
+        let lastChar = cadena[i];
+        if (!isLetter(lastChar) && !isDigit(lastChar))
         {
-            let lastChar = cadena[i];
-            if (!isLetter(lastChar) && !isDigit(lastChar))
-            {
-                if (lastChar !== '.')
-                    resultado = "El nombre/razon social no es correcta, debe acabar en punto, letra o caracter";
-            }
+            if (lastChar !== '.')
+                resultado = "El nombre/razon social no es correcta, debe acabar en punto, letra o caracter <br>";
         }
     }
     return resultado;
 }
 
-function CodigoEmpresa(codigo)
-{
-    let correcto = true;
+function CodigoEmpresa(codigo) {
     let resultado = "";
 
     if(codigo.length < 5 || codigo.length > 10)
-        resultado = "El codigo de la empresa no es correcto, caracter no comprendido entre 5-10";
+        resultado = "El codigo de la empresa no es correcto, caracter no comprendido entre 5-10 <br>";
     else
     {
         let i = 0;
-        while(correcto && i < codigo.length)
+        while(i < codigo.length)
         {
             if(!isLetter(codigo[i]) && !isDigit(codigo[i]))
             {
-                correcto=false;
-                resultado = "El codigo de la empresa no es correcto, no es ni una letra ni un numero";
+                resultado = "El codigo de la empresa no es correcto, no es ni una letra ni un numero <br>";
+                break;
             }
             i++;
         }
@@ -333,24 +320,18 @@ function CodigoEmpresa(codigo)
     return resultado;
 }
 
-function f_direccion(cadena)
-{
-    let correcto = true;
+function validarDireccion(cadena) {
     let resultado = "";
 
     if(cadena.length < 1)
-        resultado = "la direccion no es correcta, < 1 caracter";
+        resultado = "la direccion no es correcta, < 1 caracter <br>";
     else
     {
         if(!isLetter(cadena[0]))
-        {
-            resultado = "La direccion no es correcta, No comienza por una letra";
-            correcto = false;
-        }
+            resultado = "La direccion no es correcta, No comienza por una letra <br>";
 
-        //i = segunda letra
         let i = 1;
-        while (correcto && i < cadena.length - 1)
+        while (i < cadena.length - 1)
         {
             let char = cadena[i];
     
@@ -358,78 +339,59 @@ function f_direccion(cadena)
             {
                 if (char !== 'º' && char !== 'ª' && char !== '-' && char !== '.' && char !== '/')
                 {
-                    correcto = false;
-                    resultado = "La direccion no es correcta, caracter/es invalidos";
+                    resultado = "La direccion no es correcta, caracter/es invalidos <br>";
+                    break;
                 }
             }
             i++;
         }
 
-        //i = cadena.lenght - 1
-        if (correcto)
-        {
-            let lastChar = cadena[i];
-            if (!isLetter(lastChar) && !isDigit(lastChar))
-                resultado = "La direccion no es correcta, debe acabar en letra o caracter";
-        }
+        let lastChar = cadena[i];
+        if (!isLetter(lastChar) && !isDigit(lastChar))
+            resultado = "La direccion no es correcta, debe acabar en letra o caracter <br>";
     }
     return resultado;
 }
 
-function f_localidad(cadena)
-{
-    let correcto = true;
+function validarLocalidad(cadena) {
     let resultado = "";
 
-    if(cadena.length < 1)
-        resultado = "la direccion no es correcta, < 1 caracter";
+    if (cadena.length < 1)
+        resultado = "La localidad no es correcta, < 1 caracter <br>";
     else
     {
-        if(!isLetter(cadena[0]) && !isLetter(cadena[cadena.length - 1]))
+        if (!isLetter(cadena[0]) || !isLetter(cadena[cadena.length - 1]))
+            resultado = "La localidad no es correcta, No comienza y termina por una letra <br>";
+        else
         {
-            resultado = "La direccion no es correcta, No comienza y termina por una letra";
-            correcto = false;
-        }
+            for (let i = 1; i < cadena.length - 1; i++) {
+                let char = cadena[i];
 
-        //i = segunda letra
-        let i = 1;
-        while (correcto && i < cadena.length - 1)
-        {
-            let char = cadena[i];
-    
-            if (!isLetter(char))
-            {
-                if (char !== ' ')
+                if (!isLetter(char) && char !== ' ')
                 {
-                    correcto = false;
-                    resultado = "La direccion no es correcta, caracter/es invalidos";
+                    resultado = "La localidad no es correcta, caracter/es invalidos <br>";
+                    break;
                 }
             }
-            i++;
         }
     }
     return resultado;
 }
 
-function comprobarCodigoPostal(codigoPostal)
-{
+function validarCodigoPostal(codigoPostal) {
     let resultado = "";
     if(codigoPostal < 1000 || codigoPostal > 52999)
-    {
-        resultado = "El codigo postal no es correcto";
-    }
+
+        resultado = "El codigo postal no es correcto <br>";
     else
-    {
         saberProvincia(codigoPostal);
-    }
+
     return resultado;
 }
 
-function saberProvincia(codigoPostal)
-{
-    let provinciaa = "";
+function saberProvincia(codigoPostal) {
+    let provincia = "";
     let codigoPostalCadena = codigoPostal.toString();
-    let encontrado = false;
     let provincias =   ["Álava", "Albacete","Alicante","Almeria","Ávila","Badajoz", 
                         "Islas Baleares","Barcelona","Burgos","Cáceres","Cádiz",
                         "Castellón","Ciudad Real","Córdoba","A Coruña","Cuenca",
@@ -443,25 +405,110 @@ function saberProvincia(codigoPostal)
                         "Ceuta","Melilla"];
 
     let i = 1;
-    while(!encontrado && i <= 52)
+    while(i <= 52)
     {
         if(i < 10)
         {
-            if((codigoPostalCadena[0]+codigoPostalCadena[1]) == ("0" + i.toString()))
+            if((codigoPostalCadena[0] + codigoPostalCadena[1]) == ("0" + i.toString()))
             {
-                provinciaa = provincias[i - 1];
-                encontrado = true;
+                provincia = provincias[i - 1];
+                break ;
             }
         }
         else
         {
-            if((codigoPostalCadena[0]+codigoPostalCadena[1]) == (i.toString()))
+            if((codigoPostalCadena[0] + codigoPostalCadena[1]) == (i.toString()))
             {
-                provinciaa = provincias[i - 1];
-                encontrado = true;
+                provincia = provincias[i - 1];
+                break ;
             }
         }
         i += 1;
     }
-    document.formulario.provincia.value = provinciaa;
+    document.formu.provincia.value = provincia;
+}
+
+function validarNumTel(numero) {
+    resultado = "";
+    if(numero < 0)
+        resultado = "Error, numero negativo";
+    if(numero.length != 9)
+        resultado = "Error, la longitud de numero no puede ser distinta de 9 <br>";
+    if((numero[0] != 6) && (numero[0] != 7) && (numero[0] != 9))
+        resultado = "Error, el numero debe comenzar por 6, 7 o 9 <br>";
+    return resultado;
+}
+
+function validarFax(numero) {
+    resultado = "";
+    if(numero < 0)
+        resultado = "Error, fax negativo";
+    if(numero.length != 9)
+        resultado = "Error, la longitud del fax no puede ser distinta de 9 <br>";
+    if(numero[0] != 9)
+        resultado = "Error, el fax debe comenzar por 9 <br>";
+    return resultado;
+}
+
+function validarFecha(cadena) {
+    let partes = cadena.split("/");
+    resultado = "";
+
+    if (partes.length !== 3)
+        resultado = "La fecha debe tener el formato día/mes/año.<br>";
+
+    let [dia, mes, anio] = partes;
+
+    dia = parseInt(dia, 10);
+    mes = parseInt(mes, 10);
+    anio = parseInt(anio, 10);
+
+    if (isNaN(dia) || isNaN(mes) || isNaN(anio))
+        resultado = "La fecha debe contener solo números.<br>";
+
+    if (dia < 1 || dia > 31)
+        resultado = "El día debe estar entre 1 y 31.<br>";
+    if (mes < 1 || mes > 12)
+        resultado = "El mes debe estar entre 1 y 12.<br>";
+    if ((anio < 100 && anio > 99) || anio < 0)
+        resultado = "El año debe tener dos o cuatro dígitos.<br>";
+
+    let fecha = new Date(anio, mes - 1, dia);
+    if (fecha.getDate() !== dia || fecha.getMonth() !== mes - 1 || fecha.getFullYear() !== anio)
+        resultado = "La fecha no es válida.<br>";
+
+    return resultado;
+}
+
+function validarComunidades(comunidadesSeleccionadas) {
+    let contador = 0;
+    for (let i = 0; i < comunidadesSeleccionadas.options.length; i++) {
+        if (comunidadesSeleccionadas.options[i].selected)
+            contador++;
+    }
+    if (contador < 2)
+        return "Debes seleccionar al menos dos comunidades autónomas.<br>";
+    return "";
+}
+
+function validarSector(sectoresEconomicos) {
+    let sectoresSeleccionados = false;
+    for (let i = 0; i < sectoresEconomicos.length; i++) {
+        if (sectoresEconomicos[i].checked)
+        {
+            sectoresSeleccionados = true;
+            break;
+        }
+    }
+    if (!sectoresSeleccionados)
+        return "Debes seleccionar al menos un sector económico.<br>";
+    return "";
+}
+
+function validarTipoEmpresa(tipoEmpresa) {
+    for (let i = 0; i < tipoEmpresa.length; i++) {
+        if (tipoEmpresa[i].checked)
+            return "";
+    }
+    return "Debes seleccionar un tipo de empresa.<br>";
 }

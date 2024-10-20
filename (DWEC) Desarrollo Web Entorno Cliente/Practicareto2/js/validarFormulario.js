@@ -14,15 +14,16 @@ function validarFormulario()
     let razon_nombre = document.formu.razon_nombre.value.trim().toUpperCase();
     let res_razonNombre = razonNombre(razon_nombre);
     if (res_razonNombre !== "")
-        error += res_razonNombre + "<br>";
+        error += res_razonNombre;
 
     //Codigo empresa
     let codigoEmpresa = document.formu.codigoEmpresa.value.trim().toUpperCase();
     let res_codigoEmpresa = CodigoEmpresa(codigoEmpresa);
     if (res_codigoEmpresa !== "")
-        error += res_codigoEmpresa + "<br>";
+        error += res_codigoEmpresa;
 
-    /* //Nif
+/* 
+    //Nif
     let nif = document.formu.nif.value.trim().toUpperCase();
     let res_esNif = esNif(nif);
     if (res_esNif === 1) {
@@ -44,7 +45,8 @@ function validarFormulario()
         error += "Se ha introducido un CIF erróneo. El carácter de control es erróneo<br>";
     } else if (res_esCif === 0) {
         error += "Se ha introducido un dato no válido. No es CIF<br>";
-    } */
+    }
+*/
 
     //Nifcif
     let nifcif = document.formu.nifcif.value.trim().toUpperCase();
@@ -64,24 +66,29 @@ function validarFormulario()
     }
 
     //Tipo de persona
+    if (document.formu.tipoPersona.value == '')
+        error += "Debes seleccionar 1 opcion en Tipo persona <br>";
+
+    //Domicilio Social/Particular
     let direccion = document.formu.direccion.value.trim().toUpperCase();
-    let res_direccion = f_direccion(direccion);
+    let res_direccion = validarDireccion(direccion);
     if (res_direccion !== "")
-        error += res_direccion + "<br>";
+        error += res_direccion;
 
     let localidad = document.formu.localidad.value.trim().toUpperCase();
-    let res_localidad = f_localidad(localidad);
+    let res_localidad = validarLocalidad(localidad);
     if (res_localidad !== "")
-        error += res_localidad + "<br>";
-
+        error += res_localidad;
 
     let codigoPostal = document.formu.codigoPostal.value.trim();
-    let res_codigoPostal = comprobarCodigoPostal(codigoPostal);
+    let res_codigoPostal = validarCodigoPostal(codigoPostal);
     if (res_codigoPostal !== "")
-        error += res_codigoPostal + "<br>";
+        error += res_codigoPostal;
 
-    let provincia = document.formu.provincia.value;
-
+    let telefono = document.formu.telefono.value.trim();
+    let res_tel = validarNumTel(telefono);
+    if (res_tel !== "")
+        error += res_tel;
 
     //Codigoscontrol
     let codigoBanco = document.formu.codigoBanco.value.trim();
@@ -90,43 +97,65 @@ function validarFormulario()
     let codigoControl = codigosControl(codigoBanco, numSucursal, numCuenta);
     document.formu.codigoControl.value = codigoControl;
 
-    /* //Calculo IBAN España
+/*  
+    //Calculo IBAN España
     let codigoCuenta = document.formu.codigoCuenta.value.trim();
     let res_iban = calculoIBANEspanya(codigoCuenta);
-    document.formu.iban.value = res_iban; */
+    document.formu.iban.value = res_iban;
+*/
     
     //Comprobar IBAN
     let iban = document.formu.codigoIBAN.value.trim();
     let res = comprobarIBAN(iban);
-    if (res === TRUE)
-        document.formu.codigoIBAN.style.backgroundColor="green";
-    else
-    {
+    if (res === false)
         error += "IBAN incorrecto. <br>";
-        document.formu.codigoIBAN.style.backgroundColor="red";
-    }
 
-    /* //Fecha de la Constitucion de la empresa 
+    //Fecha de la Constitucion de la empresa 
     let fechaConstitucionEmpresa = document.formu.fechaConstitucionEmpresa.value;
+    let res_fecha = validarFecha(fechaConstitucionEmpresa);
+    if (res_fecha !== "")
+        error += res_fecha;
 
     //Numero de trabajadores de la empresa 
-    let numeroTrabajadoresEmpresa = document.formu.numeroTrabajadoresEmpresa.value;
-    
+    let numTrabEmpr = document.formu.numTrabajadoresEmpresa.value.trim();
+    if (numTrabEmpr === '' || isNaN(numTrabEmpr) || numTrabEmpr < 1)
+        error += "El número de trabajadores debe ser un número válido mayor que 0.<br>";
+
     //Numero de fabricas de la empresa 
-    let numeroFabricasEmpresa = document.formu.numeroFabricasEmpresa.value;
+    let numFabEmp = document.formu.numFabricasEmpresa.value.trim();
+    if (numFabEmp === '' || isNaN(numFabEmp) || numFabEmp < 1)
+        error += "El número de fábricas debe ser un número válido mayor que 0.<br>";
     
     //Comunidades (select multiple option)
-    let comunidades = document.formu.comunidades.value;
+    let comunidadesSeleccionadas = document.formu.comunidades;
+    let res_com = validarComunidades(comunidadesSeleccionadas);
+    if (res_com !== "");
+        error += res_com;
 
     //Sector/es Economicos (checkbox)
-    let sector = document.formu.sectorEconomico.value;
+    let sectoresEconomicos = document.formu.sectorEconomico;
+    let res_sector = validarSector(sectoresEconomicos);
+    if (res_sector !== "");
+        error += res_sector;
 
-    //Sector/es Economicos (checkbox)
-    let tipoEmpresa = document.formu.tipoEmpresa.value; */
-
+    //tipoEmpresa (radio button)
+    let tipoEmpresa = document.formu.tipoEmpresa;
+    let res_tipoEmpresa = validarTipoEmpresa(tipoEmpresa);
+    if (res_tipoEmpresa !== "");
+        error += res_tipoEmpresa;
 
     // Mostrar mensajes de error
-    document.getElementById('mensajeErrores').innerHTML = error;
+    let mensajeErroresDiv = document.getElementById('mensajeErrores');
+    if (error !== "")
+    {
+        mensajeErroresDiv.style.display = "block";
+        mensajeErroresDiv.innerHTML = error;
+    }
+    else
+    {
+        window.alert("Formulario enviado correctamente");
+        correcto = true;
+    }
 
     return correcto;
 }
