@@ -6,7 +6,7 @@
     <title>bolsa3</title>
 </head>
 <body>
-    <form action="" method="POST">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <label for="valor">Valor</label>
         <select name="valor" id="valor">
             <option value="ACCIONA">ACCIONA</option>
@@ -49,6 +49,8 @@
         <br><br>
     </form>
     <?php
+        include "funciones_bolsa.php";
+    
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $archivo = fopen("./bolsa/ibex35.txt", "r");
@@ -56,7 +58,7 @@
             $palabra = $_POST['valor'];
 
             //Imprimir primera linea
-            echo "<pre><b>" . htmlspecialchars(fgets($archivo)) . "</b></pre>";
+            imprimirPrimeraLinea($archivo);
             
             // Recorre las líneas restantes buscando la palabra
             while (($linea = fgets($archivo)) !== false)
@@ -69,7 +71,7 @@
                 // Busca la subcadena en la línea usando strstr() y si encuentra la palabra, imprime esa linea
                 if (strstr($linea, $palabra))
                 {
-                    echo "<pre>" . htmlspecialchars($linea) . "</pre>";
+                    mostrarLinea($linea);
                     echo "El valor <b>Cotizacion</b> de {$palabra} es: " . htmlspecialchars(trim($ultimo_valor)) . "<br>";
                     echo "<b>Cotizacion maxima: </b> " . htmlspecialchars(trim($max_valor)) . "<br>";
                     echo "<b>Cotizacion minima: </b> " . htmlspecialchars(trim($min_valor)) . "<br>";

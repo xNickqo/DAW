@@ -35,13 +35,9 @@ function escribir_campo($archivo, $campo, $longitud)
     for ($i = 0; $i < $longitud; $i++)
     {
         if ($i < strlen($campo))
-        {
             fwrite($archivo, $campo[$i]);
-        }
         else
-        {
             fwrite($archivo, " ");
-        }
     }
 }
 

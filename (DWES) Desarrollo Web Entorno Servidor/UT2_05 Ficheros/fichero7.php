@@ -7,7 +7,7 @@
 </head>
 <body>
     <h2>Operaciones Sistemas Ficheros</h2>
-    <form action="" method="POST">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <label for="src">Fichero Origen(Path/nombre)</label>
             <input type="text" id="src" name="src"><br>
         <label for="dst">Fichero Destino(Path/nombre)</label>
