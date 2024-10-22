@@ -15,7 +15,7 @@
         {
             //file()                devuelve un array de lineas
             //file_get_content()    devuelve una cadena
-            $content = file_get_contents("./bolsa/ibex35.txt");
+            $content = file_get_contents("ibex35.txt");
             $content = htmlspecialchars($content);
             echo "<pre>$content<pre>";
         }

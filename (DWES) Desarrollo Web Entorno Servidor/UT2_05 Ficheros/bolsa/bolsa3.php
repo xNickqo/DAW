@@ -53,7 +53,7 @@
     
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $archivo = fopen("./bolsa/ibex35.txt", "r");
+            $archivo = fopen("ibex35.txt", "r");
             
             $palabra = $_POST['valor'];
 

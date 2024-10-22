@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bolsa4</title>
+    <title>bolsa2</title>
 </head>
 <body>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
@@ -45,51 +45,24 @@
             <option value="TELEFONICA">TELEFONICA</option>
             <option value="VISCOFAN">VISCOFAN</option>
         </select>
-        <br>
-        <label for="mostrar">Mostrar</label>
-        <select name="mostrar" id="mostrar">
-            <option>Ultimo</option>
-            <option>Var.%</option>
-            <option>Var.</option>
-            <option>Ac.% Año</option>
-            <option>MAx.</option>
-            <option>MIn.</option>
-            <option>Vol.</option>
-            <option>Capit.</option>
-            <option>Hora</option>
-        </select>
-        <br>
-        <input type="submit" value="Visualizar">
-        <input type="reset" value="Borrar">
+        <input type="submit" value="Recibir datos">
         <br><br>
     </form>
     <?php
         include "funciones_bolsa.php";
-    
+
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $archivo = fopen("./bolsa/ibex35.txt", "r");
+            $archivo = fopen("ibex35.txt", "r");
             
             $palabra = $_POST['valor'];
-
-            $mostrar = $_POST['mostrar'];
 
             //Imprimir primera linea
             imprimirPrimeraLinea($archivo);
             
-            // Recorre las líneas restantes buscando la palabra
-            while (($linea = fgets($archivo)) !== false)
-            {
-                inicializarValores($linea);
-                // Busca la subcadena en la línea usando strstr() y si encuentra la palabra, imprime esa linea
-                if (strstr($linea, $palabra))
-                {
-                    
-                    mostrarLinea($linea);
-                    break;
-                }
-            }
-
+            //Buscar la palabra dentro del archivo, linea por linea
+            buscarPalabra($archivo, $palabra);
+            
             fclose($archivo);
         }
     ?>
