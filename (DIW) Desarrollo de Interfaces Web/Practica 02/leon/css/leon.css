@@ -1,0 +1,42 @@
+body {
+    font-family: 'Nyala';
+    color: darkred;
+    font-style: italic;
+    text-decoration: underline;
+    background-image: url("../img/catedral leon.jpg"), url("../img/casa botines.jpg"), url("../img/convento san marcos.jpg");
+    background-size: 33.33% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left,center,right;
+    
+}
+
+#marcos {
+    font-family: "Latha";
+    text-transform: lowercase;
+    color: DarkSlateGray;
+    text-indent: calc(10ch);
+}
+
+/* Tamaño de letra según la resolución */
+
+/* Resolución inferior a 625px */
+@media (max-width: 624px) {
+    body {
+        font-size: 10px;
+    }
+}
+
+/* Resolución entre 625px y 1250px */
+@media (min-width: 625px) and (max-width: 1250px) {
+    body {
+        font-size: 11px;
+    }
+}
+
+/* Resolución superior a 1250px */
+@media (min-width: 1251px) {
+    body {
+        font-size: 13px;
+    }
+}

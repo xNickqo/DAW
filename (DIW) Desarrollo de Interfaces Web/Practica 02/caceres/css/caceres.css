@@ -1,0 +1,57 @@
+body {
+    font-family: "Lucida Sans";
+    color: #690C26;
+    font-weight: bold;
+}
+
+article[class^="c"] {
+    margin: 8% 10%;
+    padding: 5%;
+    border-top: 20px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 30px solid transparent;
+    border-right: 25px solid transparent;
+
+    outline-width: 2%;
+    outline-style: solid;
+    outline-color: gold;
+}
+
+.c1 {
+    background-image: url("../img/torre bujaco.jpg");
+    background-clip: content-box;
+    background-size: cover;
+    text-decoration: line-through;
+}
+
+.c2 {
+    background-image: url("../img/palacio ovando.jpg");
+    background-clip: padding-box;
+    background-size: cover;
+    text-decoration: underline;
+}
+
+.c3 {
+    background-image: url("../img/iglesia santiago.jpg");
+    background-clip: border-box;
+    background-size: cover;
+    font-style: italic;
+}
+
+@media (max-width: 599px) {
+    body {
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1200px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 1201px) {
+    body {
+        font-size: 13px;
+    }
+}

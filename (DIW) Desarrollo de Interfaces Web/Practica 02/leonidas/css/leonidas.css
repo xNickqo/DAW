@@ -1,0 +1,33 @@
+
+body {
+    background-image: url("../img/convento san marcos.jpg");
+    background-repeat: repeat-y;
+    font-family: "Vivaldy";
+    color: #0B08BD;
+    font-style: italic;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+/* Tamaño de letra según la resolución */
+
+/* Resolución inferior a 475px */
+@media (max-width: 474px) {
+    body {
+        font-size: 10px;
+    }
+}
+
+/* Resolución entre 475px y 950px */
+@media (min-width: 475px) and (max-width: 950px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+/* Resolución superior a 950px */
+@media (min-width: 951px) {
+    body {
+        font-size: 14px;
+    }
+}
