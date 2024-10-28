@@ -1,0 +1,205 @@
+Capitales de Provincia;Sexo;Año;Total
+Total;Hombre;2023;7.202.842
+Total;Hombre;2022;7.099.329
+Total;Mujer;2023;7.980.157
+Total;Mujer;2022;7.862.979
+01059 Vitoria-Gasteiz;Hombre;2023;124.170
+01059 Vitoria-Gasteiz;Hombre;2022;123.093
+01059 Vitoria-Gasteiz;Mujer;2023;131.253
+01059 Vitoria-Gasteiz;Mujer;2022;130.037
+02003 Albacete;Hombre;2023;84.592
+02003 Albacete;Hombre;2022;84.082
+02003 Albacete;Mujer;2023;88.610
+02003 Albacete;Mujer;2022;87.978
+03014 Alacant/Alicante;Hombre;2023;169.208
+03014 Alacant/Alicante;Hombre;2022;164.511
+03014 Alacant/Alicante;Mujer;2023;181.390
+03014 Alacant/Alicante;Mujer;2022;175.749
+04013 Almería;Hombre;2023;97.782
+04013 Almería;Hombre;2022;96.714
+04013 Almería;Mujer;2023;102.883
+04013 Almería;Mujer;2022;101.730
+05019 Ávila;Hombre;2023;27.873
+05019 Ávila;Hombre;2022;27.754
+05019 Ávila;Mujer;2023;30.675
+05019 Ávila;Mujer;2022;30.474
+06015 Badajoz;Hombre;2023;72.923
+06015 Badajoz;Hombre;2022;72.914
+06015 Badajoz;Mujer;2023;77.793
+06015 Badajoz;Mujer;2022;77.669
+07040 Palma;Hombre;2023;210.280
+07040 Palma;Hombre;2022;206.237
+07040 Palma;Mujer;2023;220.360
+07040 Palma;Mujer;2022;215.696
+08019 Barcelona;Hombre;2023;788.057
+08019 Barcelona;Hombre;2022;768.009
+08019 Barcelona;Mujer;2023;867.899
+08019 Barcelona;Mujer;2022;847.115
+09059 Burgos;Hombre;2023;82.996
+09059 Burgos;Hombre;2022;82.446
+09059 Burgos;Mujer;2023;91.589
+09059 Burgos;Mujer;2022;90.751
+10037 Cáceres;Hombre;2023;46.102
+10037 Cáceres;Hombre;2022;45.812
+10037 Cáceres;Mujer;2023;50.093
+10037 Cáceres;Mujer;2022;49.598
+11012 Cádiz;Hombre;2023;52.863
+11012 Cádiz;Hombre;2022;53.489
+11012 Cádiz;Mujer;2023;59.214
+11012 Cádiz;Mujer;2022;59.796
+12040 Castelló de la Plana;Hombre;2023;84.914
+12040 Castelló de la Plana;Hombre;2022;83.059
+12040 Castelló de la Plana;Mujer;2023;91.001
+12040 Castelló de la Plana;Mujer;2022;88.949
+13034 Ciudad Real;Hombre;2023;35.660
+13034 Ciudad Real;Hombre;2022;35.407
+13034 Ciudad Real;Mujer;2023;39.594
+13034 Ciudad Real;Mujer;2022;39.272
+14021 Córdoba;Hombre;2023;155.649
+14021 Córdoba;Hombre;2022;154.551
+14021 Córdoba;Mujer;2023;168.769
+14021 Córdoba;Mujer;2022;167.444
+15030 Coruña, A;Hombre;2023;114.572
+15030 Coruña, A;Hombre;2022;113.346
+15030 Coruña, A;Mujer;2023;132.778
+15030 Coruña, A;Mujer;2022;131.091
+16078 Cuenca;Hombre;2023;25.387
+16078 Cuenca;Hombre;2022;25.470
+16078 Cuenca;Mujer;2023;28.243
+16078 Cuenca;Mujer;2022;28.288
+17079 Girona;Hombre;2023;49.974
+17079 Girona;Hombre;2022;48.851
+17079 Girona;Mujer;2023;54.064
+17079 Girona;Mujer;2022;52.878
+18087 Granada;Hombre;2023;107.435
+18087 Granada;Hombre;2022;106.627
+18087 Granada;Mujer;2023;124.811
+18087 Granada;Mujer;2022;124.027
+19130 Guadalajara;Hombre;2023;42.719
+19130 Guadalajara;Hombre;2022;41.980
+19130 Guadalajara;Mujer;2023;46.167
+19130 Guadalajara;Mujer;2022;45.235
+20069 Donostia/San Sebastián;Hombre;2023;88.866
+20069 Donostia/San Sebastián;Hombre;2022;88.565
+20069 Donostia/San Sebastián;Mujer;2023;99.270
+20069 Donostia/San Sebastián;Mujer;2022;98.803
+21041 Huelva;Hombre;2023;68.586
+21041 Huelva;Hombre;2022;68.206
+21041 Huelva;Mujer;2023;74.382
+21041 Huelva;Mujer;2022;73.944
+22125 Huesca;Hombre;2023;25.818
+22125 Huesca;Hombre;2022;25.476
+22125 Huesca;Mujer;2023;28.120
+22125 Huesca;Mujer;2022;27.738
+23050 Jaén;Hombre;2023;53.677
+23050 Jaén;Hombre;2022;53.648
+23050 Jaén;Mujer;2023;58.090
+23050 Jaén;Mujer;2022;57.919
+24089 León;Hombre;2023;55.135
+24089 León;Hombre;2022;54.935
+24089 León;Mujer;2023;66.628
+24089 León;Mujer;2022;66.442
+25120 Lleida;Hombre;2023;71.242
+25120 Lleida;Hombre;2022;69.179
+25120 Lleida;Mujer;2023;71.748
+25120 Lleida;Mujer;2022;70.350
+26089 Logroño;Hombre;2023;71.092
+26089 Logroño;Hombre;2022;70.797
+26089 Logroño;Mujer;2023;79.114
+26089 Logroño;Mujer;2022;78.782
+27028 Lugo;Hombre;2023;45.410
+27028 Lugo;Hombre;2022;44.906
+27028 Lugo;Mujer;2023;52.779
+27028 Lugo;Mujer;2022;52.276
+28079 Madrid;Hombre;2023;1.560.583
+28079 Madrid;Hombre;2022;1.525.833
+28079 Madrid;Mujer;2023;1.779.593
+28079 Madrid;Mujer;2022;1.741.194
+29067 Málaga;Hombre;2023;281.718
+29067 Málaga;Hombre;2022;277.823
+29067 Málaga;Mujer;2023;305.350
+29067 Málaga;Mujer;2022;300.650
+30030 Murcia;Hombre;2023;229.167
+30030 Murcia;Hombre;2022;225.841
+30030 Murcia;Mujer;2023;238.334
+30030 Murcia;Mujer;2022;234.815
+31201 Pamplona/Iruña;Hombre;2023;97.434
+31201 Pamplona/Iruña;Hombre;2022;96.293
+31201 Pamplona/Iruña;Mujer;2023;108.799
+31201 Pamplona/Iruña;Mujer;2022;107.552
+32054 Ourense;Hombre;2023;47.292
+32054 Ourense;Hombre;2022;47.097
+32054 Ourense;Mujer;2023;56.895
+32054 Ourense;Mujer;2022;56.647
+33044 Oviedo;Hombre;2023;100.555
+33044 Oviedo;Hombre;2022;99.331
+33044 Oviedo;Mujer;2023;116.814
+33044 Oviedo;Mujer;2022;115.357
+34120 Palencia;Hombre;2023;35.867
+34120 Palencia;Hombre;2022;35.915
+34120 Palencia;Mujer;2023;40.399
+34120 Palencia;Mujer;2022;40.297
+35016 Palmas de Gran Canaria, Las;Hombre;2023;183.420
+35016 Palmas de Gran Canaria, Las;Hombre;2022;183.600
+35016 Palmas de Gran Canaria, Las;Mujer;2023;197.443
+35016 Palmas de Gran Canaria, Las;Mujer;2022;197.573
+36038 Pontevedra;Hombre;2023;38.959
+36038 Pontevedra;Hombre;2022;39.159
+36038 Pontevedra;Mujer;2023;43.633
+36038 Pontevedra;Mujer;2022;43.532
+37274 Salamanca;Hombre;2023;64.936
+37274 Salamanca;Hombre;2022;64.549
+37274 Salamanca;Mujer;2023;78.730
+37274 Salamanca;Mujer;2022;78.037
+38038 Santa Cruz de Tenerife;Hombre;2023;99.286
+38038 Santa Cruz de Tenerife;Hombre;2022;99.013
+38038 Santa Cruz de Tenerife;Mujer;2023;109.620
+38038 Santa Cruz de Tenerife;Mujer;2022;109.043
+39075 Santander;Hombre;2023;79.492
+39075 Santander;Hombre;2022;79.005
+39075 Santander;Mujer;2023;93.163
+39075 Santander;Mujer;2022;92.472
+40194 Segovia;Hombre;2023;23.751
+40194 Segovia;Hombre;2022;23.684
+40194 Segovia;Mujer;2023;27.175
+40194 Segovia;Mujer;2022;26.986
+41091 Sevilla;Hombre;2023;324.431
+41091 Sevilla;Hombre;2022;323.221
+41091 Sevilla;Mujer;2023;359.733
+41091 Sevilla;Mujer;2022;357.963
+42173 Soria;Hombre;2023;18.874
+42173 Soria;Hombre;2022;18.542
+42173 Soria;Mujer;2023;21.159
+42173 Soria;Mujer;2022;20.779
+43148 Tarragona;Hombre;2023;67.329
+43148 Tarragona;Hombre;2022;65.915
+43148 Tarragona;Mujer;2023;70.997
+43148 Tarragona;Mujer;2022;69.498
+44216 Teruel;Hombre;2023;17.151
+44216 Teruel;Hombre;2022;16.990
+44216 Teruel;Mujer;2023;19.004
+44216 Teruel;Mujer;2022;18.720
+45168 Toledo;Hombre;2023;40.885
+45168 Toledo;Hombre;2022;40.447
+45168 Toledo;Mujer;2023;44.933
+45168 Toledo;Mujer;2022;44.380
+46250 València;Hombre;2023;381.448
+46250 València;Hombre;2022;375.503
+46250 València;Mujer;2023;422.673
+46250 València;Mujer;2022;415.294
+47186 Valladolid;Hombre;2023;139.108
+47186 Valladolid;Hombre;2022;138.252
+47186 Valladolid;Mujer;2023;158.021
+47186 Valladolid;Mujer;2022;156.964
+48020 Bilbao;Hombre;2023;163.496
+48020 Bilbao;Hombre;2022;162.428
+48020 Bilbao;Mujer;2023;181.739
+48020 Bilbao;Mujer;2022;181.078
+49275 Zamora;Hombre;2023;27.446
+49275 Zamora;Hombre;2022;27.570
+49275 Zamora;Mujer;2023;31.916
+49275 Zamora;Mujer;2022;32.010
+50297 Zaragoza;Hombre;2023;327.232
+50297 Zaragoza;Hombre;2022;323.254
+50297 Zaragoza;Mujer;2023;356.717
+50297 Zaragoza;Mujer;2022;352.107

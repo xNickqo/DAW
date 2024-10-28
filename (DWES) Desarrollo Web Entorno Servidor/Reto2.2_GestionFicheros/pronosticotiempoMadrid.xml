@@ -1,0 +1,327 @@
+<?xml version='1.0' encoding='ISO-8859-15'?>
+<root xmlns:xsd="https://www.w3.org/2001/XMLSchema" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" id="28079" version="1.0" xsi:noNamespaceSchemaLocation="https://www.aemet.es/xsd/localidades.xsd">
+  <origen>
+    <productor>Agencia Estatal de Meteorología - AEMET. Gobierno de España</productor>
+    <web>https://www.aemet.es</web>
+    <enlace>https://www.aemet.es/es/eltiempo/prediccion/municipios/madrid-id28079</enlace>
+    <language>es</language>
+    <copyright>© AEMET. Autorizado el uso de la información y su reproducción citando a AEMET como autora de la misma.</copyright>
+    <nota_legal>https://www.aemet.es/es/nota_legal</nota_legal>
+  </origen>
+  <elaborado>2024-10-16T06:52:11</elaborado>
+  <nombre>Madrid</nombre>
+  <provincia>Madrid</provincia>
+  <prediccion>
+    <dia fecha="2024-10-16">
+      <prob_precipitacion periodo="00-24">100</prob_precipitacion>
+      <prob_precipitacion periodo="00-12">100</prob_precipitacion>
+      <prob_precipitacion periodo="12-24">100</prob_precipitacion>
+      <prob_precipitacion periodo="00-06">100</prob_precipitacion>
+      <prob_precipitacion periodo="06-12">100</prob_precipitacion>
+      <prob_precipitacion periodo="12-18">40</prob_precipitacion>
+      <prob_precipitacion periodo="18-24">100</prob_precipitacion>
+      <cota_nieve_prov periodo="00-24"></cota_nieve_prov>
+      <cota_nieve_prov periodo="00-12"></cota_nieve_prov>
+      <cota_nieve_prov periodo="12-24"></cota_nieve_prov>
+      <cota_nieve_prov periodo="00-06"></cota_nieve_prov>
+      <cota_nieve_prov periodo="06-12"></cota_nieve_prov>
+      <cota_nieve_prov periodo="12-18"></cota_nieve_prov>
+      <cota_nieve_prov periodo="18-24"></cota_nieve_prov>
+      <estado_cielo periodo="00-24" descripcion="Nuboso con lluvia">24</estado_cielo>
+      <estado_cielo periodo="00-12" descripcion="Nuboso con lluvia">24</estado_cielo>
+      <estado_cielo periodo="12-24" descripcion="Nuboso con tormenta">52</estado_cielo>
+      <estado_cielo periodo="00-06" descripcion="Cubierto con lluvia">26n</estado_cielo>
+      <estado_cielo periodo="06-12" descripcion="Nuboso con lluvia">24</estado_cielo>
+      <estado_cielo periodo="12-18" descripcion="Nuboso">14</estado_cielo>
+      <estado_cielo periodo="18-24" descripcion="Cubierto con tormenta">54</estado_cielo>
+      <viento periodo="00-24">
+        <direccion>SO</direccion>
+        <velocidad>20</velocidad>
+      </viento>
+      <viento periodo="00-12">
+        <direccion>S</direccion>
+        <velocidad>30</velocidad>
+      </viento>
+      <viento periodo="12-24">
+        <direccion>SO</direccion>
+        <velocidad>20</velocidad>
+      </viento>
+      <viento periodo="00-06">
+        <direccion>S</direccion>
+        <velocidad>30</velocidad>
+      </viento>
+      <viento periodo="06-12">
+        <direccion>SO</direccion>
+        <velocidad>20</velocidad>
+      </viento>
+      <viento periodo="12-18">
+        <direccion>SO</direccion>
+        <velocidad>15</velocidad>
+      </viento>
+      <viento periodo="18-24">
+        <direccion>O</direccion>
+        <velocidad>20</velocidad>
+      </viento>
+      <racha_max periodo="00-24"/>
+      <racha_max periodo="00-12">45</racha_max>
+      <racha_max periodo="12-24"/>
+      <racha_max periodo="00-06">45</racha_max>
+      <racha_max periodo="06-12"/>
+      <racha_max periodo="12-18"/>
+      <racha_max periodo="18-24"/>
+      <temperatura>
+        <maxima>20</maxima>
+        <minima>15</minima>
+        <dato hora="06">17</dato>
+        <dato hora="12">20</dato>
+        <dato hora="18">18</dato>
+        <dato hora="24">15</dato>
+      </temperatura>
+      <sens_termica>
+        <maxima>21</maxima>
+        <minima>15</minima>
+        <dato hora="06">17</dato>
+        <dato hora="12">20</dato>
+        <dato hora="18">18</dato>
+        <dato hora="24">15</dato>
+      </sens_termica>
+      <humedad_relativa>
+        <maxima>95</maxima>
+        <minima>70</minima>
+        <dato hora="06">85</dato>
+        <dato hora="12">80</dato>
+        <dato hora="18">85</dato>
+        <dato hora="24">80</dato>
+      </humedad_relativa>
+      <uv_max>4</uv_max>
+    </dia>
+    <dia fecha="2024-10-17">
+      <prob_precipitacion periodo="00-24">100</prob_precipitacion>
+      <prob_precipitacion periodo="00-12">100</prob_precipitacion>
+      <prob_precipitacion periodo="12-24">85</prob_precipitacion>
+      <prob_precipitacion periodo="00-06">95</prob_precipitacion>
+      <prob_precipitacion periodo="06-12">85</prob_precipitacion>
+      <prob_precipitacion periodo="12-18">85</prob_precipitacion>
+      <prob_precipitacion periodo="18-24">5</prob_precipitacion>
+      <cota_nieve_prov periodo="00-24">2100</cota_nieve_prov>
+      <cota_nieve_prov periodo="00-12">2200</cota_nieve_prov>
+      <cota_nieve_prov periodo="12-24"></cota_nieve_prov>
+      <cota_nieve_prov periodo="00-06">2300</cota_nieve_prov>
+      <cota_nieve_prov periodo="06-12">2200</cota_nieve_prov>
+      <cota_nieve_prov periodo="12-18">2100</cota_nieve_prov>
+      <cota_nieve_prov periodo="18-24"></cota_nieve_prov>
+      <estado_cielo periodo="00-24" descripcion="Muy nuboso con lluvia">25</estado_cielo>
+      <estado_cielo periodo="00-12" descripcion="Muy nuboso con tormenta">53</estado_cielo>
+      <estado_cielo periodo="12-24" descripcion="Muy nuboso con tormenta">53</estado_cielo>
+      <estado_cielo periodo="00-06" descripcion="Cubierto con tormenta">54n</estado_cielo>
+      <estado_cielo periodo="06-12" descripcion="Muy nuboso con lluvia">25</estado_cielo>
+      <estado_cielo periodo="12-18" descripcion="Muy nuboso con tormenta y lluvia escasa">63</estado_cielo>
+      <estado_cielo periodo="18-24" descripcion="Nuboso">14</estado_cielo>
+      <viento periodo="00-24">
+        <direccion>O</direccion>
+        <velocidad>25</velocidad>
+      </viento>
+      <viento periodo="00-12">
+        <direccion>O</direccion>
+        <velocidad>25</velocidad>
+      </viento>
+      <viento periodo="12-24">
+        <direccion>O</direccion>
+        <velocidad>25</velocidad>
+      </viento>
+      <viento periodo="00-06">
+        <direccion>SO</direccion>
+        <velocidad>15</velocidad>
+      </viento>
+      <viento periodo="06-12">
+        <direccion>O</direccion>
+        <velocidad>25</velocidad>
+      </viento>
+      <viento periodo="12-18">
+        <direccion>O</direccion>
+        <velocidad>20</velocidad>
+      </viento>
+      <viento periodo="18-24">
+        <direccion>O</direccion>
+        <velocidad>10</velocidad>
+      </viento>
+      <racha_max periodo="00-24">45</racha_max>
+      <racha_max periodo="00-12">45</racha_max>
+      <racha_max periodo="12-24">45</racha_max>
+      <racha_max periodo="00-06"/>
+      <racha_max periodo="06-12">45</racha_max>
+      <racha_max periodo="12-18"/>
+      <racha_max periodo="18-24"/>
+      <temperatura>
+        <maxima>16</maxima>
+        <minima>13</minima>
+        <dato hora="06">13</dato>
+        <dato hora="12">15</dato>
+        <dato hora="18">13</dato>
+        <dato hora="24">11</dato>
+      </temperatura>
+      <sens_termica>
+        <maxima>17</maxima>
+        <minima>11</minima>
+        <dato hora="06">13</dato>
+        <dato hora="12">15</dato>
+        <dato hora="18">13</dato>
+        <dato hora="24">11</dato>
+      </sens_termica>
+      <humedad_relativa>
+        <maxima>90</maxima>
+        <minima>55</minima>
+        <dato hora="06">90</dato>
+        <dato hora="12">60</dato>
+        <dato hora="18">75</dato>
+        <dato hora="24">75</dato>
+      </humedad_relativa>
+      <uv_max>3</uv_max>
+    </dia>
+    <dia fecha="2024-10-18">
+      <prob_precipitacion periodo="00-24">10</prob_precipitacion>
+      <prob_precipitacion periodo="00-12">0</prob_precipitacion>
+      <prob_precipitacion periodo="12-24">10</prob_precipitacion>
+      <cota_nieve_prov periodo="00-24"></cota_nieve_prov>
+      <cota_nieve_prov periodo="00-12"></cota_nieve_prov>
+      <cota_nieve_prov periodo="12-24"></cota_nieve_prov>
+      <estado_cielo periodo="00-24" descripcion="Intervalos nubosos">13</estado_cielo>
+      <estado_cielo periodo="00-12" descripcion="Poco nuboso">12</estado_cielo>
+      <estado_cielo periodo="12-24" descripcion="Nuboso">14</estado_cielo>
+      <viento periodo="00-24">
+        <direccion>O</direccion>
+        <velocidad>10</velocidad>
+      </viento>
+      <viento periodo="00-12">
+        <direccion>O</direccion>
+        <velocidad>10</velocidad>
+      </viento>
+      <viento periodo="12-24">
+        <direccion>O</direccion>
+        <velocidad>10</velocidad>
+      </viento>
+      <racha_max periodo="00-24"/>
+      <racha_max periodo="00-12"/>
+      <racha_max periodo="12-24"/>
+      <temperatura>
+        <maxima>17</maxima>
+        <minima>8</minima>
+      </temperatura>
+      <sens_termica>
+        <maxima>17</maxima>
+        <minima>8</minima>
+      </sens_termica>
+      <humedad_relativa>
+        <maxima>75</maxima>
+        <minima>45</minima>
+      </humedad_relativa>
+      <uv_max>4</uv_max>
+    </dia>
+    <dia fecha="2024-10-19">
+      <prob_precipitacion periodo="00-24">25</prob_precipitacion>
+      <prob_precipitacion periodo="00-12">45</prob_precipitacion>
+      <prob_precipitacion periodo="12-24">0</prob_precipitacion>
+      <cota_nieve_prov periodo="00-24"></cota_nieve_prov>
+      <cota_nieve_prov periodo="00-12"></cota_nieve_prov>
+      <cota_nieve_prov periodo="12-24"></cota_nieve_prov>
+      <estado_cielo periodo="00-24" descripcion="Nuboso">14</estado_cielo>
+      <estado_cielo periodo="00-12" descripcion="Intervalos nubosos">13</estado_cielo>
+      <estado_cielo periodo="12-24" descripcion="Muy nuboso">15</estado_cielo>
+      <viento periodo="00-24">
+        <direccion>SO</direccion>
+        <velocidad>15</velocidad>
+      </viento>
+      <viento periodo="00-12">
+        <direccion>SO</direccion>
+        <velocidad>15</velocidad>
+      </viento>
+      <viento periodo="12-24">
+        <direccion>SO</direccion>
+        <velocidad>15</velocidad>
+      </viento>
+      <racha_max periodo="00-24"/>
+      <racha_max periodo="00-12"/>
+      <racha_max periodo="12-24"/>
+      <temperatura>
+        <maxima>18</maxima>
+        <minima>11</minima>
+      </temperatura>
+      <sens_termica>
+        <maxima>18</maxima>
+        <minima>11</minima>
+      </sens_termica>
+      <humedad_relativa>
+        <maxima>90</maxima>
+        <minima>70</minima>
+      </humedad_relativa>
+      <uv_max>4</uv_max>
+    </dia>
+    <dia fecha="2024-10-20">
+      <prob_precipitacion>10</prob_precipitacion>
+      <cota_nieve_prov></cota_nieve_prov>
+      <estado_cielo descripcion="Cubierto">16</estado_cielo>
+      <viento>
+        <direccion>O</direccion>
+        <velocidad>10</velocidad>
+      </viento>
+      <racha_max/>
+      <temperatura>
+        <maxima>19</maxima>
+        <minima>12</minima>
+      </temperatura>
+      <sens_termica>
+        <maxima>19</maxima>
+        <minima>12</minima>
+      </sens_termica>
+      <humedad_relativa>
+        <maxima>90</maxima>
+        <minima>70</minima>
+      </humedad_relativa>
+      <uv_max>4</uv_max>
+    </dia>
+    <dia fecha="2024-10-21">
+      <prob_precipitacion>10</prob_precipitacion>
+      <cota_nieve_prov></cota_nieve_prov>
+      <estado_cielo descripcion="Intervalos nubosos">13</estado_cielo>
+      <viento>
+        <direccion>C</direccion>
+        <velocidad>0</velocidad>
+      </viento>
+      <racha_max/>
+      <temperatura>
+        <maxima>21</maxima>
+        <minima>11</minima>
+      </temperatura>
+      <sens_termica>
+        <maxima>21</maxima>
+        <minima>11</minima>
+      </sens_termica>
+      <humedad_relativa>
+        <maxima>80</maxima>
+        <minima>80</minima>
+      </humedad_relativa>
+    </dia>
+    <dia fecha="2024-10-22">
+      <prob_precipitacion>10</prob_precipitacion>
+      <cota_nieve_prov>2400</cota_nieve_prov>
+      <estado_cielo descripcion="Intervalos nubosos">13</estado_cielo>
+      <viento>
+        <direccion>NE</direccion>
+        <velocidad>10</velocidad>
+      </viento>
+      <racha_max/>
+      <temperatura>
+        <maxima>21</maxima>
+        <minima>13</minima>
+      </temperatura>
+      <sens_termica>
+        <maxima>21</maxima>
+        <minima>13</minima>
+      </sens_termica>
+      <humedad_relativa>
+        <maxima>95</maxima>
+        <minima>75</minima>
+      </humedad_relativa>
+    </dia>
+  </prediccion>
+</root>
