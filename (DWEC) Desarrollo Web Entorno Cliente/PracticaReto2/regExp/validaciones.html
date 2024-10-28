@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<title>Validaciones</title>
+		<meta charset="utf-8" />
+		<meta name="author" content="tu nombre" />
+		<link rel="stylesheet" href="css/estilo.css" type="text/css">
+		<script src="js/validaciones.js" type="text/javascript"> </script>
+		<script src="js/validarFormulario.js" type="text/javascript"> </script>
+	</head>
+	<body>
+		<header>
+		
+		</header>
+		<nav>
+		
+		</nav>
+		<main>
+			<section>
+				<article>
+					<div>
+						<h1> Fromulario de recogida de datos de la empresa</h1>
+						<form name="formu" method="post">
+							<!-- <label for="nif">nif</label>
+							<input type="text" name="nif" id="nif" /> <br />
+
+							<label for="cif">cif</label>
+							<input type="text" name="cif" id="cif"/> <br /> -->
+
+							<label for="razon_nombre">Razón Social/Apellidos y Nombre</label>
+							<input type="text" name="razon_nombre" id="razon_nombre"/> <br />
+
+							<label for="codigoEmpresa">Código de la empresa</label>
+							<input type="text" name="codigoEmpresa" id="codigoEmpresa"/> <br />
+
+							<label for="nifcif">Cif/Nif de la empresa</label>
+							<input type="text" name="nifcif" id="nifcif"/> <br />
+
+							<fieldset>
+								<legend>Tipo de persona</legend>
+								<input type="radio" name="tipoPersona" value="Juridica">Juridica
+								<input type="radio" name="tipoPersona" value="Fisica">Fisica
+							</fieldset>
+
+							<fieldset>
+								<legend>Domicilio Social/Particular </legend>
+								<label for="direccion">Dirección </label>
+									<input type="text" name="direccion" id="direccion">
+								<label for="telefono">Telefono </label>
+									<input type="text" name="telefono" id="telefono">
+								<br>
+								<label for="localidad">Localidad </label>
+									<input type="text" name="localidad" id="localidad">
+								<label for="codigoPostal">Codigo postal </label>
+									<input type="number" name="codigoPostal" id="codigoPostal">
+								<br>
+								<label for="provincia">Provincia </label>
+									<input type="text" name="provincia" id="provincia" readonly>
+							</fieldset>
+
+							<fieldset>
+								<legend>Datos Bancarios</legend>
+								<label for="codigoBanco">Codigo del banco</label>
+									<input type="text" name="codigoBanco" id="codigoBanco"/> <br />
+								<label for="numSucursal">Numero de la Sucursal</label>
+									<input type="text" name="numSucursal" id="numSucursal"/> <br />
+								<label for="codigoControl">Código Control </label>
+									<input type="text" name="codigoControl" id="codigoControl" readonly/> <br />
+								<label for="numCuenta">Numero de cuenta</label>
+									<input type="text" name="numCuenta" id="numCuenta"/> <br />
+								<!-- <label for="">IBAN </label>
+									<input type="text" name=""><br>
+								<label for="">Codigo de cuenta (IBAN)</label>
+									<input type="text" name="codigoCuenta" /> <br />
+									<input type="text" name="iban" placeholder="IBAN" readonly style="width: 300px;"/> <br /> -->
+								<label for="codigoIBAN">IBAN </label>
+									<input type="text" name="codigoIBAN" id="codigoIBAN"/> <br />
+							</fieldset>
+							<br>		
+							<label for="fechaConstitucionEmpresa">Fecha de la constitucion de la empresa</label>
+							<input type="text" name="fechaConstitucionEmpresa" id="fechaConstitucionEmpresa" placeholder="dia/mes/año">
+							<br>			
+							<label for="numTrabajadoresEmpresa">Numero de trabajadores de la empresa</label>
+							<input type="number" name="numTrabajadoresEmpresa" id="numTrabajadoresEmpresa">
+							<br>			
+							<label for="numFabricasEmpresa">Numero de fabricas de la empresa</label>
+							<input type="number" name="numFabricasEmpresa" id="numFabricasEmpresa">
+							<br>	
+							<label for="comunidades">Comunidades en las que hay empresas</label>
+							<select name="comunidades" id="comunidades" size="5" multiple="">
+								<option value="andalucia">Andalucía</option>
+								<option value="aragon">Aragón</option>
+								<option value="asturias">Asturias</option>
+								<option value="islas_baleares">Islas Baleares</option>
+								<option value="canarias">Canarias</option>
+								<option value="cantabria">Cantabria</option>
+								<option value="castilla_la_mancha">Castilla-La Mancha</option>
+								<option value="castilla_y_leon">Castilla y León</option>
+								<option value="catalunya">Cataluña</option>
+								<option value="extremadura">Extremadura</option>
+								<option value="galicia">Galicia</option>
+								<option value="madrid">Madrid</option>
+								<option value="murcia">Murcia</option>
+								<option value="navarra">Navarra</option>
+								<option value="la_rioja">La Rioja</option>
+								<option value="pais_vasco">País Vasco</option>
+								<option value="valencia">Comunidad Valenciana</option>
+							</select>
+							<br>
+							<br>
+							<fieldset>
+								<legend>Sector/es Económicos</legend>
+								<input type="checkbox" name="sectorEconomico" value="Alimentacion"><label>Alimentacion</label>
+								<input type="checkbox" name="sectorEconomico" value="Informatica"><label>Informatica</label>
+								<input type="checkbox" name="sectorEconomico" value="Comercio"><label>Comercio</label>
+								<input type="checkbox" name="sectorEconomico" value="Construccion"><label>Construccion</label>
+								<input type="checkbox" name="sectorEconomico" value="Hosteleria"><label>Hosteleria</label>
+								<input type="checkbox" name="sectorEconomico" value="Alimentacion"><label>Alimentacion</label>
+								<input type="checkbox" name="sectorEconomico" value="Alimentacion"><label>Alimentacion</label>
+								<input type="checkbox" name="sectorEconomico" value="Automocion"><label>Automocion</label>
+								<input type="checkbox" name="sectorEconomico" value="Calzado"><label>Calzado</label>
+								<input type="checkbox" name="sectorEconomico" value="Turismo"><label>Turismo</label>
+								<input type="checkbox" name="sectorEconomico" value="Agricultura"><label>Agricultura</label>
+								<input type="checkbox" name="sectorEconomico" value="Ganaderia"><label>Ganaderia</label>
+								<input type="checkbox" name="sectorEconomico" value="Otros"><label>Otros</label>
+							</fieldset>
+							<br>
+							<fieldset>
+								<legend>Tipo de Empresa</legend>
+								<input type="radio" name="tipoEmpresa" value="SA"><label> S.A.  </label>
+								<input type="radio" name="tipoEmpresa" value="SL"><label> S.L.  </label>
+								<input type="radio" name="tipoEmpresa" value="SAL"><label> S.A.L.  </label>
+								<input type="radio" name="tipoEmpresa" value="Cooperativa"><label> Cooperativa  </label>
+								<input type="radio" name="tipoEmpresa" value="Autonomo"><label> Autónomo  </label>
+								<input type="radio" name="tipoEmpresa" value="Otra"><label> Otra  </label>
+							</fieldset>
+							<br>
+							<input value="Validar" type="submit" />
+							<input value="Limpiar" type="reset" />
+							<br>
+						</form>
+					</div>
+				</article>
+			</section>
+		</main>
+		<footer>
+
+		</footer>
+		<aside>
+
+		</aside>
+	</body>
+</html>
