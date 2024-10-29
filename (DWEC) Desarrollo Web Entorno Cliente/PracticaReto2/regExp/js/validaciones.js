@@ -1,6 +1,6 @@
 function esNif(nif) {
-    let forma1 = /^\d{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i;
 
+    let forma1 = /^\d{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i;
     let controlChars = "TRWAGMYFPDXBNJZSQVHLCKE";
 
     if(forma1.test(nif))
@@ -69,10 +69,9 @@ function esCif(cif) {
         digitoControl = 0;
     else
         digitoControl = 10 - resto;
-
+    //console.log(digitoControl);
     let caracterControl = cif[8];
 
-    // Si la letra inicial está en lettersIfNumber, el control debe ser un número
     if (forma1.test(cif))
     {
         if (parseInt(caracterControl, 10) === digitoControl)
@@ -80,7 +79,6 @@ function esCif(cif) {
         else
             return 2;
     }
-    // Si la letra inicial está en lettersIfLetter, el control debe ser una letra
     else if (forma2.test(cif))
     {
         let conversion = ['J', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
@@ -121,11 +119,13 @@ function NIFCIF(dato) {
 
 function codigosControl(codigoBanco, numSucursal, numCuenta) {
 
-    if (isNaN(codigoBanco) || isNaN(numSucursal) || isNaN(numCuenta))
-        return "El código del banco, la sucursal y el número de cuenta deben ser numéricos.\n";
+    let bancoRegex = /^\d{4}$/;
+    let sucursalRegex = /^\d{4}$/;
+    let cuentaRegex = /^\d{10}$/;
 
-    if (codigoBanco.length !== 4 || numSucursal.length !== 4 || numCuenta.length !== 10)
-        return "Error[codigoControl], en el tamaño de las variables \n";
+    if (!bancoRegex.test(codigoBanco) || !sucursalRegex.test(numSucursal) || !cuentaRegex.test(numCuenta)) {
+        return "---[Código del banco][sucursal][número de cuenta] deben ser numéricos y tener el tamaño correcto.\n";
+    }
 
     let numero1 = 0;
     numero1 += parseInt(codigoBanco[0]) * 4;
@@ -172,8 +172,11 @@ function codigosControl(codigoBanco, numSucursal, numCuenta) {
 
 function calculoIBANEspanya(codigoCuenta) {
 
-    if (codigoCuenta.length !== 20)
-        return "Error en el tamaño de las variables \n";
+    let cuentaRegex = /^\d{20}$/;
+
+    if (!cuentaRegex.test(codigoCuenta)) {
+        return "---[Código de cuenta] debe tener 20 dígitos numéricos.\n";
+    }
 
     let calc = codigoCuenta + '142800';
     let resto = parseFloat(calc) % 97;
@@ -185,10 +188,21 @@ function calculoIBANEspanya(codigoCuenta) {
     return iban;
 }
 
+function isDigit(char) {
+    return /^\d$/.test(char);
+}
+
+function isLetter(char) {
+    return /^[A-Za-z]$/.test(char);
+}
+
 function comprobarIBAN(codigoIBAN) {
 
-    if (codigoIBAN.length > 34)
-        return "Error: IBAN muy largo \n";
+    let ibanRegex = /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/i;
+
+    if (!ibanRegex.test(codigoIBAN)) {
+        return "---[IBAN] inválido o demasiado largo.\n";
+    }
 
     let letras = codigoIBAN.substring(0, 4)
     let calc = codigoIBAN.substring(4) + letras;
@@ -221,87 +235,49 @@ function razonNombre(cadena) {
     let resultado = "";
 
     if(!nombre.test(cadena))
-        return "Nombre incorrecto\n";
+        return "---[Nombre] incorrecto\n";
     return resultado;
 }
 
 function CodigoEmpresa(codigo) {
 
-    let empresa = /^[[a-zñáéíóúü0-9]{5,10}$/;
+    let empresa = /^[[a-zñáéíóúü0-9]{5,10}$/i;
     let resultado = "";
 
     if (!empresa.test(codigo))
-        return "El codigo de la empresa es incorrecto\n";
+        return "---[Codigo empresa] es incorrecto\n";
     return resultado;
 }
 
 function validarDireccion(cadena) {
 
     let resultado = "";
+    let direccionRegex = /^[a-zA-Záéíóúüñ][a-z0-9ºª\-.\/]*[a-z0-9]$/i;
 
-    if(cadena.length < 1)
-        resultado = "la direccion no es correcta, < 1 caracter \n";
-    else
-    {
-        if(!isLetter(cadena[0]))
-            resultado = "La direccion no es correcta, No comienza por una letra \n";
+    if (!direccionRegex.test(cadena))
+        return "---[Direccion] es incorrecta.\n";
 
-        let i = 1;
-        while (i < cadena.length - 1)
-        {
-            let char = cadena[i];
-
-            if (!isLetter(char) && !isDigit(char))
-            {
-                if (char !== 'º' && char !== 'ª' && char !== '-' && char !== '.' && char !== '/')
-                {
-                    resultado = "La direccion no es correcta, caracter/es invalidos \n";
-                    break;
-                }
-            }
-            i++;
-        }
-
-        let lastChar = cadena[i];
-        if (!isLetter(lastChar) && !isDigit(lastChar))
-            resultado = "La direccion no es correcta, debe acabar en letra o caracter \n";
-    }
     return resultado;
 }
 
 function validarLocalidad(cadena) {
 
     let resultado = "";
+    let localidadRegex = /^[a-zA-Záéíóúüñ]([a-zA-Záéíóúüñ ]*[a-záéíóúüñ])?$/i;
 
-    if (cadena.length < 1)
-        resultado = "La localidad no es correcta, < 1 caracter \n";
-    else
-    {
-        if (!isLetter(cadena[0]) || !isLetter(cadena[cadena.length - 1]))
-            resultado = "La localidad no es correcta, No comienza y termina por una letra \n";
-        else
-        {
-            for (let i = 1; i < cadena.length - 1; i++) {
-                let char = cadena[i];
+    if (!localidadRegex.test(cadena))
+        return "---[Localidad] es incorrecta.\n";
 
-                if (!isLetter(char) && char !== ' ')
-                {
-                    resultado = "La localidad no es correcta, caracter/es invalidos \n";
-                    break;
-                }
-            }
-        }
-    }
     return resultado;
 }
 
 function validarCodigoPostal(codigoPostal) {
 
     let resultado = "";
+    let codigoPostalRegex = /^(0?[1-4]\d{3}|5[0-2]\d{2}|[1-9]\d{3})$/;
 
-    if(codigoPostal < 1000 || codigoPostal > 52999)
-
-        resultado = "El codigo postal no es correcto \n";
+    if(!codigoPostalRegex.test(codigoPostal))
+        resultado = "---[Codigo postal] es incorrecto \n";
     else
         saberProvincia(codigoPostal);
 
@@ -350,58 +326,52 @@ function saberProvincia(codigoPostal) {
 function validarNumTel(numero) {
 
     resultado = "";
+    let telefonoRegex = /^(6|7|9)\d{8}$/;
 
     if(numero < 0)
-        resultado = "Error, numero negativo";
+        resultado = "---[TLF] numero negativo\n";
     if(numero.length != 9)
-        resultado = "Error, la longitud de numero no puede ser distinta de 9 \n";
-    if((numero[0] != 6) && (numero[0] != 7) && (numero[0] != 9))
-        resultado = "Error, el numero debe comenzar por 6, 7 o 9 \n";
+        resultado = "---[TLF] la longitud de numero no puede ser distinta de 9 \n";
+    if(!telefonoRegex.test(numero))
+        resultado = "---[TLF] el numero debe comenzar por 6, 7 o 9 \n";
     return resultado;
 }
 
 function validarFax(numero) {
 
     resultado = "";
+    let faxRegex = /^9\d{8}$/;
 
     if(numero < 0)
-        resultado = "Error, fax negativo";
+        resultado = "---[FAX] negativo";
     if(numero.length != 9)
-        resultado = "Error, la longitud del fax no puede ser distinta de 9 \n";
-    if(numero[0] != 9)
-        resultado = "Error, el fax debe comenzar por 9 \n";
+        resultado = "---[FAX] la longitud del fax no puede ser distinta de 9 \n";
+    if(!faxRegex.test(numero))
+        resultado = "---[FAX] el fax debe comenzar por 9 \n";
     return resultado;
 }
 
 function validarFecha(cadena) {
+    //d/m/aa o dd/mm/aaaa
+    let regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/(\d{2}|\d{4})$/;
+    if (!regex.test(cadena)) 
+        return "---[Fecha] La fecha debe tener el formato día/mes/año, donde día y mes pueden tener uno o dos dígitos y el año puede ser de 2 o 4 dígitos.\n";
 
     let partes = cadena.split("/");
-    resultado = "";
-
-    if (partes.length !== 3)
-        resultado = "La fecha debe tener el formato día/mes/año.\n";
-
-    let [dia, mes, anio] = partes;
-
-    dia = parseInt(dia, 10);
-    mes = parseInt(mes, 10);
-    anio = parseInt(anio, 10);
-
-    if (isNaN(dia) || isNaN(mes) || isNaN(anio))
-        resultado = "La fecha debe contener solo números.\n";
+    let [dia, mes, anio] = partes.map(part => parseInt(part, 10));
 
     if (dia < 1 || dia > 31)
-        resultado = "El día debe estar entre 1 y 31.\n";
+        return "---[Fecha] El día debe estar entre 1 y 31.\n";
     if (mes < 1 || mes > 12)
-        resultado = "El mes debe estar entre 1 y 12.\n";
-    if ((anio < 100 && anio > 99) || anio < 0)
-        resultado = "El año debe tener dos o cuatro dígitos.\n";
+        return "---[Fecha] El mes debe estar entre 1 y 12.\n";
+    if (anio < 0 || (anio < 100 && anio > 99))
+        return "---[Fecha] El año debe tener dos o cuatro dígitos.\n";
 
     let fecha = new Date(anio, mes - 1, dia);
     if (fecha.getDate() !== dia || fecha.getMonth() !== mes - 1 || fecha.getFullYear() !== anio)
-        resultado = "La fecha no es válida.\n";
+        return "---[Fecha] La fecha no es válida.\n";
 
-    return resultado;
+    return "";
 }
 
 function validarComunidades(comunidadesSeleccionadas) {
@@ -417,7 +387,7 @@ function validarComunidades(comunidadesSeleccionadas) {
     }
 
     if (contador < 2)
-        return "Debes seleccionar al menos dos comunidades autónomas.\n";
+        return "---[Comunidades] Debes seleccionar al menos dos comunidades autónomas.\n";
 
     return "";
 }
@@ -438,7 +408,7 @@ function validarSector(sectoresEconomicos) {
     }
 
     if (!sectoresSeleccionados)
-        return "Debes seleccionar al menos un sector económico.\n";
+        return "---[Sector] Debes seleccionar al menos un sector económico.\n";
 
     return "";
 }
@@ -453,5 +423,5 @@ function validarTipoEmpresa(tipoEmpresa) {
             return "";
         i++;
     }
-    return "Debes seleccionar un tipo de empresa.\n";
+    return "---[Tipo de empresa] Debes seleccionar un tipo de empresa.\n";
 }
