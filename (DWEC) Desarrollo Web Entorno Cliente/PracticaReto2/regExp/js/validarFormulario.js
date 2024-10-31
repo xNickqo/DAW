@@ -95,8 +95,7 @@ function validarFormulario()
     let numSucursal = document.formu.numSucursal.value.trim();
     let numCuenta = document.formu.numCuenta.value.trim();
     let codigoControl = codigosControl(codigoBanco, numSucursal, numCuenta);
-    if(codigoControl !== "")
-        error += codigoControl;
+    document.formu.codigoControl.value = codigoControl
 
 /*
     //Calculo IBAN España

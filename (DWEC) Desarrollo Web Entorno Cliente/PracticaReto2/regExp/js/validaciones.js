@@ -274,7 +274,7 @@ function validarLocalidad(cadena) {
 function validarCodigoPostal(codigoPostal) {
 
     let resultado = "";
-    let codigoPostalRegex = /^(0?[1-4]\d{3}|5[0-2]\d{2}|[1-9]\d{3})$/;
+    let codigoPostalRegex = /^(0[1-9]|[1-4][0-9]|5[0-2])\d{3}$/;
 
     if(!codigoPostalRegex.test(codigoPostal))
         resultado = "---[Codigo postal] es incorrecto \n";
