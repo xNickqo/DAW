@@ -7,10 +7,19 @@
 </head>
 <body>
     <form action="<?php  echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-        <label for="dpto">Codigo de departamento</label>
+        <label for="dpto">Departamento</label>
         <input type="text" name="dpto" id="dpto" placeholder="Ingrese dpto aqui">
         
         <input type="submit" value="Enviar">
+        <?php
+            include "funciones_bbdd.php";
+
+            if($_SERVER['REQUEST_METHOD'] == 'POST')
+            {
+                $conn = ConexionBBDD();
+                insert_dpto_bbdd($conn);
+            }
+        ?>
     </form>
 </body>
 </html>
