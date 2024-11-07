@@ -15,6 +15,16 @@
                 <input id="entrar" type="button" value="Entrar">
         </div>
         <br>
+        <div id="formRegistro" style="display: none;">
+            <h3>Registro de Usuario</h3>
+            <label>Nombre de Usuario:</label>
+            <input type="text" id="nombreUsuario"><br>
+            <label>Contraseña:</label>
+            <input type="password" id="contrasena"><br>
+            <button id="aceptar">Aceptar</button>
+            <button id="cancelar">Cancelar</button>
+        </div>
+        <br>
         <div id="definiciones">
                 <h2>Definiciones</h2>
                 <label for="palabra"> Palabra</label>
@@ -45,19 +55,19 @@
                 <h2>Lista de coches</h2>
                 <label for="marca"> Marca</label>
                     <input type="text" id="marca"><br>
-                <label for="modelo"> modelo</label>
+                <label for="modelo"> Modelo</label>
                     <input type="text" id="modelo"><br>
-                <label for="precio"> precio</label>
+                <label for="precio"> Precio</label>
                     <input type="text" id="precio"><br>
 
-                <input type="button" value="Añadir coche"><br>
+                <input type="button" value="Añadir coche" id="crearCoche"><br>
 
-                <table border="1">
-    
+                <table border="1" id="tablaCoches">
+                    <tr>
                         <th>Marca</th>
                         <th>Modelo</th>
-                        <th>precio</th>
-    
+                        <th>Precio</th>
+                    </tr>
                 </table>
         </div>
         <br>
@@ -66,15 +76,33 @@
 
                 <select id="comun">
                     <option>Asturias</option>
-
-
+                    <option>Andalucia</option>
+                    <option>Aragon</option>
+                    <option>Baleares</option>
+                    <option>Canarias</option>
+                    <option>Cantabria</option>
+                    <option>Castilla y Leon</option>
+                    <option>Castilla-La Mancha</option>
+                    <option>Cataluña</option>
+                    <option>Valencia</option>
+                    <option>Extremadura</option>
+                    <option>Galicia</option>
+                    <option>Madrid</option>
+                    <option>Murcia</option>
+                    <option>Navarra</option>
+                    <option>Pais Vasco</option>
+                    <option>La Rioja</option>
+                    <option>Ceuta</option>
+                    <option>Melilla</option>
                 </select>
+
                 <label for="provincias">Provincias</label>
                 <select id="provincias">
-                    <option value=""></option>
+                    
                 </select>
                 <br>
                 <b>Comentario sobre la comunidad autonoma</b>
+                <p id="coment"></p>
         </div>
         <br><br><br>
 

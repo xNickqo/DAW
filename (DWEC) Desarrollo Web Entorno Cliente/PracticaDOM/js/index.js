@@ -5,6 +5,11 @@ else if (document.attachEvent)
 
 
 function inicio() {
+    document.getElementById("registro").addEventListener("click", mostrarFormularioRegistro);
+    document.getElementById("aceptar").addEventListener("click", validarYRegistrar);
+    document.getElementById("cancelar").addEventListener("click", ocultarFormularioRegistro);
+
+
 	let botonDef=document.getElementById("crearDef");
 
 	if (document.addEventListener)
@@ -18,13 +23,57 @@ function inicio() {
 		botonLoc.addEventListener("click", crearLocalidades);
 	else if (document.attachEvent)
 		botonLoc.attachEvent("onclick", crearLocalidades);
+
+    let botonCoche = document.getElementById("crearCoche");
+
+    if (document.addEventListener)
+		botonCoche.addEventListener("click", crearTablaCoches);
+	else if (document.attachEvent)
+		botonCoche.attachEvent("onclick", crearTablaCoches);
+
+
+    let comunidadSelect = document.getElementById("comun");
+    let provinciasSelect = document.getElementById("provincias");
+    comunidadSelect.addEventListener("change", actualizarProvincias);
+    provinciasSelect.addEventListener("change", mostrarComentario);
+
 }
 
-/* Cuando se pulse el botón de “Añadir Definición” vamos a añadir los datos de las cajas
-de texto a una lista de definición (ambas cajas de texto deben tener valor), que se encuentra a
-continuación, en la cual la palabra es el término y el concepto es la definición. Si el término se
-repite en la lista de definición entonces deberemos añadir ese nuevo concepto como una
-nueva definición del término. */
+// Función para mostrar el formulario de registro
+function mostrarFormularioRegistro() {
+    document.getElementById("formRegistro").style.display = "block";
+}
+
+// Función para ocultar el formulario de registro
+function ocultarFormularioRegistro() {
+    document.getElementById("formRegistro").style.display = "none";
+}
+
+// Función para validar y registrar al usuario
+function validarYRegistrar() {
+    let nombre = document.getElementById("nombreUsuario").value.trim();
+    let contrasena = document.getElementById("contrasena").value.trim();
+    
+    // Expresiones regulares para validar nombre y contraseña
+    let regexNombre = /^[a-z]{3}[a-z0-9]{5,9}$/i;
+    let regexContrasena = /^[a-z]{2}[a-z0-9_]{5,11}[a-z0-9]$/i;
+
+    if (!regexNombre.test(nombre)) {
+        alert("El nombre debe tener entre 8 y 12 caracteres, los tres primeros deben ser letras y el resto letras o números.");
+        return;
+    }
+    if (!regexContrasena.test(contrasena)) {
+        alert("La contraseña debe tener entre 8 y 14 caracteres, los dos primeros deben ser letras, y el último letra o dígito. Los demás pueden ser letras, dígitos o '_'.");
+        return;
+    }
+
+    // Crear cookie
+    document.cookie = `${nombre}=${contrasena}; path=/;`;
+
+    alert("Usuario registrado correctamente.");
+    ocultarFormularioRegistro(); // Ocultar el formulario al terminar
+}
+
 function crearDefiniciones() {	
     let palabra = document.getElementById("palabra").value.trim();
     let concepto = document.getElementById("concepto").value.trim();
@@ -81,44 +130,209 @@ function crearDefiniciones() {
         alert("Ambos campos, palabra y concepto deben tener contenido");
 }
 
-
-/* Cuando se pulse el botón de “Añadir Localidad” vamos a añadir el dato de la caja de
-texto (debe tener valor) a una lista no ordenada, los valores en la lista no ordenada deberán
-aparecer ordenados alfabéticamente en modo ascendente y la localidad que se añade no debe
-estar presente en la lista no ordenada. */
 function crearLocalidades() {
-    let localidad = document.getElementById("localidad").value.trim();
+    let loc = document.getElementById("loc").value.trim();
     let listaLoc = document.getElementById("listaLoc");
 
-    if (localidad.length > 0)
-    {
-        let todos = document.getElementsByTagName("li");
-        let localidadExistente = null;
-        let i = 0;
-        while(i < todos.length)
-        {
-            if(todos.item(i).textContent === localidad)
-            {
-                localidadExistente = todos[i];
-                break ;
+    if (loc.length > 0) {
+        // Convertir todos los elementos <li> a un array
+        let lista = Array.from(listaLoc.getElementsByTagName("li"));
+        
+        // Suscar si la loc ya existe
+        if (loc === lista.some(item => item.textContent)) {
+            alert("La loc que has introducido ya existe");
+            return;
+        }
+
+        // Crear el nuevo elemento de lista con el nombre de la loc
+        let nuevoLI = document.createElement("li");
+        nuevoLI.textContent = loc;
+
+        // Insertar en la posición correcta para mantener el orden alfabético
+        let inserted = false;
+        let i = 0
+        while (i < lista.length) {
+            // Si la loc es alfabéticamente menor que el actual, insertarla antes de ese elemento
+            if (loc < lista[i].textContent) {
+                listaLoc.insertBefore(nuevoLI, lista[i]);
+                inserted = true;
+                break;
+            }
+        }
+
+        // Si no se insertó, significa que la loc es la mayor y va al final
+        if (!inserted) {
+            listaLoc.appendChild(nuevoLI);
+        }
+    } else {
+        alert("Falta el contenido de localidades");
+    }
+}
+
+function crearTablaCoches() {
+    let marca = document.getElementById("marca").value.trim();
+    let modelo = document.getElementById("modelo").value.trim();
+    let precio = document.getElementById("precio").value.trim();
+
+    let tablaCoches = document.getElementById("tablaCoches");
+    let padre = tablaCoches.querySelector("tbody");
+    let filas = padre.getElementsByTagName("tr");
+
+    if (marca && modelo && precio) {
+        let existe = false;
+        let i = 1; // Ignoramos el encabezado de la tabla
+        while (i < filas.length) {
+            let celdas = filas.item(i).getElementsByTagName("td");
+
+            let marcaExistente = celdas[0].textContent;
+            let modeloExistente = celdas[1].textContent;
+
+            // Si la marca y modelo ya existen, actualizamos el precio
+            if (marcaExistente === marca && modeloExistente === modelo) {
+                celdas[2].textContent = precio;
+                existe = true;
+                break;
             }
             i++;
         }
-        if (!localidadExistente)
-        {
-            let nuevoLI = document.createElement("li");
-            let contenido= document.createTextNode(localidad);
-            nuevoLI.appendChild(contenido);
-            listaLoc.append(nuevoLI);
+
+        if (!existe) {
+            let fila = document.createElement("tr");
+
+            let col1 = document.createElement("td");
+            let col2 = document.createElement("td");
+            let col3 = document.createElement("td");
+
+            let con1 = document.createTextNode(marca);
+            let con2 = document.createTextNode(modelo);
+            let con3 = document.createTextNode(precio);
+
+            col1.appendChild(con1);
+            col2.appendChild(con2);
+            col3.appendChild(con3);
+
+            fila.appendChild(col1);
+            fila.appendChild(col2);
+            fila.appendChild(col3);
+
+            padre.appendChild(fila); 
         }
-        else
-        {
-            alert("La localidad que has introducido ya existe");
-            return;
-        }
+    } else {
+        alert("Complete todos los campos [marca, modelo, precio]");
     }
-    else
-    {
-        alert("Falta el contenido de localidades");
+}
+
+let comunidades = {
+    Asturias: {
+        provincias: ["Oviedo", "Gijón", "Avilés", "Mieres", "Langreo"],
+        comentario: "Asturias es una comunidad autónoma situada al norte de España, conocida por sus paisajes montañosos y su costa."
+    },
+    Andalucia: {
+        provincias: ["Sevilla", "Málaga", "Granada", "Córdoba", "Almería", "Cádiz", "Huelva", "Jaén", "Málaga", "Cádiz"],
+        comentario: "Andalucía es una de las regiones más grandes y pobladas de España, famosa por su cultura, gastronomía y el flamenco."
+    },
+    Aragon: {
+        provincias: ["Zaragoza", "Huesca", "Teruel"],
+        comentario: "Aragón es una comunidad autónoma situada en el noreste de España, famosa por sus paisajes montañosos y el Pilar en Zaragoza."
+    },
+    Baleares: {
+        provincias: ["Palma de Mallorca", "Ibiza", "Menorca", "Formentera"],
+        comentario: "Las Islas Baleares son una comunidad autónoma que se encuentra en el mar Mediterráneo, conocida por sus hermosas playas y turismo."
+    },
+    Canarias: {
+        provincias: ["Las Palmas", "Santa Cruz de Tenerife"],
+        comentario: "Las Islas Canarias son un archipiélago en el océano Atlántico, con un clima subtropical y paisajes volcánicos únicos."
+    },
+    Cantabria: {
+        provincias: ["Santander", "Torrelavega", "Castro Urdiales", "Colindres"],
+        comentario: "Cantabria es una comunidad autónoma ubicada al norte de España, famosa por su costa y las cuevas de Altamira."
+    },
+    CastillaLeon: {
+        provincias: ["Ávila", "Burgos", "León", "Palencia", "Salamanca", "Segovia", "Soria", "Valladolid", "Zamora"],
+        comentario: "Castilla y León es la comunidad autónoma más grande de España y se caracteriza por su historia medieval y su patrimonio cultural."
+    },
+    CastillaLaMancha: {
+        provincias: ["Albacete", "Ciudad Real", "Cuenca", "Guadalajara", "Toledo"],
+        comentario: "Castilla-La Mancha es una comunidad autónoma en el centro de España, famosa por sus llanuras, molinos de viento y el legado de Don Quijote."
+    },
+    Cataluña: {
+        provincias: ["Barcelona", "Girona", "Lleida", "Tarragona"],
+        comentario: "Cataluña es una comunidad autónoma en el noreste de España, conocida por su arquitectura modernista, el arte de Gaudí y la Costa Brava."
+    },
+    Valencia: {
+        provincias: ["Valencia", "Alicante", "Castellón"],
+        comentario: "La Comunidad Valenciana es famosa por sus playas, la Ciudad de las Artes y las Ciencias en Valencia y la fiesta de las Fallas."
+    },
+    Extremadura: {
+        provincias: ["Badajoz", "Cáceres"],
+        comentario: "Extremadura es una comunidad autónoma en el suroeste de España, conocida por sus paisajes naturales, monumentos romanos y su gastronomía."
+    },
+    Galicia: {
+        provincias: ["A Coruña", "Lugo", "Ourense", "Pontevedra"],
+        comentario: "Galicia está en el noroeste de España, famosa por su costa atlántica, el Camino de Santiago y sus platos como el pulpo a la gallega."
+    },
+    Madrid: {
+        provincias: ["Madrid"],
+        comentario: "Madrid es la capital de España, una ciudad vibrante conocida por sus museos, plazas, parques y vida nocturna."
+    },
+    Navarra: {
+        provincias: ["Pamplona", "Tudela"],
+        comentario: "Navarra es conocida por la fiesta de San Fermín y la famosa corrida de toros de Pamplona, además de sus montañas y paisajes naturales."
+    },
+    Murcia: {
+        provincias: ["Murcia", "Cartagena"],
+        comentario: "Murcia es una comunidad autónoma situada en el sureste de España, famosa por sus huertas y playas en la Costa Cálida."
+    },
+    PaisVasco: {
+        provincias: ["Álava", "Bizkaia", "Gipuzkoa"],
+        comentario: "El País Vasco es una comunidad autónoma en el norte de España, conocida por su cultura vasca, la gastronomía y el paisaje montañoso."
+    },
+    LaRioja: {
+        provincias: ["Logroño"],
+        comentario: "La Rioja es una comunidad autónoma famosa por sus vinos, la cultura del vino y sus bodegas en el valle del Ebro."
+    },
+    Ceuta: {
+        provincias: ["Ceuta"],
+        comentario: "Ceuta es una ciudad autónoma española ubicada en el norte de África, famosa por su posición estratégica y su puerto."
+    },
+    Melilla: {
+        provincias: ["Melilla"],
+        comentario: "Melilla es una ciudad autónoma española también situada en el norte de África, conocida por su arquitectura y su puerto comercial."
+    }
+};
+
+function actualizarProvincias() {
+    let comunidadSeleccionada = document.getElementById("comun").value;
+    let provinciasSelect = document.getElementById("provincias");
+
+    // Limpiar provincias actuales
+    while (provinciasSelect.firstChild) {
+        provinciasSelect.removeChild(provinciasSelect.firstChild);
+    }
+
+    if (comunidadSeleccionada) {
+        // Obtener la lista de provincias de la comunidad seleccionada
+        let provincias = comunidades[comunidadSeleccionada].provincias;
+
+        // Agregar cada provincia al <select> de provincias
+        let i = 0;
+        while (i < provincias.length) {
+            let option = document.createElement("option");
+            option.value = provincias[i];
+            option.textContent = provincias[i];
+            provinciasSelect.appendChild(option);
+            i++;
+        }
+    } 
+}
+
+// Función para mostrar el comentario si se selecciona una provincia
+function mostrarComentario() {
+    let comunidadSeleccionada = document.getElementById("comun").value;
+    let provinciaSeleccionada = document.getElementById("provincias").value;
+    let comentarioP = document.getElementById("coment");
+
+    if (comunidadSeleccionada && provinciaSeleccionada) {
+        comentarioP.textContent = comunidades[comunidadSeleccionada].comentario;
     }
 }
