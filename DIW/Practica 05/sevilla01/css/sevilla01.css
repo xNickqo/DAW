@@ -1,0 +1,60 @@
+#historia > div {
+    display: flex;
+    width: 100vw;
+    height: 800px;
+    border: 2px solid green; 
+}
+
+#historia > div > div {
+    width: 30%;
+    height: 600px;
+    border: 2px solid yellow;
+}
+
+#primero {
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+#primero > div:last-child {
+    flex-grow: 2;
+}
+
+#segundo {
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+#segundo > div:first-child {
+    flex-grow: 2;
+}
+
+#tercero {
+    align-items: flex-end;
+    flex-direction: row;
+}
+
+#tercero > div:nth-child(3) {
+    order: 1;
+}
+
+#tercero > div:nth-child(1) {
+    order: 2;
+}
+
+#tercero > div:nth-child(2) {
+    order: 3;
+}
+
+#cuarto {
+    align-items: baseline;
+    flex-direction: row;
+}
+
+#cuarto > div:nth-child(1) {
+    flex-grow: 1;
+}
+
+#cuarto > div:nth-child(2) {
+    flex-grow: 2;
+}
