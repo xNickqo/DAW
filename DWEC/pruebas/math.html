@@ -24,66 +24,56 @@
     </form>
 
     <script>
-        // Función para Math.floor
         function useFloor() {
             let num = 5.7;
-            document.mathForm.output.value = `Math.floor(${num}): ${Math.floor(num)} (redondea hacia abajo)`;
+            document.mathForm.output.value = `Math.floor(${num}): ${Math.floor(num)}`; //math.floor solo captura el numero entero sin redondear
         }
 
-        // Función para Math.round
         function useRound() {
             let num = 5.5;
-            document.mathForm.output.value = `Math.round(${num}): ${Math.round(num)} (redondea al entero más cercano)`;
+            document.mathForm.output.value = `Math.round(${num}): ${Math.round(num)}`; //math.round redondea al entero mas cercano
         }
 
-        // Función para Math.trunc
         function useTrunc() {
             let num = 5.9;
-            document.mathForm.output.value = `Math.trunc(${num}): ${Math.trunc(num)} (elimina la parte decimal)`;
+            document.mathForm.output.value = `Math.trunc(${num}): ${Math.trunc(num)}`; // math.trunc elimina la parte decimal
         }
 
-        // Función para Math.exp
         function useExp() {
             let exponent = 2;
-            document.mathForm.output.value = `Math.exp(${exponent}): ${Math.exp(exponent)} (calcula e^${exponent})`;
+            document.mathForm.output.value = `Math.exp(${exponent}): ${Math.exp(exponent)} (calcula e^${exponent})`; // math.exp calcula el exponencial del numero que le pases
         }
 
-        // Función para Math.pow
         function usePow() {
             let base = 4, exponent = 3;
-            document.mathForm.output.value = `Math.pow(${base}, ${exponent}): ${Math.pow(base, exponent)} (calcula ${base}^${exponent})`;
+            document.mathForm.output.value = `Math.pow(${base}, ${exponent}): ${Math.pow(base, exponent)} (calcula ${base}^${exponent})`; // math.pow(base, exponente)
         }
 
-        // Función para Math.sqrt
         function useSqrt() {
             let num = 16;
-            document.mathForm.output.value = `Math.sqrt(${num}): ${Math.sqrt(num)} (calcula la raíz cuadrada)`;
+            document.mathForm.output.value = `Math.sqrt(${num}): ${Math.sqrt(num)}`; // math.sqrt() calcula la raiz cuadrada 
         }
 
-        // Función para Math.log
         function useLog() {
             let num = 10;
-            document.mathForm.output.value = `Math.log(${num}): ${Math.log(num)} (calcula el logaritmo natural)`;
+            document.mathForm.output.value = `Math.log(${num}): ${Math.log(num)}`; // Calcula el logaritmo natural del numero
         }
 
-        // Función para Math.max y Math.min
         function useMaxMin() {
             let values = [2, 3, 9, 4, 7];
-            let max = Math.max(...values);
-            let min = Math.min(...values);
-            document.mathForm.output.value = `Valores: ${values}\nMath.max: ${max}\nMath.min: ${min}`;
+            let max = Math.max(...values); // Valor maximo
+            let min = Math.min(...values); // Valor minimo
+            document.mathForm.output.value = `Valores: ${values}\nMath.max: ${max}\nMath.min: ${min}`; 
         }
 
-        // Función para Math.random
         function useRandom() {
             let randomNum = Math.random();
-            document.mathForm.output.value = `Math.random(): ${randomNum} (número aleatorio entre 0 y 1)`;
+            document.mathForm.output.value = `Math.random(): ${randomNum}`; // math.random() numero aleatorio entre 0 y 1
         }
 
-        // Función para Math.sign
         function useSign() {
             let num = -42;
-            document.mathForm.output.value = `Math.sign(${num}): ${Math.sign(num)} (devuelve -1, 0 o 1 según el signo del número)`;
+            document.mathForm.output.value = `Math.sign(${num}): ${Math.sign(num)}`; //math.sign() devuelve -1, 0 o 1 según el signo del número
         }
     </script>
 </body>

@@ -31,88 +31,88 @@
             let array = [1, 2, 3, 4, 5];
             results += `Array inicial: ${array}\n\n`;
 
-            results += `Longitud del array, array.length: ${array.length}\n\n`;
+            results += `Longitud del array, array.length: ${array.length}\n\n`;//Longitud del array
 
-            results += `Elemento en posición 2, array.at(2): ${array.at(2)}\n\n`;
+            results += `Elemento en posición 2, array.at(2): ${array.at(2)}\n\n`; //Elemento en posición 2
 
-            results += `Primer elemento eliminado con shift, array.shift(): ${array.shift()}\n`;
+            results += `Primer elemento eliminado con shift, array.shift(): ${array.shift()}\n`; //Eliminar el 1er elemento de un array
             results += `Array después de shift: ${array}\n\n`;
             
-            results += `Ultimo elemento eliminado con pop, array.pop(): ${array.pop()}\n`;
+            results += `Ultimo elemento eliminado con pop, array.pop(): ${array.pop()}\n`; // Eliminar el ultimo elemento de un array
             results += `Array después de pop: ${array}\n\n`;
             
-            array.push(6);
+            array.push(6); // Introducir un valor al final del array
             results += `Array después de push (6), array.push(6): ${array}\n\n`;
             
-            array.unshift(0);
+            array.unshift(0); // Introducir un valor al principio del array
             results += `Array después de unshift (0), array.unshift(0): ${array}\n\n`;
             
-            array.splice(1, 2, 10, 20);
+            array.splice(1, 2, 10, 20); // Elimina 2 elementos desde la posicion 1 y agregando 10 y 20 al final
             results += `Array después de splice (removiendo 2 elementos desde la posición 1 y agregando 10 y 20): ${array}\n\n`;
             
-            let newArray = array.toSpliced(1, 1, 99);
+            let newArray = array.toSpliced(1, 1, 99); // Remueve 1 elemento y añade el 99
             results += `Array original: ${array}\n`;
             results += `Nuevo array con toSpliced (removiendo 1 elemento y agregando 99): ${newArray}\n\n`;
             
-            results += `Array invertido, array.reverse(): ${array.reverse()}\n\n`;
+            results += `Array invertido, array.reverse(): ${array.reverse()}\n\n`; // Invierte el array
             results += `Array original (después de reverse): ${array}\n`;
             
-            results += `Nuevo array invertido con toReversed: ${array.toReversed()}\n\n`;
+            results += `Nuevo array invertido con toReversed: ${array.toReversed()}\n\n`; // Crea una copia del array invertido
             
-            results += `Array ordenado: ${array.sort((a, b) => a - b)}\n\n`;
+            results += `Array ordenado: ${array.sort((a, b) => a - b)}\n\n`; // Ordena un array
             results += `Array original (después de sort): ${array}\n`;
             
-            results += `Nuevo array ordenado con toSorted: ${array.toSorted((a, b) => b - a)}\n\n`;
+            results += `Nuevo array ordenado con toSorted: ${array.toSorted((a, b) => b - a)}\n\n`; // Crea una copia del array ordenado
             
-            let slicedArray = array.slice(1, 4);
+            let slicedArray = array.slice(1, 4); // Muestra el array desde la posicion 1 hasta la 4
             results += `Array original: ${array}\n`;
             results += `Array cortado con slice (1, 4): ${slicedArray}\n\n`;
             
-            results += `array.indexOf(3): ${array.indexOf(3)}\n`;
+            results += `array.indexOf(3): ${array.indexOf(3)}\n`; // Muestra el contenido del 4to elemento del array
             
-            results += `array.lastIndexOf(3): ${array.lastIndexOf(3)}\n\n`;
+            results += `array.lastIndexOf(3): ${array.lastIndexOf(3)}\n\n`; // Muestra el contenido del 3er elemento del array comenzando desde el final
             
-            results += `¿El array tiene el numero 4? array.includes(4): ${array.includes(4)}\n\n`;
+            results += `¿El array tiene el numero 4? array.includes(4): ${array.includes(4)}\n\n`; // incluye el numero 4?
             
             let anotherArray = [7, 8, 9];
-            let concatenatedArray = array.concat(anotherArray);
+            let concatenatedArray = array.concat(anotherArray); // concatena 2 arrays
             results += `Array concatenado array.concat(anotherArray=[7, 8, 9]): ${concatenatedArray}\n\n`;
             
-            results += `Unir elementos en una cadena añadiendo el caracter ',' con array.join(","): ${array.join(", ")}\n\n`;
+            results += `Unir elementos en una cadena añadiendo el caracter ',' con array.join(","): ${array.join(", ")}\n\n`; // Une los elementos del arrat en una cadena separados por el delimitador indicado
             
             results += "Usar forEach:\n";
-            array.forEach((value, index) => {
+            array.forEach((value, index) => { // Recorre el array asociativo usando foreach
                 results += `Elemento en índice ${index}: ${value}\n`;
             });
             results += "\n";
             
-            results += `Array rellenado con 0, con array.fill(0): ${array.fill(0)}\n\n`;
+            results += `Array rellenado con 0, con array.fill(0): ${array.fill(0)}\n\n`; // Array relleno de 0s
             
-            let foundValue = array.find(value => value > 0);
+            let foundValue = array.find(value => value > 0); // Encontrar el valor mayor que 0
             results += `Primer valor encontrado mayor que 0, con find(value => value > 0): ${foundValue}\n\n`;
             
-            let foundIndex = array.findIndex(value => value > 0);
+            let foundIndex = array.findIndex(value => value > 0); // Encontrar el index mayor que 0
             results += `Índice del primer valor mayor que 0, con findIndex(value => value > 0): ${foundIndex}\n\n`;
             
             results += "Entradas del array:\n";
-            for (let entry of array.entries()) {
+            for (let entry of array.entries()) { // Indices del array asociativo
                 results += `Índice: ${entry[0]}, Valor: ${entry[1]}\n`;
             }
             
             results += "\nValores del array:\n";
-            for (let value of array.values()) {
+            for (let value of array.values()) { // Valores del array asociativo
                 results += `Valor: ${value}\n`;
             }
             
             results += "\nÍndices del array:\n";
-            for (let key of array.keys()) {
+            for (let key of array.keys()) { // Todo el array asociativo
                 results += `Índice: ${key}\n`;
             }
             
-            let mappedArray = array.map(value => value * 2);
-            results += `Array mapeado (cada elemento multiplicado por 2), array.map(value => value*2): ${mappedArray}\n\n`;
+            let mappedArray = array.map(value => value * 2); // Todos los valores del array * 2 con map
+            results += `Array mapeado (cada elemento multiplicado por 2), array.map(value => value*2): ${mappedArray}\n\n`; 
             
-            results += `Array como cadena, array.toString(): ${array.toString()}\n\n`;
+            results += `Array como cadena, array.toString(): ${array.toString()}\n\n`; // Array pasado a cadena
             
             let str = "1,2,3,4,5";
             let splitArray = str.split(",");
