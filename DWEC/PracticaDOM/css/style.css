@@ -11,7 +11,8 @@ body{
 
 form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     gap: 70px;
     box-sizing: border-box;
 }
@@ -20,32 +21,39 @@ div > * {
     margin: 2px;
 }
 
+#reg, #ini{
+    grid-column: 1;
+    grid-row: 1;
+}
+
 #usuario {
-    grid-column: 2 / 2;
+    grid-column: 2;
+    grid-row: 1;
     text-align: right;
 }
 
 #definiciones {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
+    grid-column: 1;
+    grid-row: 2;
 }
 
 #localidades {
-    grid-column: 2 / 2;
-    grid-row: 2 / 3;
+    grid-column: 2;
+    grid-row: 2;
 }
 
 #coches {
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
+    grid-column: 1;
+    grid-row: 3;
 }
 
 #comunidades {
-    grid-column: 2 / 2;
-    grid-row: 3 / 4;
+    grid-column: 2;
+    grid-row: 3;
 }
 
 #boton {
-    grid-column: 1 / 2;
-    grid-row: 4 / 4;
+    display: hidden;
+    grid-column: 1;
+    grid-row: 4;
 }

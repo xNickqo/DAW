@@ -5,52 +5,74 @@ else if (document.attachEvent)
 
 
 function inicio() {
+    //Registrar cookie
+    document.getElementById("aceptar").addEventListener("click", registro);
     document.getElementById("registro").addEventListener("click", mostrarFormularioRegistro);
-    document.getElementById("aceptar").addEventListener("click", validarYRegistrar);
     document.getElementById("cancelar").addEventListener("click", ocultarFormularioRegistro);
+    
+    //Entrar con cookie existente
+    document.getElementById("entrar").addEventListener("click", mostrarFormularioInicio);
+    document.getElementById("iniciar").addEventListener("click", entrar);
 
-
+    //Definiciones
 	let botonDef=document.getElementById("crearDef");
-
 	if (document.addEventListener)
 		botonDef.addEventListener("click", crearDefiniciones);
 	else if (document.attachEvent)
 		botonDef.attachEvent("onclick", crearDefiniciones);
 
+    //Localidades
     let botonLoc = document.getElementById("crearLoc");
-
     if (document.addEventListener)
 		botonLoc.addEventListener("click", crearLocalidades);
 	else if (document.attachEvent)
 		botonLoc.attachEvent("onclick", crearLocalidades);
 
+    //Coches
     let botonCoche = document.getElementById("crearCoche");
-
     if (document.addEventListener)
 		botonCoche.addEventListener("click", crearTablaCoches);
 	else if (document.attachEvent)
 		botonCoche.attachEvent("onclick", crearTablaCoches);
 
-
+    //Comunidades autonomas
     let comunidadSelect = document.getElementById("comun");
     let provinciasSelect = document.getElementById("provincias");
     comunidadSelect.addEventListener("change", actualizarProvincias);
     provinciasSelect.addEventListener("change", mostrarComentario);
-
 }
 
-// Función para mostrar el formulario de registro
 function mostrarFormularioRegistro() {
-    document.getElementById("formRegistro").style.display = "block";
+    document.getElementById("formRegistro").setAttribute("open","true");
 }
 
-// Función para ocultar el formulario de registro
 function ocultarFormularioRegistro() {
-    document.getElementById("formRegistro").style.display = "none";
+    document.getElementById("formRegistro").removeAttribute("open");
+}
+
+function mostrarFormularioInicio() {
+    document.getElementById("formInicio").setAttribute("open","true");
+}
+
+function ocultarFormularioInicio() {
+    document.getElementById("formInicio").removeAttribute("open");
+}
+
+function existeCookie(nombre, contrasena){
+    let misCookies = document.cookie.split("; ");
+    let existe = false;
+    let i = 0;
+    while (existe === false && (i < misCookies.length)) {
+        let parte = misCookies[i].split("="); 
+        if (parte[0] === nombre && parte[1] === contrasena)
+            existe = true;
+        i++;
+    }
+    return existe;
 }
 
 // Función para validar y registrar al usuario
-function validarYRegistrar() {
+function registro() {
     let nombre = document.getElementById("nombreUsuario").value.trim();
     let contrasena = document.getElementById("contrasena").value.trim();
     
@@ -58,20 +80,46 @@ function validarYRegistrar() {
     let regexNombre = /^[a-z]{3}[a-z0-9]{5,9}$/i;
     let regexContrasena = /^[a-z]{2}[a-z0-9_]{5,11}[a-z0-9]$/i;
 
-    if (!regexNombre.test(nombre)) {
-        alert("El nombre debe tener entre 8 y 12 caracteres, los tres primeros deben ser letras y el resto letras o números.");
-        return;
+    if(!existeCookie(nombre, contrasena)) {
+        if ((regexNombre.test(nombre)) && (regexContrasena.test(contrasena))) {
+            // Crear cookie
+            document.cookie = `${nombre}=${contrasena}; expires=true 31 Dec 2024 00:00:00 GMT;`;
+            alert("Cookie creada con exito");
+            ocultarFormularioRegistro();
+        } else {
+            alert("Error nombre o contraseña");
+        }
+    } else {
+        alert ("La cookie ya existe, no puedes registrarla de nuevo");
     }
-    if (!regexContrasena.test(contrasena)) {
-        alert("La contraseña debe tener entre 8 y 14 caracteres, los dos primeros deben ser letras, y el último letra o dígito. Los demás pueden ser letras, dígitos o '_'.");
-        return;
+}
+
+//Funcion para validar si la cookie existe y usarla
+function entrar(){
+    let nombre = document.getElementById("nom").value.trim();
+    let contrasena = document.getElementById("pas").value.trim();
+
+    //Verificar si la cookie existe
+    let misCookies = document.cookie.split(";");
+    console.log("Todas las cookies:\n"+document.cookie);
+
+    let existe = false;
+    let i = 0;
+    while (existe === false && (i < misCookies.length ))
+    {
+        let parte = misCookies[i].split("="); 
+        if (parte[0] === nombre && parte[1] === contrasena)
+        {
+            alert("Tu cookie existe y sigue activa");
+            existe = true;
+            document.getElementById("user").textContent = nombre;
+            ocultarFormularioInicio();
+        }
+        i++;
     }
-
-    // Crear cookie
-    document.cookie = `${nombre}=${contrasena}; path=/;`;
-
-    alert("Usuario registrado correctamente.");
-    ocultarFormularioRegistro(); // Ocultar el formulario al terminar
+    if(existe === false) {
+        alert("La cookie no existe");
+    }
 }
 
 function crearDefiniciones() {	

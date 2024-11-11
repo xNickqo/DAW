@@ -10,19 +10,34 @@
 <body>
     <form id="formulario" action="">
         <div id="usuario">
-                <h2>USUARIO</h2>
+                <h2 id="user">USUARIO</h2>
                 <input id="registro" type="button" value="Registrarse">
                 <input id="entrar" type="button" value="Entrar">
         </div>
         <br>
-        <div id="formRegistro" style="display: none;">
-            <h3>Registro de Usuario</h3>
-            <label>Nombre de Usuario:</label>
-            <input type="text" id="nombreUsuario"><br>
-            <label>Contraseña:</label>
-            <input type="password" id="contrasena"><br>
-            <button id="aceptar">Aceptar</button>
-            <button id="cancelar">Cancelar</button>
+        <div id="reg">
+            <dialog id="formRegistro">
+                <h3>Registro de Usuario</h3>
+                <label>Nombre de Usuario:</label>
+                <input type="text" id="nombreUsuario"><br>
+                <label>Contraseña:</label>
+                <input type="password" id="contrasena"><br>
+                <input type="button" id="aceptar" value="Aceptar">
+                <input type="button" id="cancelar" value="Cancelar">
+            </dialog>
+        </div>
+        <br>
+        <br>
+        <div id="ini">
+            <dialog id="formInicio">
+                <h3>Iniciar Sesion (Cookie)</h3>
+                <label>Nombre de Usuario:</label>
+                <input type="text" id="nom"><br>
+                <label>Contraseña:</label>
+                <input type="password" id="pas"><br>
+                <input type="button" id="iniciar" value="Iniciar">
+                <input type="button" type="reset" value="Borrar">
+            </dialog>
         </div>
         <br>
         <div id="definiciones">
