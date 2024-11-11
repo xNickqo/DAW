@@ -33,33 +33,29 @@ function arrayAssocDpto($conn) {
 
 //Funcion encargada de hacer inserts en la BBDD
 function insert_dpto_BBDD($conn) {
-    if (empty($_POST['dpto'])) {
-        echo "Introduce un nombre de departamento";
-        return;
-    }
-    $nombre_dpto = $_POST['dpto'];
-    try {
-        // Obtenemos los dptos y los metemos en un array asociativo
-        $result = arrayAssocDpto($conn);
 
-        // Encontrar el valor más alto
-        $mayor = 0;
-        foreach ($result as $row) {
-            // Convertir el código a número, eliminando la letra "D"
-            $num = (int)substr($row['cod_dpto'], 1);
-            if ($num > $mayor) {
-                $mayor = $num;
-            }
+    $nombre_dpto = $_POST['dpto'];
+
+    if (empty($_POST['dpto']))
+    {
+        echo "Introduce un nombre de departamento";
+        return ;
+    }
+
+    try {
+        $sql = "SELECT max(cod_dpto) as max_cod FROM dpto";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_NUM);
+        
+        if ($result[0] != NULL) {
+            // Obtener el último código y eliminar la "D"
+            $lastNumber = (int)substr($result[0], 1); 
+            $newNumber = $lastNumber + 1;
         }
 
-        // Incrementar el número más alto y formatear el nuevo código como "Dxxx"
-        $newNumber = $mayor + 1;
+        // Formatear el nuevo código como "Dxxx"
         $cod_dpto = 'D' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
-        /*str_pad($num, 3, '0', STR_PAD_LEFT)
-            -$newNumber: Es el número que queremos formatear, por ejemplo, 5.
-            -3: Define la longitud total deseada de la cadena (en este caso, queremos que el número sea de tres dígitos).
-            -'0': Especifica el carácter que se debe añadir para completar la longitud deseada (ceros, en este caso).
-            -STR_PAD_LEFT: Indica que los ceros deben añadirse al lado izquierdo. */
 
         // Insertar el nuevo departamento
         $sql = "INSERT INTO dpto (cod_dpto, nombre) VALUES (:cod_dpto, :nombre)";
