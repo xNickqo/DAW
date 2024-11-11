@@ -13,6 +13,8 @@ function inicio() {
     //Entrar con cookie existente
     document.getElementById("entrar").addEventListener("click", mostrarFormularioInicio);
     document.getElementById("iniciar").addEventListener("click", entrar);
+    document.getElementById("borrar").addEventListener("click", ocultarFormularioInicio);
+
 
     //Definiciones
 	let botonDef=document.getElementById("crearDef");
@@ -40,6 +42,11 @@ function inicio() {
     let provinciasSelect = document.getElementById("provincias");
     comunidadSelect.addEventListener("change", actualizarProvincias);
     provinciasSelect.addEventListener("change", mostrarComentario);
+
+    // Mostrar el formulario de mensaje cuando se hace clic en "Añadir mensaje"
+    document.getElementById("boton").addEventListener("click", mostrarFormularioMensaje);
+    document.getElementById("aceptarMensaje").addEventListener("click", agregarMensaje);
+    document.getElementById("cancelarMensaje").addEventListener("click", ocultarFormularioMensaje);
 }
 
 function mostrarFormularioRegistro() {
@@ -56,6 +63,14 @@ function mostrarFormularioInicio() {
 
 function ocultarFormularioInicio() {
     document.getElementById("formInicio").removeAttribute("open");
+}
+
+function mostrarFormularioMensaje() {
+    document.getElementById("formularioMensaje").style.display = "block";
+}
+
+function ocultarFormularioMensaje() {
+    document.getElementById("formularioMensaje").style.display = "none";
 }
 
 function existeCookie(nombre, contrasena){
@@ -113,13 +128,33 @@ function entrar(){
             alert("Tu cookie existe y sigue activa");
             existe = true;
             document.getElementById("user").textContent = nombre;
+            document.getElementById("entrar").value = "Cerrar sesion";
+            document.getElementById("entrar").removeEventListener("click", mostrarFormularioInicio);
+            document.getElementById("entrar").addEventListener("click", cerrarSesion);
             ocultarFormularioInicio();
+
+            //Mostrar el boton de "añadir mensaje"
+            document.getElementById("boton").style.display = "block";
         }
         i++;
     }
     if(existe === false) {
         alert("La cookie no existe");
     }
+}
+
+// Función para cerrar sesión
+function cerrarSesion() {
+    document.getElementById("user").textContent = "USUARIO";
+    document.getElementById("entrar").value = "Entrar";
+    
+    // Eliminar el listener de "Cerrar sesión"
+    document.getElementById("entrar").removeEventListener("click", cerrarSesion);
+    
+    ocultarFormularioInicio();
+    
+    // Reasignar el evento para abrir el formulario de inicio de sesión
+    document.getElementById("entrar").addEventListener("click", mostrarFormularioInicio);
 }
 
 function crearDefiniciones() {	
@@ -383,4 +418,78 @@ function mostrarComentario() {
     if (comunidadSeleccionada && provinciaSeleccionada) {
         comentarioP.textContent = comunidades[comunidadSeleccionada].comentario;
     }
+}
+
+function agregarMensaje() {
+    let titulo = document.getElementById("titulo").value.trim();
+    let comentario = document.getElementById("comentario").value.trim();
+    let imagenSeleccionada = document.querySelector('input[name="imagen"]:checked');
+
+    if (titulo === "" || comentario === "" || !imagenSeleccionada) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    // Obtener la imagen seleccionada
+    let imagenUrl = "";
+    switch (imagenSeleccionada.value) {
+        case "image1":
+            imagenUrl = "image1.jpg";
+            break;
+        case "image2":
+            imagenUrl = "image2.jpg";
+            break;
+        case "image3":
+            imagenUrl = "image3.jpg";
+            break;
+        case "image4":
+            imagenUrl = "image4.jpg";
+            break;
+        case "image5":
+            imagenUrl = "image5.jpg";
+            break;
+        case "image6":
+            imagenUrl = "image6.jpg";
+            break;
+    }
+
+    // Crear el contenedor para el mensaje
+    let chatDiv = document.getElementById("chat");
+
+    let nuevoMensaje = document.createElement("div");
+    nuevoMensaje.classList.add("mensaje");
+
+    // Crear la imagen del usuario
+    let imagenElemento = document.createElement("img");
+    imagenElemento.src = imagenUrl;
+    imagenElemento.alt = "Fallo Imagen";
+    
+    // Crear el nombre de usuario
+    let nombreUsuario = document.createElement("strong");
+    nombreUsuario.textContent = document.getElementById("user").textContent;
+
+    // Crear el título del mensaje
+    let mensajeTitulo = document.createElement("h4");
+    mensajeTitulo.textContent = titulo;
+
+    // Crear el comentario
+    let mensajeComentario = document.createElement("p");
+    mensajeComentario.textContent = comentario;
+
+    // Añadir los elementos al contenedor del mensaje
+    nuevoMensaje.appendChild(imagenElemento);
+    nuevoMensaje.appendChild(nombreUsuario);
+    nuevoMensaje.appendChild(mensajeTitulo);
+    nuevoMensaje.appendChild(mensajeComentario);
+
+    // Añadir el mensaje al chat
+    chatDiv.appendChild(nuevoMensaje);
+
+    // Ocultar el formulario
+    ocultarFormularioMensaje();
+
+    // Limpiar los campos del formulario
+    document.getElementById("titulo").value = "";
+    document.getElementById("comentario").value = "";
+    document.querySelector('input[name="imagen"]:checked').checked = false;
 }

@@ -12,8 +12,9 @@ body{
 form {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 70px;
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 70px;
+    grid-row-gap: 20px;
     box-sizing: border-box;
 }
 
@@ -53,7 +54,13 @@ div > * {
 }
 
 #boton {
-    display: hidden;
+    display: none;
     grid-column: 1;
     grid-row: 4;
+}
+
+#formularioMensaje {
+    display: none;
+    grid-column: 1;
+    grid-row: 5;
 }
