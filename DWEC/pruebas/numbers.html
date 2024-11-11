@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos de Números en JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input {
+            background-color: grey;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            width: 50%;
+            height: 20%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Métodos Comunes de Números en JavaScript</h1>
+
+    <form name="numerosForm">
+        <h2>1. Verificar si un valor es NaN</h2>
+        <input type="text" name="resultadoNaN"></input>
+        
+        <h2>2. Convertir a entero</h2>
+        <input type="text" name="resultadoEntero"></input>
+        
+        <h2>3. Convertir número a cadena</h2>
+        <input type="text" name="resultadoCadena"></input>
+    </form>
+
+    <script>
+        // 1. Verificar si un valor es NaN
+        let valor1 = "texto";
+        let esNaN1 = isNaN(valor1); // true
+        let resultadoNaN = `Valor: ${valor1}, ¿Es NaN?: ${esNaN1}\n`;
+
+        let valor2 = 123;
+        let esNaN2 = isNaN(valor2); // false
+        resultadoNaN += `Valor: ${valor2}, ¿Es NaN?: ${esNaN2}`;
+        
+        document.numerosForm.resultadoNaN.value = resultadoNaN;
+
+        // 2. Convertir a entero
+        let numeroDecimal = "10.5";
+        let entero = parseInt(numeroDecimal, 10); // 10
+        let resultadoEntero = `Decimal: ${numeroDecimal}, Entero: ${entero}\n`;
+
+        let numeroCadena = "20.99 es un número";
+        let enteroCadena = parseInt(numeroCadena, 10); // 20
+        resultadoEntero += `Cadena: ${numeroCadena}, Entero: ${enteroCadena}`;
+
+        document.numerosForm.resultadoEntero.value = resultadoEntero;
+
+        // 3. Convertir número a cadena
+        const numero = 123;
+        const cadena = numero.toString(); // "123"
+        let resultadoCadena = `Número: ${numero}, Cadena: ${cadena}\n`;
+
+        const numeroNegativo = -456;
+        const cadenaNegativa = numeroNegativo.toString(); // "-456"
+        resultadoCadena += `Número: ${numeroNegativo}, Cadena: ${cadenaNegativa}`;
+
+        document.numerosForm.resultadoCadena.value = resultadoCadena;
+    </script>
+</body>
+</html>

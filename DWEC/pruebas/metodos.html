@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos de Documento y Ventana en JavaScript</title>
+</head>
+<body>
+    <h1>Ejemplo de Métodos de Documento y Ventana en JavaScript</h1>
+    
+    <button onclick="writeContent()">Escribir contenido</button>
+    <button onclick="writeLineContent()">Escribir línea de contenido</button>
+    <button onclick="openNewWindow()">Abrir nueva ventana</button>
+    <button onclick="closeCurrentWindow()">Cerrar ventana actual</button>
+
+    <script>
+        // Método para escribir contenido en el documento
+        function writeContent() {
+            document.write("Este es un mensaje escrito usando document.write().<br>");
+            document.write("¡Puedes ver cómo funciona este método!");
+        }
+
+        // Método para escribir una línea en el documento
+        function writeLineContent() {
+            document.writeln("Este es un mensaje escrito usando document.writeln().<br>");
+            document.writeln("Cada línea se agrega automáticamente con un salto de línea.");
+        }
+
+        // Método para abrir una nueva ventana
+        function openNewWindow() {
+            let newWindow = window.open("", "Nueva Ventana", "width=400,height=300");
+            newWindow.document.write("<h2>Esta es una nueva ventana</h2>");
+            newWindow.document.writeln("<p>¡Hola desde la nueva ventana!</p>");
+            newWindow.document.writeln("<button onclick='window.close()'>Cerrar ventana</button>"); // Botón para cerrar la ventana nueva
+        }
+
+        // Método para cerrar la ventana actual
+        function closeCurrentWindow() {
+            window.close(); // Cierra la ventana actual, pero solo funcionará si la ventana fue abierta por JavaScript
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Objeto Date en JavaScript</title>
+</head>
+<body>
+    <h1>Ejemplo de Constructores y Métodos del Objeto Date</h1>
+
+    <button onclick="currentDate()">Fecha actual</button>
+    <button onclick="specificDate()">Fecha específica (2022-12-25)</button>
+    <button onclick="showDateMethods()">Métodos principales de Date</button>
+
+    <form name="dateForm">
+        <textarea name="output" rows="10" cols="50" readonly></textarea>
+    </form>
+
+    <script>
+        // Función para crear la fecha actual
+        function currentDate() {
+            let date = new Date();
+            document.dateForm.output.value = "Fecha actual: " + date.toString();
+        }
+
+        // Función para crear una fecha específica
+        function specificDate() {
+            let date = new Date(2022, 11, 25); // Meses en JavaScript empiezan desde 0, 11 = Diciembre
+            document.dateForm.output.value = "Fecha específica: " + date.toString();
+        }
+
+        // Función para mostrar los principales métodos del objeto Date
+        function showDateMethods() {
+            let date = new Date();
+
+            // Métodos comunes del objeto Date
+            let year = date.getFullYear(); // Obtiene el año completo
+            let month = date.getMonth() + 1; // Obtiene el mes (0-11), +1 para hacerlo humano
+            let day = date.getDate(); // Obtiene el día del mes (1-31)
+            let hours = date.getHours(); // Obtiene la hora
+            let minutes = date.getMinutes(); // Obtiene los minutos
+            let seconds = date.getSeconds(); // Obtiene los segundos
+            let timeString = date.toLocaleTimeString(); // Hora en formato local
+            let dateString = date.toLocaleDateString(); // Fecha en formato local
+
+            document.dateForm.output.value = `
+                Métodos de la fecha actual:
+                getFullYear(): Año: ${year}
+                getMonth(): Mes: ${month}
+                getDay(): Día: ${day}
+                getHours(): Hora: ${hours}
+                getMinutes(): Minutos: ${minutes}
+                getSeconds(): Segundos: ${seconds}
+                toLocaleTimeString(): Hora local: ${timeString}
+                toLocaleDateString(): Fecha local: ${dateString}
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Métodos en JavaScript</title>
+</head>
+<body>
+    <h1>Ejemplo de Métodos en JavaScript</h1>
+    <p><strong>Variables iniciales:</strong></p>
+    <ul>
+        <li>text: "JavaScript es un lenguaje poderoso"</li>
+        <li>numberStr: "12345"</li>
+        <li>phrase: "   Hola, mundo!   "</li>
+    </ul>
+
+    <div id="result"></div>
+
+    <script>
+        // Variables de ejemplo
+        let text = "JavaScript es un lenguaje poderoso";
+        let numberStr = "12345";
+        let phrase = "   Hola, mundo!   ";
+
+        // Resultados de métodos con "text"
+        let searchResult = text.search("lenguaje"); // Posición de "lenguaje"
+        let substrResult = text.substr(4, 6); // Comienza en el indice 4 y toma 6 caracteres
+        let substringResult = text.substring(0, 10); // Primeros 10 caracteres
+        let sliceResult = text.slice(11); //Captura el string a partir de la posicion 11
+        let replaceResult = text.replace("poderoso", "versátil"); // Reemplaza "poderoso" por "versátil"
+        let repeatResult = text.repeat(2); // Repite la cadena dos veces
+        let codePointAtResult = text.codePointAt(0); // Código Unicode del primer carácter "J"
+        let valueOfResult = text.valueOf(); // Valor en cadena de "text"
+        let startsWithResult = text.startsWith("Java"); // ¿Empieza con "Java"?
+        let endsWithResult = text.endsWith("poderoso"); // ¿Termina con "poderoso"?
+        let lengthResult = text.length; // Longitud de la cadena
+        let charAtResult = text.charAt(5); // Carácter en la posición 5
+        let charCodeAtResult = text.charCodeAt(0); // Código ASCII del primer carácter "J"
+        let indexOfResult = text.indexOf("lenguaje"); // Posición de "lenguaje"
+        //Usa search() cuando necesitas buscar patrones complejos o expresiones regulares.
+        //Usa indexOf() para búsquedas simples de texto o cuando necesitas especificar un índice de inicio
+        let includesResult = text.includes("poderoso"); // ¿Contiene "poderoso"?
+
+        // Resultados de métodos con "numberStr"
+        let numToString = numberStr.toString(); // Convierte el número en cadena
+        let padEndResult = numberStr.padEnd(10, "0"); // Rellena a la derecha con ceros hasta tener 10 caracteres
+        let padStartResult = numberStr.padStart(10, "0"); // Rellena a la izquierda con ceros hasta tener 10 caracteres
+        let parsedInt = parseInt(numberStr); // Convierte la cadena en un número entero
+
+        // Resultados de métodos con "phrase"
+        let trimResult = phrase.trim(); // Elimina espacios en blanco de los extremos
+
+        // Mostrar resultados en HTML agrupados por variable
+        document.getElementById("result").innerHTML = `
+            <h2>Resultados para la variable "text":</h2>
+            <ul>
+                <li><strong>Posición de "lenguaje" usando search:</strong> ${searchResult}</li>
+                <li><strong>indice 4 y coje 6 caracteres usando substr:</strong> "${substrResult}"</li>
+                <li><strong>Primeros 10 caracteres usando substring:</strong> "${substringResult}"</li>
+                <li><strong>A partir de la posicion 11 usando slice:</strong> "${sliceResult}"</li>
+                <li><strong>Reemplazar "poderoso" por "versátil" usando replace:</strong> "${replaceResult}"</li>
+                <li><strong>Repetir texto dos veces usando repeat:</strong> "${repeatResult}"</li>
+                <li><strong>Código Unicode del primer carácter usando codePointAt:</strong> ${codePointAtResult}</li>
+                <li><strong>Valor de la cadena usando valueOf:</strong> "${valueOfResult}"</li>
+                <li><strong>¿Empieza con "Java" usando startsWith?:</strong> ${startsWithResult}</li>
+                <li><strong>¿Termina con "poderoso" usando endsWith?:</strong> ${endsWithResult}</li>
+                <li><strong>Longitud de la cadena usando length:</strong> ${lengthResult}</li>
+                <li><strong>Carácter en la posición 5 usando charAt:</strong> "${charAtResult}"</li>
+                <li><strong>Código ASCII del primer carácter usando charCodeAt:</strong> ${charCodeAtResult}</li>
+                <li><strong>Posición de "lenguaje" usando indexOf:</strong> ${indexOfResult}</li>
+                <li><strong>¿Contiene "poderoso" usando includes?:</strong> ${includesResult}</li>
+            </ul>
+
+            <h2>Resultados para la variable "numberStr":</h2>
+            <ul>
+                <li><strong>Convertir en cadena usando toString:</strong> "${numToString}"</li>
+                <li><strong>Rellenar a la derecha con ceros usando padEnd:</strong> "${padEndResult}"</li>
+                <li><strong>Rellenar a la izquierda con ceros usando padStart:</strong> "${padStartResult}"</li>
+                <li><strong>Convertir en número entero usando parseInt:</strong> ${parsedInt}</li>
+            </ul>
+
+            <h2>Resultados para la variable "phrase":</h2>
+            <ul>
+                <li><strong>Eliminar espacios en blanco de los extremos usando trim:</strong> "${trimResult}"</li>
+            </ul>
+        `;
+    </script>
+</body>
+</html>

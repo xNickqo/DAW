@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expresiones Regulares con Condicionales</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        input { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Ejemplos de Expresiones Regulares en JavaScript</h1>
+
+    <h2>1. Testear una expresión regular</h2>
+    <input type="text" name="testInput" placeholder="Introduce texto para testear">
+    <button onclick="testRegex()">Probar</button>
+    <p name="testResult"></p>
+
+    <h2>2. Buscar coincidencia (match)</h2>
+    <input type="text" name="matchInput" placeholder="Introduce texto para buscar">
+    <button onclick="matchRegex()">Buscar coincidencia</button>
+    <p name="matchResult"></p>
+
+    <h2>3. Reemplazar texto (replace)</h2>
+    <input type="text" name="replaceInput" placeholder="Introduce texto para reemplazar">
+    <button onclick="replaceRegex()">Reemplazar</button>
+    <p name="replaceResult"></p>
+
+    <h2>4. Dividir texto (split)</h2>
+    <input type="text" name="splitInput" placeholder="Introduce texto para dividir">
+    <button onclick="splitRegex()">Dividir</button>
+    <p name="splitResult"></p>
+
+    <h2>5. Ejecutar búsqueda avanzada (exec)</h2>
+    <input type="text" name="execInput" placeholder="Introduce texto para ejecutar búsqueda">
+    <button onclick="execRegex()">Ejecutar</button>
+    <p name="execResult"></p>
+
+    <h2>6. Comprobar coincidencia global y obtener todas las coincidencias</h2>
+    <input type="text" name="matchAllInput" placeholder="Introduce texto para buscar todas las coincidencias">
+    <button onclick="matchAllRegex()">Buscar todas las coincidencias</button>
+    <p name="matchAllResult"></p>
+
+    <script>
+        // 1. Testear una expresión regular en el texto (test)
+        function testRegex() {
+            let input = document.getElementsByName("testInput")[0].value;
+            let regex = /^[a-zA-Z]+$/; // Expresión regular para verificar si el texto contiene solo letras
+            
+            let result = regex.test(input);
+            if (result) {
+                document.getElementsByName("testResult")[0].textContent = "Solo letras encontradas";
+            } else {
+                document.getElementsByName("testResult")[0].textContent = "Se encontraron otros caracteres";
+            }
+        }
+
+        // 2. Buscar coincidencia en el texto (match)
+        function matchRegex() {
+            let input = document.getElementsByName("matchInput")[0].value;
+            let regex = /\bJava\w*\b/; // Expresión regular para encontrar la primera coincidencia de una palabra que empieza con 'Java'
+            
+            let result = input.match(regex);
+            if (result) {
+                document.getElementsByName("matchResult")[0].textContent = `Coincidencia encontrada: ${result[0]}`;
+            } else {
+                document.getElementsByName("matchResult")[0].textContent = "No se encontraron coincidencias";
+            }
+        }
+
+        // 3. Reemplazar texto en la cadena (replace)
+        function replaceRegex() {
+            let input = document.getElementsByName("replaceInput")[0].value;
+            let regex = /[aeiou]/gi; // Expresión regular para reemplazar todas las vocales por un asterisco
+            
+            let result = input.replace(regex, "*");
+            if (input) {
+                document.getElementsByName("replaceResult")[0].textContent = `Texto después de reemplazar: ${result}`;
+            } else {
+                document.getElementsByName("replaceResult")[0].textContent = "Por favor, introduce texto para reemplazar.";
+            }
+        }
+
+        // 4. Dividir texto en partes (split)
+        function splitRegex() {
+            let input = document.getElementsByName("splitInput")[0].value;
+            let regex = /\s+/; // Expresión regular para dividir el texto por cualquier espacio en blanco
+            
+            let result = input.split(regex);
+            if (input.trim() === "") {
+                document.getElementsByName("splitResult")[0].textContent = "Por favor, introduce texto para dividir.";
+            } else {
+                document.getElementsByName("splitResult")[0].textContent = `Texto dividido en partes: ${result.join(", ")}`;
+            }
+        }
+
+        // 5. Ejecutar una búsqueda avanzada en el texto (exec)
+        function execRegex() {
+            let input = document.getElementsByName("execInput")[0].value;
+            let regex = /\d+/; // Expresión regular para encontrar la primera secuencia de dígitos
+            
+            let result = regex.exec(input);
+            if (result) {
+                document.getElementsByName("execResult")[0].textContent = `Coincidencia encontrada: ${result[0]} en índice ${result.index}`;
+            } else {
+                document.getElementsByName("execResult")[0].textContent = "No se encontraron coincidencias";
+            }
+        }
+    </script>
+</body>
+</html>

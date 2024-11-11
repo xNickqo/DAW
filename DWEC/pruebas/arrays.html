@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métodos de Arrays en JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Métodos de Arrays en JavaScript</h1>
+
+    <button onclick="demonstrateArrayMethods()">Mostrar Métodos de Arrays</button>
+
+    <h2>Resultados:</h2>
+    <pre></pre>
+
+    <script>
+        function demonstrateArrayMethods() {
+            let results = "";
+            let array = [1, 2, 3, 4, 5];
+            results += `Array inicial: ${array}\n\n`;
+
+            results += `Longitud del array, array.length: ${array.length}\n\n`;
+
+            results += `Elemento en posición 2, array.at(2): ${array.at(2)}\n\n`;
+
+            results += `Primer elemento eliminado con shift, array.shift(): ${array.shift()}\n`;
+            results += `Array después de shift: ${array}\n\n`;
+            
+            results += `Ultimo elemento eliminado con pop, array.pop(): ${array.pop()}\n`;
+            results += `Array después de pop: ${array}\n\n`;
+            
+            array.push(6);
+            results += `Array después de push (6), array.push(6): ${array}\n\n`;
+            
+            array.unshift(0);
+            results += `Array después de unshift (0), array.unshift(0): ${array}\n\n`;
+            
+            array.splice(1, 2, 10, 20);
+            results += `Array después de splice (removiendo 2 elementos desde la posición 1 y agregando 10 y 20): ${array}\n\n`;
+            
+            let newArray = array.toSpliced(1, 1, 99);
+            results += `Array original: ${array}\n`;
+            results += `Nuevo array con toSpliced (removiendo 1 elemento y agregando 99): ${newArray}\n\n`;
+            
+            results += `Array invertido, array.reverse(): ${array.reverse()}\n\n`;
+            results += `Array original (después de reverse): ${array}\n`;
+            
+            results += `Nuevo array invertido con toReversed: ${array.toReversed()}\n\n`;
+            
+            results += `Array ordenado: ${array.sort((a, b) => a - b)}\n\n`;
+            results += `Array original (después de sort): ${array}\n`;
+            
+            results += `Nuevo array ordenado con toSorted: ${array.toSorted((a, b) => b - a)}\n\n`;
+            
+            let slicedArray = array.slice(1, 4);
+            results += `Array original: ${array}\n`;
+            results += `Array cortado con slice (1, 4): ${slicedArray}\n\n`;
+            
+            results += `array.indexOf(3): ${array.indexOf(3)}\n`;
+            
+            results += `array.lastIndexOf(3): ${array.lastIndexOf(3)}\n\n`;
+            
+            results += `¿El array tiene el numero 4? array.includes(4): ${array.includes(4)}\n\n`;
+            
+            let anotherArray = [7, 8, 9];
+            let concatenatedArray = array.concat(anotherArray);
+            results += `Array concatenado array.concat(anotherArray=[7, 8, 9]): ${concatenatedArray}\n\n`;
+            
+            results += `Unir elementos en una cadena añadiendo el caracter ',' con array.join(","): ${array.join(", ")}\n\n`;
+            
+            results += "Usar forEach:\n";
+            array.forEach((value, index) => {
+                results += `Elemento en índice ${index}: ${value}\n`;
+            });
+            results += "\n";
+            
+            results += `Array rellenado con 0, con array.fill(0): ${array.fill(0)}\n\n`;
+            
+            let foundValue = array.find(value => value > 0);
+            results += `Primer valor encontrado mayor que 0, con find(value => value > 0): ${foundValue}\n\n`;
+            
+            let foundIndex = array.findIndex(value => value > 0);
+            results += `Índice del primer valor mayor que 0, con findIndex(value => value > 0): ${foundIndex}\n\n`;
+            
+            results += "Entradas del array:\n";
+            for (let entry of array.entries()) {
+                results += `Índice: ${entry[0]}, Valor: ${entry[1]}\n`;
+            }
+            
+            results += "\nValores del array:\n";
+            for (let value of array.values()) {
+                results += `Valor: ${value}\n`;
+            }
+            
+            results += "\nÍndices del array:\n";
+            for (let key of array.keys()) {
+                results += `Índice: ${key}\n`;
+            }
+            
+            let mappedArray = array.map(value => value * 2);
+            results += `Array mapeado (cada elemento multiplicado por 2), array.map(value => value*2): ${mappedArray}\n\n`;
+            
+            results += `Array como cadena, array.toString(): ${array.toString()}\n\n`;
+            
+            let str = "1,2,3,4,5";
+            let splitArray = str.split(",");
+            results += `Array resultante de dividir la cadena "1,2,3,4,5": ${splitArray}\n\n`;
+
+            // Mostrar resultados directamente en el <pre>
+            document.getElementsByTagName('pre')[0].textContent = results; 
+        }
+    </script>
+</body>
+</html>

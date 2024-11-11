@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Métodos de Math en JavaScript</title>
+</head>
+<body>
+    <h1>Ejemplo de Métodos del Objeto Math</h1>
+
+    <button onclick="useFloor()">Math.floor</button>
+    <button onclick="useRound()">Math.round</button>
+    <button onclick="useTrunc()">Math.trunc</button>
+    <button onclick="useExp()">Math.exp</button>
+    <button onclick="usePow()">Math.pow</button>
+    <button onclick="useSqrt()">Math.sqrt</button>
+    <button onclick="useLog()">Math.log</button>
+    <button onclick="useMaxMin()">Math.max y Math.min</button>
+    <button onclick="useRandom()">Math.random</button>
+    <button onclick="useSign()">Math.sign</button>
+
+    <form name="mathForm">
+        <textarea name="output" rows="10" cols="50" readonly></textarea>
+    </form>
+
+    <script>
+        // Función para Math.floor
+        function useFloor() {
+            let num = 5.7;
+            document.mathForm.output.value = `Math.floor(${num}): ${Math.floor(num)} (redondea hacia abajo)`;
+        }
+
+        // Función para Math.round
+        function useRound() {
+            let num = 5.5;
+            document.mathForm.output.value = `Math.round(${num}): ${Math.round(num)} (redondea al entero más cercano)`;
+        }
+
+        // Función para Math.trunc
+        function useTrunc() {
+            let num = 5.9;
+            document.mathForm.output.value = `Math.trunc(${num}): ${Math.trunc(num)} (elimina la parte decimal)`;
+        }
+
+        // Función para Math.exp
+        function useExp() {
+            let exponent = 2;
+            document.mathForm.output.value = `Math.exp(${exponent}): ${Math.exp(exponent)} (calcula e^${exponent})`;
+        }
+
+        // Función para Math.pow
+        function usePow() {
+            let base = 4, exponent = 3;
+            document.mathForm.output.value = `Math.pow(${base}, ${exponent}): ${Math.pow(base, exponent)} (calcula ${base}^${exponent})`;
+        }
+
+        // Función para Math.sqrt
+        function useSqrt() {
+            let num = 16;
+            document.mathForm.output.value = `Math.sqrt(${num}): ${Math.sqrt(num)} (calcula la raíz cuadrada)`;
+        }
+
+        // Función para Math.log
+        function useLog() {
+            let num = 10;
+            document.mathForm.output.value = `Math.log(${num}): ${Math.log(num)} (calcula el logaritmo natural)`;
+        }
+
+        // Función para Math.max y Math.min
+        function useMaxMin() {
+            let values = [2, 3, 9, 4, 7];
+            let max = Math.max(...values);
+            let min = Math.min(...values);
+            document.mathForm.output.value = `Valores: ${values}\nMath.max: ${max}\nMath.min: ${min}`;
+        }
+
+        // Función para Math.random
+        function useRandom() {
+            let randomNum = Math.random();
+            document.mathForm.output.value = `Math.random(): ${randomNum} (número aleatorio entre 0 y 1)`;
+        }
+
+        // Función para Math.sign
+        function useSign() {
+            let num = -42;
+            document.mathForm.output.value = `Math.sign(${num}): ${Math.sign(num)} (devuelve -1, 0 o 1 según el signo del número)`;
+        }
+    </script>
+</body>
+</html>

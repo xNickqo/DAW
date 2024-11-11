@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejemplo de Manipulación del DOM</title>
+</head>
+<body>
+
+<h1 id="titulo">Formulario de Registro</h1>
+<form name="formularioRegistro">
+    <label>Nombre:</label>
+    <input type="text" name="nombre" id="nombre"><br><br>
+
+    <label>Apellido:</label>
+    <input type="text" name="apellido" class="campoTexto"><br><br>
+
+    <label>Correo:</label>
+    <input type="email" name="correo" class="campoTexto"><br><br>
+
+    <button type="button" id="crearElementoBtn">Crear Elemento</button>
+    <button type="button" id="mostrarMensajeBtn">Mostrar Mensaje</button>
+</form>
+
+<script>
+    // Ejemplo de uso de `createElement`, `createTextNode`, `append`, `prepend`, `createAttribute`, y `getElementById`
+    document.getElementById('crearElementoBtn').onclick = function() {
+        let nuevoDiv = document.createElement('div');
+        let texto = document.createTextNode('Elemento creado dinámicamente');
+        
+        nuevoDiv.appendChild(texto);
+        
+        let atributoId = document.createAttribute('id');
+        atributoId.value = 'nuevoDiv';
+        nuevoDiv.setAttributeNode(atributoId);
+        
+        document.body.append(nuevoDiv);
+    };
+
+    // Ejemplo de uso de `getElementsByTagName` y `getElementsByClassName`
+    document.getElementById('mostrarMensajeBtn').onclick = function() {
+        let camposTexto = document.getElementsByTagName('input');
+        let camposConClase = document.getElementsByClassName('campoTexto');
+        
+        let mensaje = 'Número de campos de texto: ' + camposTexto.length + '\n';
+        mensaje += 'Número de campos con clase "campoTexto": ' + camposConClase.length;
+        
+        alert(mensaje);
+    };
+
+    // Ejemplo de `querySelector` y `querySelectorAll`
+    let primerCampoTexto = document.querySelector('.campoTexto');
+    primerCampoTexto.style.backgroundColor = 'yellow';
+
+    let todosLosCampos = document.querySelectorAll('.campoTexto');
+    todosLosCampos.forEach(campo => campo.style.border = '1px solid blue');
+
+    // Ejemplo de `createEvent` y `dispatchEvent`
+    let eventoClick = document.createEvent('Event');
+    eventoClick.initEvent('click', true, true);
+    
+    document.getElementById('crearElementoBtn').dispatchEvent(eventoClick);
+
+    // Ejemplo de `getElementsByName`
+    let nombreInput = document.getElementsByName('nombre')[0];
+    nombreInput.value = "Texto agregado usando getElementsByName";
+
+</script>
+
+</body>
+</html>

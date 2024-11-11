@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Sentencias Básicas en JavaScript</title>
+</head>
+<body>
+    <h1>Ejemplo de Sentencias Básicas en JavaScript</h1>
+    
+    <button onclick="showAlert()">Mostrar Alert</button>
+    <button onclick="showConfirm()">Mostrar Confirm</button>
+    <button onclick="showPrompt()">Mostrar Prompt</button>
+    <button onclick="showConsoleLog()">Mostrar Console.log</button>
+    <button onclick="showDocumentWrite()">Mostrar Document.write</button>
+    
+    <div id="output"></div>
+
+    <script>
+        // Función para mostrar una alerta
+        function showAlert() {
+            alert("¡Hola! Esto es una alerta.");
+        }
+
+        // Función para mostrar un mensaje de confirmación
+        function showConfirm() {
+            let result = confirm("¿Estás seguro de continuar?");
+            document.getElementById("output").innerText = "Resultado de confirm: " + (result ? "OK" : "Cancelar");
+        }
+
+        // Función para mostrar un mensaje de prompt
+        function showPrompt() {
+            let name = prompt("¿Cuál es tu nombre?", "Usuario");
+            document.getElementById("output").innerText = "Nombre ingresado en prompt: " + (name ? name : "No ingresaste un nombre.");
+        }
+
+        // Función para mostrar un mensaje en la consola
+        function showConsoleLog() {
+            console.log("Este es un mensaje en la consola.");
+            document.getElementById("output").innerText = "Revisa la consola para ver el mensaje de console.log.";
+        }
+
+        // Función para mostrar un mensaje en el documento usando document.write
+        function showDocumentWrite() {
+            document.write("<h2>Este contenido fue escrito con document.write</h2>");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Gestión de Eventos en JavaScript</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #hoverBox { width: 100px; height: 100px; background-color: lightblue; margin: 10px; }
+    </style>
+</head>
+<body onload="onPageLoad()">
+    <h1>Eventos en JavaScript</h1>
+    <p>Interactúa con los elementos para ver los eventos en acción.</p>
+
+    <!-- Evento onload: Ejecutado cuando se carga la página -->
+    <script>
+        function onPageLoad() {
+            console.log("Página cargada (evento onload)");
+        }
+    </script>
+
+    <!-- Evento onclick: Ejecutado cuando se hace clic en el botón -->
+    <button onclick="onClickEvent()">Click Me</button>
+    <script>
+        function onClickEvent() {
+            console.log("Botón clickeado (evento onclick)");
+        }
+    </script>
+
+    <!-- Evento ondbclick: Ejecutado cuando se hace doble clic en el botón -->
+    <button ondblclick="onDoubleClickEvent()">Doble Click</button>
+    <script>
+        function onDoubleClickEvent() {
+            console.log("Botón doblemente clickeado (evento ondblclick)");
+        }
+    </script>
+
+    <!-- Eventos onmousedown y onmouseup: Detecta cuando se presiona y se suelta el botón del ratón -->
+    <button onmousedown="onMouseDownEvent()" onmouseup="onMouseUpEvent()">Mantén Presionado</button>
+    <script>
+        function onMouseDownEvent() {
+            console.log("Botón del ratón presionado (evento onmousedown)");
+        }
+        function onMouseUpEvent() {
+            console.log("Botón del ratón liberado (evento onmouseup)");
+        }
+    </script>
+
+    <!-- Eventos onmouseover, onmousemove y onmouseout: Detecta cuando el ratón entra, se mueve, o sale de un área -->
+    <div id="hoverBox" onmouseover="onMouseOverEvent()" onmousemove="onMouseMoveEvent()" onmouseout="onMouseOutEvent()"></div>
+    <script>
+        function onMouseOverEvent() {
+            console.log("El ratón ha entrado en el área (evento onmouseover)");
+        }
+        function onMouseMoveEvent() {
+            console.log("El ratón se está moviendo dentro del área (evento onmousemove)");
+        }
+        function onMouseOutEvent() {
+            console.log("El ratón ha salido del área (evento onmouseout)");
+        }
+    </script>
+
+    <!-- Evento onfocus: Detecta cuando el input obtiene el foco -->
+    <input type="text" onfocus="onFocusEvent()" placeholder="Haz clic aquí">
+    <script>
+        function onFocusEvent() {
+            console.log("Input enfocado (evento onfocus)");
+        }
+    </script>
+
+    <!-- Eventos onkeypress, onkeyup, y onkeydown: Detecta cuando se presiona, suelta, y mantiene una tecla en el input -->
+    <input type="text" onkeypress="onKeyPressEvent()" onkeyup="onKeyUpEvent()" onkeydown="onKeyDownEvent()" placeholder="Escribe algo">
+    <script>
+        function onKeyPressEvent() {
+            console.log("Tecla presionada (evento onkeypress)");
+        }
+        function onKeyUpEvent() {
+            console.log("Tecla liberada (evento onkeyup)");
+        }
+        function onKeyDownEvent() {
+            console.log("Tecla mantenida presionada (evento onkeydown)");
+        }
+    </script>
+
+    <!-- Eventos onsubmit y onreset: Detecta cuando se envía o se reinicia el formulario -->
+    <form onsubmit="onSubmitEvent(event)" onreset="onResetEvent()">
+        <input type="text" placeholder="Nombre" required>
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Reiniciar">
+    </form>
+    <script>
+        function onSubmitEvent(event) {
+            event.preventDefault(); // Evita que el formulario se envíe para fines de demostración
+            console.log("Formulario enviado (evento onsubmit)");
+        }
+        function onResetEvent() {
+            console.log("Formulario reiniciado (evento onreset)");
+        }
+    </script>
+
+    <!-- Evento onselect: Ejecutado cuando se selecciona texto dentro del input -->
+    <input type="text" onselect="onSelectEvent()" value="Selecciona este texto">
+    <script>
+        function onSelectEvent() {
+            console.log("Texto seleccionado en el input (evento onselect)");
+        }
+    </script>
+
+    <!-- Evento onchange: Detecta cambios en el valor del input -->
+    <input type="text" onchange="onChangeEvent()" placeholder="Escribe y cambia el foco">
+    <script>
+        function onChangeEvent() {
+            console.log("Valor del input cambiado (evento onchange)");
+        }
+    </script>
+</body>
+</html>
