@@ -9,8 +9,9 @@
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
         <label for="dni">DNI:</label>
         <select name="dni" id="dni">
-            <option value=""></option>
+            <option value="">Seleccione un DNI</option>
             <?php
+                include "funciones_bbdd.php";
                 $conn = ConexionBBDD();
 
                 $sql = "SELECT dni, nombre FROM emple";
@@ -18,16 +19,15 @@
                 $stmt->execute();
                 $arrayEmple = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                var_dump($arrayEmple);
-
                 foreach ($arrayEmple as $emple) {
                     echo "<option value='" . htmlspecialchars($emple['nombre']) . "'>" . htmlspecialchars($emple['dni']) . "</option>";
                 }
             ?>
         </select>
-        <label for="cod_dpto">Selecciona Nuevo Departamento:</label>
+        <br>
+        <label for="cod_dpto">Departamento:</label>
         <select name="cod_dpto" id="cod_dpto" required>
-            <option value="">Seleccione un departamento</option>
+            <option value="">Seleccione un nuevo departamento</option>
             <?php
                 $sql = "SELECT cod_dpto, nombre FROM dpto";
                 $stmt = $conn->prepare($sql);
@@ -39,7 +39,7 @@
                 }
             ?>
         </select>
-
+        <br>
         <input type="submit" value="Asignar Departamento">
 
     </form>
@@ -67,6 +67,10 @@
                 echo "<p>Por favor, seleccione un empleado y un departamento.</p>";
             }
         }
+
+        //var_dump($arrayEmple);
+
+        //var_dump($arrayDpto);
     ?>
 </body>
 </html>
