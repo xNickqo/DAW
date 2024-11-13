@@ -1,0 +1,54 @@
+ - Flexbox caja flexible
+ - Grid	rejilla
+ 
+ 
+ Flexbox
+ Tener estructura de Flex
+ Padre							Hijos
+ display: flex | inline-flex
+ 
+ alinear los elementos hijos
+ -webkit-align-items: flex-strart| flex-end | baseline | center | strectch
+ align-items:flex-strart| flex-end | baseline | center | strectch
+ 
+ 								alineación diferente de un hijo
+								align-self: flex-strart| flex-end | baseline | center | strectch
+								
+Sentido en que se colocan los hijos
+flex-direction:row | row-reverse | column | column-reverse
+
+
+Para indicar si se muestran el línea
+flex-wrap: wrap | nowrap | wrap-reverse
+
+
+Resumen de las dis anteriores
+flex-flow: v-flex-direction   v-flex-wrap
+
+								Orden en que se colocan los hijos
+								order:posición
+								
+
+								flex-basic : content | auto | ancho
+
+								Factor de expansión
+								flex-grow:número
+								
+
+								Factor de compresión
+								flex-shrink: número
+								
+								flex: vflex-grow vflex-shrink flex-basic | initial 
+														auto| número
+								
+								flex-initial :  flex:initial -->  0 1 auto
+												flex:auto    -->  1 1 auto
+												flex:número  -->  número 1 0
+
+
+
+justify-content: flex-start | flex-end | center | space-between | space-around
+
+
+align-content: flex-start | flex-end | center | space-between | space-around | stretch
+								

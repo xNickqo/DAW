@@ -1,0 +1,129 @@
+Expresiones regulares
+	- expresiones regulares directas
+	let variable= /expresión-regular/modificadores --> i 
+	- Expresionres regulares objeto RegExp
+	let variable= new RegExp("expresión-regular", "modificadores")
+	 la expresión regular aquí es igual a la expresión regular de la expresiones regulares
+	 directas duplicando el caracter \.
+	
+	Caracteres con signidicado 
+	 . --> un carácter cualquiera.
+	 carácter-1 | carácter-2 --> o bien el carácter-1 o bien el carácter-2
+	 [lista-caracteres] --> un único caracter, cuyo valor es uno de la lista
+	 [aeiou] --> una vocal sin acentuar
+	 [rango-caracteres] --> un único carácter, cuyo valor es uno de los del rango
+	 [a-z] --> una letra del alfabeto inglés
+	 [a-záéíóúüñ] --> una letra del alfabeto español.
+	 [^lista-caracteres] --> un único caracter, cuyo valor es cualquier carácter exceptuando
+	 						los de la lista
+	 [^aeiou] --> un único carácter excepto las vocales sin acentuar.
+	 [^0-9] --> un único carácter excepto los dígitos.
+	 [^a-záéíóúüñ] --> un único carácter excepto las letras del alfabeto español.
+	 \d --> un dígito
+	 \D --> un carácter cualquiera excepto lkos dígitos.
+	 \w --> un carácter alfanumérico [a-zA-Z0-9_]
+	 \W --> un carácter cualquiera que no sea alfanumérico
+	 \b --> límite de palabra
+	 \B --> un carácter cualquiera excepto los límites de palabra
+	 \s --> espacio
+	 \S --> un carácter cualquiera excepto el espacio
+	 \0 --> carácter nulo
+	 
+	 ^ --> principio
+	 $ -> final
+	 
+	 ? --> 0 ó 1 vez
+	 * --> de 0 a n veces
+	 + --> de 1 a n veces
+	 {n} --> n veces
+	 {n,m} --> repetido de n a m veces
+	 {n,} --> repetido de n a infinito veces
+	 
+	 () --> agrupaciones
+	 
+	 
+	 código postal
+	 let cp0=/^\d{4,5}$/;
+	 let cp1= new RegExp("^\\d{4,5}$");
+	 código postal 1.000 a 52.999
+	 let cp2=/^((0?[1-9])|([1-4]\d)|(5[0-2]))\d{3}$/
+		0 1-9 3 dígitos
+		1-4 4 dígitos = 1-4 dígito 3 dígitos	 
+		5 0-2 3 dígitos
+	
+	28040
+	 nombre empieza por 3 letras, termina por 2 letras, en medio tiene letras, espacio
+	 ª, º, . , - con una longitud total de entre 8 y 19 caracteres.
+	 	
+	let expNombre=/^[a-záéíóúüñ]{3}[a-záéíóúüñºª\.\- ]{3,14}[a-záéíóúüñ]{2}$/i;
+	
+	fecha
+	
+	let fecha=/^((0?)|(\d))\d[\-\/]((0?)|(\d))\d[\-\/]\d{4}$/;
+	let fecha1=/^((0?[1-9])|([12]\d)|(3[01]))[\-\/]((0?[1-9])|(1[0-2]))[\-\/]\d{4}$/;
+	let fecha2=/^((((0?[1-9])|([12]\d)|(3[01]))[\-\/]((0?[13578])|(1[02])))|
+				 (((0?[1-9])|([12]\d)|(30))[\-\/]((0?[469])|(11))) | 
+				 (((0?[1-9])|([12]\d))[\-\/](0?2)))[\-\/]\d{4}$/;
+	
+	
+	let fecha3=/^((((((0?[1-9])|([12]\d)|(3[01]))[\-\/]((0?[13578])|(1[02])))|
+				(((0?[1-9])|([12]\d))|(30))[\-\/]((0?[469])|(11))|
+				(((0?[1-9])|([1\d)|(2[0-8]))[\-\/](0?2)))
+				[\-\/]\d{4})|
+				(29[\-\/]0?2[\-\/]
+				((((0[48])|([2468][480])|([13579][26]))00)|
+				(\d{2}((0[48])|([2468][480])|([13579][26]))))))$/
+	
+	0[48]00
+[2468][480]00
+[13579][26]00
+
+\d{2} 0[48]
+\d{2}[2468][480]
+\d{2}[13579][26]
+	
+	número comprendido entre 48 y 3678.
+	
+	
+	4[89]
+	[5-9]\d
+	[1-9]\d{2}
+	[1-2]\d{3}
+	3[0-5]\d{2}
+	36[0-6]\d
+	367[0-8]
+	
+	
+	let expNum=/^((0{0,2}((4[89])|([5-9]\d)))|(0?([1-9]\d{2}))|([12]\d{3})|(3[0-5]\d{2}) |
+				(36[0-6]\d)|(367[0-8]))$/;
+
+
+	let expReg5=/^\d{0,}((5)|([1-9]0))$/;
+	
+	let expReg2=/^\d{0,}(([2468])|([1-9]0))$/;
+	
+	empieza por dos letras, le sigue de 3 a 7 dígitos, continua con un carácter de entre
+	%,$,/, continua con cuatro caracteres que pueden ser letras o dígitos, le siguen dos caractreres
+	de entre -, (, ), ?, ¿, y termina con 5 letras o 3 dígitos.
+	
+	let expReg99=/^[a-záéíóúüñ]{2}\d[3,7][\%\$\/][a-záéíóúüñ0-9]{4}[\-\,\(\)\?\¿]{2}
+					([a-záéíóúüñ]{5}|\d{3})$/i;
+	
+	
+	if (expReg.test(cadena))
+		// cadena está dentro del patrón de la expresión regular
+	else 
+		// cadena NO está dentro del patrón de la expresión regular
+				 
+			
+	
+	
+				 
+	
+				
+	
+	
+	
+	 
+	 
+	  

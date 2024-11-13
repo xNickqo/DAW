@@ -1,0 +1,50 @@
+#rejilla {
+	display :grid;
+	-ms-grid-template-columns: repeat(5, 1fr);
+	-ms-grid-template-rows:repeat(4, 500px);
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows:repeat(4, 500px);
+}
+
+-------------------------------------------
+
+pensando en móviles
+si la resolución es inferior a 500px ---> 2 columnas y 8 filas
+si la resolución está entre 500px y 1000px  --> 3 columnas y 6 filas
+si la resolución está entre 1000px y 1500px --> 4 columnas y 4 filas
+si la resolución si es superior a 1500px --> 6 columnas y 3 filas
+
+columnas un ancho de una unidad flexible
+filas un alto de 400px
+
+#rejilla {
+	display:grid;
+	grid-template-columns:repeat(2 , 1fr);
+	grid-template-rows:repeat(8,400px);
+}
+
+@media min-width:500px {
+	#rejilla{
+		grid-template-columns:repeat(3, 1fr);
+		grid-template-rows: repeat(6, 400px);
+	}
+}
+
+
+@media min-width: 1000px{
+	#rejilla{
+		grid-template-columns:repeat(4, 1fr);
+		grid-template-rows: repeat(4, 400px);
+	}
+}
+
+@media min-width: 1500px {
+	#rejilla{
+		grid-template-columns:repeat(6, 1fr);
+		grid-template-rows: repeat(3, 400px);
+	}
+}
+
+
+
+

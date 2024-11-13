@@ -1,0 +1,101 @@
+document.cookie
+
+usuario=luis; nombre=felix; apellido=muÃ±oz; segundo=angel; tercero=bayÃ³n
+
+Crear una cookie
+
+document.cookie="profesor=FÃ©lix Ãngel;expires=true, 31 Dic 2024 00:00:00 GMT;";
+
+
+document.cookie=VstNombre+"="+VstValor+";expires=true, 31 Dic 2024 00:00:00 GMT;";
+
+document.cookie=`${VstNombre}=${VstValor};expires=true, 31 Dic 2024 00:00:00 GMT;`;
+
+
+gundo
+
+
+
+
+
+Leer valor cookie
+Tratandola como una cadena
+let posicion=document.cookie.indexOf(VstNombre+"=");
+if (posicion==-1)
+	// no existe la cookie
+else if (posicion==0)
+	// existe la cookie, es la primera cookie
+else {
+	let posicion=documenet.cookie.indexOf("; "+VstNombre+"=");
+	if (posicion == -1)
+	//	 no existe la cookie
+	else 
+	// existe la cookie
+}
+
+if (posicion !=-1){
+	let pos1=document.cookie.indexOf("=", posicion);
+	let pos2=document.cookie.indexOf(";", pos1);
+	if (pos2==-1)
+		pos2=document.cookie.length;
+	let valorCookie=document.cookie.substring(pos1+1,pos2);
+}
+
+Comprobar existe una cookie con un valor
+let posicion=document.cookie.indexOf(VstNombre+"="+VstValor);
+if (posicion==-1)
+	// no existe la cookie
+else if (posicion==0)
+	// existe la cookie con el valor, es la primera cookie
+else {
+	let posicion=documenet.cookie.indexOf("; "+VstNombre+"="+VstValor);
+	if (posicion == -1)
+	//	 no existe la cookie
+	else 
+	// existe la cookie con el valor 
+}
+
+-----------------------------------
+let misCookies=document.cookie.split("; ");
+if (misCookies.includes(VstNombre+"="+VstValor) )
+	existe la cookie con el valor
+else
+	no existe la cookie con ese valor
+--------------------------------
+let misCookies=document.cookie.split("; ");
+let indice=0;
+let inexiste= true;
+let correcto=true;
+while (inexiste && indice < misCookies.length){
+	if (misCookies[indice].startsWith(VstNombre+"="){
+		inexiste=false;
+		let valores=misCookies[indice].split("=");
+		VstValor=valores[1];
+		
+		let posicion=misCookies[indice].indexOf("=");
+		VstValor=misCookies[indice].substring(posicion+1);
+		
+		if (VstValor!=valorCookie)
+			correcto=false;
+		
+	}
+	indice+=1;
+}
+
+if (inexiste)
+	// no existe la cookie
+else
+	// existe la cookie
+	if (correcto)
+		// valor de la cookie correcto
+	else 
+		// valor de la cookie errÃ³neo
+		
+		
+		
+	
+	
+	
+
+
+

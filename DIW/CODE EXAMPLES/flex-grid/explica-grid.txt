@@ -1,0 +1,82 @@
+Grid
+
+display :grid | grid-inline
+
+indicar las columnas, a través de los tamaños de columna
+grid-template-columns:none | lista-tamaños
+
+grid-template-columns: 200px 300px 400px 500px;
+grid-template-columns: repeat(4,300px);
+grid-template-columns: repeat(5, 1fr)
+grid-template-columns: 1fr 2fr 3fr 4fr;
+grid-template-columns: max-content min-content minmax(100px,500px);
+
+indicamos las filas a través de sus tamaños
+grid-template-rows:none | lista-tamaños
+
+grid-template-areas: lista-nombres;
+
+								grid-area:nombre;
+
+
+grid-template: vgrid-template-rows / v-grid-template-columns v-grid-template-areas
+
+
+Tamaño de las columnas
+grid-auto-columns:tamaño;
+
+Tamaño de las filas
+grid-auto-rows: tamaño;
+
+Para indicar como se colocan los hojos
+grid-auto-flow:row|column|dense
+
+							Para indicar la posición de un hijo
+							grid-row:nº-fila
+							grid-column:nº-columna
+							
+							grid-row: nº-fila/ span número-filas-ocupa
+							grid-column: nº-columna / span nº-columnas-ocupa
+							
+							grid-row: nº-fila-inicial / nº-fila-final
+							grid-row: 2 / 5  ocupa las filas de la 2 a la 4.
+							la última fila indicada no la ocupa
+							grid-column: nº-columna-inicial / nº-columna-final
+							
+							
+							grid-row-start:nº-fila-inicial;
+							grid-row-end:nº-fila-final;
+							
+							grid-column-start:nº-columna-inicial;
+							grid-column-end: nº-columna-final;
+							
+							grid-area: v-grid-row-start / v-grid-column-start / 
+										v-grid-row-end / v-grid-column-end;
+							
+
+Establecer el ancho de separación de las filas
+grid-row-gap: ancho;
+
+Establecer el ancho de separación de las columnas
+grid-column-gap:ancho;
+
+Resumen de las dos anteriores
+grid-gap: sepación-filas sepaciópn-columnas
+
+grid: v-grid-template | v-grid-template-rows / v-grid-template-columns
+
+
+justify-content: flex-start | flex-end | center | space-between | space-around
+
+
+align-content: flex-start | flex-end | center | space-between | space-around | stretch
+
+
+
+
+
+
+
+
+
+
