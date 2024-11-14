@@ -1,0 +1,84 @@
+body{
+    background-image: url(../../imagenes/Giralda.jpg);
+
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    /* background: linear-gradient();
+    background-image: linear-gradient(); */
+
+    font-family: 'Verdana';
+    font-size: 14pt;
+    color: #95B796;
+    margin: 20px 10px 0px 30px;
+    /* margin-left: 30px;
+    margin-top: 20px;
+    margin-right: 10px; */
+}
+
+h3, h2, header{
+    font-family: 'Comic Sans';
+    color: #F50B78;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+div#campanas {
+    display: grid;
+    grid-template-columns: repeat(3,  1fr);
+    column-gap: 2.5cm;
+
+    /* column-rule: 9mm double green; */
+    column-rule-width: 9mm;
+    column-rule-style: double;
+    column-rule-color: green;
+
+    padding: 20px 15px 25px 40px;
+    /* padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 15px;
+    padding-bottom: 25px; */
+
+
+    border-top: 5px dotted #AB0BF5;
+    border-bottom: 5px dotted #AB0BF5;
+    border-left: 8px  dashed #AAA0F0;
+    border-right: 8px  dashed #AAA0F0;
+
+    border-radius: 10px;
+
+    box-shadow: -10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+div#campanas > div:nth-of-type(1) {
+    background-image: url(../../imagenes/sevilla_1562.JPG);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+div#campanas > div:nth-of-type(2) {
+    background-image: url(../../imagenes/sevilla_1563.JPG);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+div#campanas > div:nth-of-type(3) {
+    background-image: url(../../imagenes/sevilla_1564.JPG);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#veleta{
+    background-image: url(../../imagenes/veleta.JPG);
+    background-origin: content-box;
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+
