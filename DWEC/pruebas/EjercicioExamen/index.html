@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/validacionFormulario.js"></script>
+    <script src="js/validaciones.js"></script>
+    
+    <title>Registro</title>
+</head>
+<body>
+    <form name="formu">
+        <h2>Registro</h2>
+        <label>Nombre Completo:</label>
+        <input type="text" name="nombre">
+        <div class="error"></div>
+
+        <label>Correo Electrónico:</label>
+        <input type="email" name="correo">
+        <div class="error"></div>
+
+        <label>Fecha de Nacimiento:</label>
+        <input type="date" name="fechaNacimiento">
+        <div class="error"></div>
+
+        <label>Número de Teléfono:</label>
+        <input type="tel" name="telefono">
+        <div class="error"></div>
+
+        <label>IBAN:</label>
+        <input type="text" name="iban">
+        <div class="error"></div>
+
+        <label>Mensaje:</label>
+        <textarea name="mensaje"></textarea>
+        <div class="error"></div>
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
