@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    place-items: center;
+}
+
+form{
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 5px -5px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+input{
+    margin: 10px;
+}
+
+button{
+    float: right;
+    padding: 5px 10px;
+    background-color: yellow;
+}
