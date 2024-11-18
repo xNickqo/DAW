@@ -1,0 +1,29 @@
+1. Mostrar el salario anual y el apellido de los empleados.
+SELECT last_name, salary FROM employees;
+2. Mostrar el trabajo, el apellido y el salario de los empleados ordenados por tipo de trabajo y por salario descendente.
+SELECT e.last_name, j.job_title, e.salary FROM employees e JOIN jobs j ON e.job_id = j.job_id ORDER BY j.job_id ASC, e.salary DESC;
+3. Mostrar los nombres de los empleados del departamento 10 y el número de meses que llevan trabajando para la empresa.
+SELECT first_name, TIMESTAMPDIFF(MONTH, hire_date, CURRENT_DATE) AS meses FROM employees WHERE department_id = 10;
+4. Mostrar los nombres de los empleados y el número de días que llevan trabajando para la empresa, cuyo salario sea mayor de 2.000$.
+SELECT first_name, last_name, DATEDIFF(CURRENT_DATE, hire_date) AS Dias_Trabajando FROM employees WHERE salary > 2000;
+5. Mostrar el nombre del empleado y la posición en la que aparece la primera letra “E” en dicho nombre, para aquellos empleados cuya comisión sea nula.
+SELECT first_name AS nombre, LOCATE("E", first_name) AS ocurrencia FROM employees WHERE commission_pct IS NULL;
+6. Mostrar el nombre del empleado y su fecha de alta en la empresa con formato Día (nombre del día)/ Mes (nombre del mes) / YYYY (cuatro dígitos del año) que desempeñen el trabajo de “IT_PROG”.
+7. Mostrar el nombre del empleado y el número de su departamento. Si es el 10 debe aparecer el literal “Contabilidad”, si es el 20 “Investigación”, si es el 30 “Ventas” y si es el 40 “Operaciones”.
+8. Mostrar el nombre del empleado y una columna que contenga el salario multiplicado por la comisión cuya cabecera sea “Bono”, si el empleado no tiene comisión asignarle 0 en la columna ‘Bono’.
+9. Mostrar el salario medio de aquellos empleados cuyo trabajo sea el de “IT_PROG”.
+10. Encontrar, entre los empleados, el salario más alto, el más bajo y la diferencia entre ambos.
+11. Hallar el número de trabajos distintos que existen en el departamento 30.
+12. Encontrar que departamentos tienen al menos dos trabajos distintos.
+13. Encontrar el número de trabajos diferentes, que se desempeñan en el departamento 30, para aquellos empleados cuyo salario se comprende entre 1.000 y 7.800$.
+14. Contar el número de personas que realizan un trabajo determinado, dentro de cada departamento.
+15. Mostrar el nombre de los empleados, número y nombre de departamento, número y los tres primeros caracteres de la localidad donde se encuentra el departamento, para aquellos empleados que trabajen en el departamento 20 o que sea vendedor (que su trabajo comience por ‘SA’).
+16. Mostrar el nombre del empleado, identificador de trabajo, el nombre y código del departamento en el que trabaja.
+17. En la consulta anterior existen departamentos que no tienen empleados. Mostrar también esta información.
+18. Nombre completo del empleado que más gana.
+19. Mostrar el nombre, el trabajo y el salario de todos los empleados que tienen un salario superior al salario más bajo del departamento 30. Ordenar la recuperación por orden descendente de salarios.
+20. Encontrar quienes son los trabajadores que tienen por jefe a ‘King’.
+21. Nombre del día de la semana en el que más empleados entraron a la empresa.
+22. Encontrar el nombre, trabajo, salario y fecha de alta de aquellos empleados que cobren más que cualquier vendedor (job_id ‘SA…’). Ordenar la salida por orden descendente de salarios.
+23. Encontrar el nombre, departamento, salario y trabajo de aquellos empleados que trabajan en el mismo departamento que ‘Irene’, y cuyo salario es menor a la media de los salarios del departamento 10.
+24. Mostrar el nombre del empleado y la localidad donde trabaja, para los que tengan comisión o que trabajen en el mismo departamento que ‘Irene’.
