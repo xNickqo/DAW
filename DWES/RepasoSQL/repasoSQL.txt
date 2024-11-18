@@ -1,13 +1,13 @@
 1. Mostrar el salario anual y el apellido de los empleados.
-SELECT last_name, salary FROM employees;
+    SELECT last_name, salary FROM employees;
 2. Mostrar el trabajo, el apellido y el salario de los empleados ordenados por tipo de trabajo y por salario descendente.
-SELECT e.last_name, j.job_title, e.salary FROM employees e JOIN jobs j ON e.job_id = j.job_id ORDER BY j.job_id ASC, e.salary DESC;
+    SELECT e.last_name, j.job_title, e.salary FROM employees e JOIN jobs j ON e.job_id = j.job_id ORDER BY j.job_id ASC, e.salary DESC;
 3. Mostrar los nombres de los empleados del departamento 10 y el número de meses que llevan trabajando para la empresa.
-SELECT first_name, TIMESTAMPDIFF(MONTH, hire_date, CURRENT_DATE) AS meses FROM employees WHERE department_id = 10;
+    SELECT first_name, TIMESTAMPDIFF(MONTH, hire_date, CURRENT_DATE) AS meses FROM employees WHERE department_id = 10;
 4. Mostrar los nombres de los empleados y el número de días que llevan trabajando para la empresa, cuyo salario sea mayor de 2.000$.
-SELECT first_name, last_name, DATEDIFF(CURRENT_DATE, hire_date) AS Dias_Trabajando FROM employees WHERE salary > 2000;
+    SELECT first_name, last_name, DATEDIFF(CURRENT_DATE, hire_date) AS Dias_Trabajando FROM employees WHERE salary > 2000;
 5. Mostrar el nombre del empleado y la posición en la que aparece la primera letra “E” en dicho nombre, para aquellos empleados cuya comisión sea nula.
-SELECT first_name AS nombre, LOCATE("E", first_name) AS ocurrencia FROM employees WHERE commission_pct IS NULL;
+    SELECT first_name AS nombre, LOCATE("E", first_name) AS ocurrencia FROM employees WHERE commission_pct IS NULL;
 6. Mostrar el nombre del empleado y su fecha de alta en la empresa con formato Día (nombre del día)/ Mes (nombre del mes) / YYYY (cuatro dígitos del año) que desempeñen el trabajo de “IT_PROG”.
 7. Mostrar el nombre del empleado y el número de su departamento. Si es el 10 debe aparecer el literal “Contabilidad”, si es el 20 “Investigación”, si es el 30 “Ventas” y si es el 40 “Operaciones”.
 8. Mostrar el nombre del empleado y una columna que contenga el salario multiplicado por la comisión cuya cabecera sea “Bono”, si el empleado no tiene comisión asignarle 0 en la columna ‘Bono’.

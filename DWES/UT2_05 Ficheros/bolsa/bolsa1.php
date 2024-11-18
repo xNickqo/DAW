@@ -19,7 +19,6 @@
             $content = htmlspecialchars($content);
             echo "<pre>$content<pre>";
         }
-
     ?>
 </body>
 </html>

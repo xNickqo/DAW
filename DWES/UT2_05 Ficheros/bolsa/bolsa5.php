@@ -21,6 +21,7 @@
         <input type="reset" value="Borrar">
         <br><br>
     </form>
+
     <?php
         include "funciones_bolsa.php";
     
@@ -53,5 +54,6 @@
             fclose($archivo);
         }
     ?>
+    
 </body>
 </html>

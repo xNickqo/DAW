@@ -32,16 +32,16 @@
             </div>
 
             <?php
-                include "functions.php";
+				include "functions.php";
 
-                if((($_SERVER["REQUEST_METHOD"] == "POST")))
-                {
-                    $jugador = recogerDatos();
+				if((($_SERVER["REQUEST_METHOD"] == "POST")))
+				{
+					$jugador = recogerDatos();
 
-                    $file = fopen("fichero.txt", "a");
-                    fwrite($file, $jugador);
-                    fclose($file);
-                }
+					$file = fopen("fichero.txt", "a");
+					fwrite($file, $jugador);
+					fclose($file);
+				}
             ?>
 
             </div>
