@@ -413,25 +413,12 @@ function saberProvincia(codigoPostal) {
                         "Sevilla", "Soria","Tarragona", "Teruel", "Toledo",
                         "Valencia", "Valladolid","Bizkaia","Zamora", "Zaragoza",
                         "Ceuta","Melilla"];
-
+    let existe = true;
     let i = 1;
-    while(i <= 52)
-    {
-        if(i < 10)
-        {
-            if((codigoPostalCadena[0] + codigoPostalCadena[1]) == ("0" + i.toString()))
-            {
-                provincia = provincias[i - 1];
-                break ;
-            }
-        }
-        else
-        {
-            if((codigoPostalCadena[0] + codigoPostalCadena[1]) == (i.toString()))
-            {
-                provincia = provincias[i - 1];
-                break ;
-            }
+    while(existe && i <= 52) {
+        if ((codigoPostalCadena[0] + codigoPostalCadena[1]) == i.toString().padStart(2, "0")) {
+            provincia = provincias[i - 1];
+            existe = false;
         }
         i += 1;
     }
