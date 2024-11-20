@@ -3,7 +3,7 @@
 </HEAD>
 <BODY>
 <?php
-//Función permite "limpiar campos" introducidos por los usuarios
+//Funciï¿½n permite "limpiar campos" introducidos por los usuarios
 function limpiar_campo($campoformulario) {
   $campoformulario = trim($campoformulario); //elimina espacios en blanco por izquierda/derecha
   $campoformulario = stripslashes($campoformulario); //elimina la barra de escape "\", utilizada para escapar caracteres
@@ -17,10 +17,9 @@ function limpiar_campo($campoformulario) {
   //  < menor que = &lt;
 
   return $campoformulario;
-   
 }
 
-// definición variables para recoger datos formulario
+// definiciï¿½n variables para recoger datos formulario
 $nombre = $email = $sexo = $experiencia = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

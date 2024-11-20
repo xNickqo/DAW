@@ -1,7 +1,10 @@
 <?php
 function errores($errno, $errstr, $errfile, $errline)
 {
-	echo "<b>Error [$errno]:</b> $errstr en la línea <b>$errline</b> en el archivo <b>$errfile</b>.<br>";
+	echo "<b>Error [$errno]:</b> $errstr 
+			en la línea <b>$errline</b> 
+			en el archivo <b>$errfile</b>.<br>";
+
 	die();
 }
 set_error_handler("errores");
