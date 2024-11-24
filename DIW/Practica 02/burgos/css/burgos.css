@@ -6,6 +6,7 @@
 
 .b1 {
     background-color: #97107E;
+    background-clip: content-box;
     color: #90E0D9;
     font-family: "Heracles";
     font-size: 11px;
@@ -21,6 +22,7 @@
 
 .b2 {
     background-color: #5fcb17;
+    background-clip: content-box;
     color: #dd7474;
     font-family: 'Caladea';
     font-size: 13px;

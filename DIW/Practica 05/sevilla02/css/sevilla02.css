@@ -1,5 +1,6 @@
-#monumentos > div {
+#monumentos[id] > div {
     display: flex;
+    /*align-items: center;*/
     width: 100vw;
     height: 700px;
     border: 2px solid orange;

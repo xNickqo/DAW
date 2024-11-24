@@ -12,9 +12,11 @@ article[class^="c"] {
     border-left: 30px solid transparent;
     border-right: 25px solid transparent;
 
-    outline-width: 2%;
-    outline-style: solid;
+    /*outline: gold solid 2%;*/
     outline-color: gold;
+    outline-style: solid;
+    outline-width: 2%;
+    
 }
 
 .c1 {

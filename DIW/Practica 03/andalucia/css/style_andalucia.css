@@ -5,7 +5,7 @@
 
 /* Parrafos <span> nietos o mas descendientes del parrafo <div> con id="cuerpo" */
 #cuerpo div span{
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: "Comic Sans MS";
     font-weight: bold;
     font-style: italic;
     text-decoration: underline;
