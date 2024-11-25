@@ -1,0 +1,43 @@
+/*Nicolas Lopez Flores*/
+
+a {
+    color: #36E120;
+}
+
+a:visited{
+    color: #A68E20;
+}
+
+a:active{
+    color: #75E1D8;
+}
+
+div p {
+    font-family: 'Comic Sans MS';
+    font-size: 14pt;
+    color: #581827;
+}
+
+h3 + ol{
+    border: 7px dotted rgba(167, 42, 91, 0.65); /*He tenido que buscar el numero hex en rgba*/
+    background-color: #15e28a;
+    background-clip: content-box;
+}
+
+body {
+    margin: 15px 10px 0px 20px;
+    padding: 11pt 8pt 0pt 13pt;
+    /*background-repeat: no-repeat;
+    background-size: cover;*/
+}
+
+img{
+    height: 25%;
+    width: 25%;
+}
+
+div[id="revolucion"]{
+    column-count: 3;
+    column-gap: 30px;
+    column-rule: 10px dotted green;
+}

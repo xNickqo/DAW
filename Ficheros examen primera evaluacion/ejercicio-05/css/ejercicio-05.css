@@ -1,0 +1,109 @@
+/*Nicolas Lopez Flores*/
+
+@font-face {
+    font-family: 'Blackout';
+    src: url(../../tipos\ letra/Blackout.otf);
+}
+
+@font-face {
+    font-family: 'Pantherdam Signature';
+    src:    url(../../tipos\ letra/Pantherdam\ Signature.otf),
+            url(../../tipos\ letra/Pantherdam\ Signature.ttf),
+            url(../../tipos\ letra/Pantherdam\ Signature.woff),
+            url(../../tipos\ letra/Pantherdam\ Signature.woff2);
+}
+
+@font-face {
+    font-family: 'Sensation';
+    src:    url(../../tipos\ letra/Sensation.otf),
+            url(../../tipos\ letra/Sensation.ttf);
+}
+
+div > p::first-line{
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+div > p::first-letter{
+    font-size: 300%;
+}
+
+ol:first-of-type{
+    background-color: green;
+    font-family: 'Blackout';
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+ul{
+    background-color: maroon;
+    font-family: 'Pantherdam Signature';
+    font-size: 12pt;
+    font-style: italic;
+}
+
+ol:last-of-type{
+    background-color: red;
+    font-family: 'Sensation';
+    font-size: 16pt;
+    text-decoration: underline;
+}
+
+a{
+    color: #cde120;
+    font-size: 14pt;
+}
+
+a:visited{
+    color: #318e20;
+    font-size: 12pt;
+}
+
+a:active{
+    color: #f0e1d8;
+    font-size: 16pt;
+}
+
+div[id="revolucion"]{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 30px;
+}
+
+div[id="revolucion"] #voltaire{
+    grid-column: 1;
+    grid-row: 4;
+}
+
+div[id="revolucion"] #marx{
+    grid-column: 2;
+    grid-row: 4;
+    grid-row-end: span 2;
+    grid-column-end: span 2;
+}
+
+div[id="revolucion"] #hume {
+    grid-column: 4;
+    grid-row: 1;
+    grid-auto-flow: column;
+    grid-column-end: span 3;
+}
+
+div[id="revolucion"] #rousseau{
+    grid-column: 1;
+    grid-row: 6;
+    grid-auto-flow: column;
+    grid-row-end: span 3;
+}
+
+div[id="revolucion"] #kant{
+    grid-column: 1;
+    grid-row: 1;
+    grid-auto-flow: column;
+    grid-row-end: span 3;
+    grid-column-end: span 3;
+}
+

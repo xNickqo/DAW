@@ -1,0 +1,91 @@
+/*Nicolas Lopez Flores*/
+body{
+    background-image:   url(../../imagenes/filosofo-1.jpg), 
+                        url(../../imagenes/filosofo-2.jpg), 
+                        url(../../imagenes/filosofo-3.jpg), 
+                        url(../../imagenes/filosofo-4.jpg), 
+                        url(../../imagenes/filosofo-5.jpg), 
+                        url(../../imagenes/filosofo-6.jpg), 
+                        url(../../imagenes/filosofo-7.jpg), 
+                        url(../../imagenes/filosofo-8.jpg);
+
+    background-repeat: no-repeat;
+    background-size: calc(100vh/4);
+    background-position: top left, bottom left,  top center,  bottom center ,  top right,  bottom right,  top center,  bottom center;
+    
+    background-attachment: fixed;
+
+    font-family: 'Cambria';
+    line-height: 75%;
+}
+
+h1 {
+    font-size: 250%;
+}
+
+h2 {
+    font-size: 190%;
+}
+
+h3 {
+    font-size: 110%;
+}
+
+@media (min-width: 1600px) {
+    body {
+        font-size: 16pt;
+        color: #45B39D;
+    }
+}
+
+@media (min-width: 1301px) and (max-width: 1600px) {
+    body {
+        font-size: 14pt;
+        color: #FA8072;
+    }
+}
+
+@media (min-width: 1001px) and (max-width: 1301px) {
+    body {
+        font-size: 12pt;
+        color: #FAD7A0;
+    }
+}
+
+@media (min-width: 500px) and (max-width: 1000px) {
+    body {
+        font-size: 10pt;
+        color: #7B241C;
+    }
+}
+
+@media (max-width: 500px) {
+    body {
+        font-size: 8pt;
+        color: #195A19;
+    }
+}
+
+div h3 + p{
+    font-style: italic;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+div h3 ~ p {
+    text-decoration: line-through;
+    font-weight: bold;
+}
+
+h3[div]{
+    text-decoration-color: maroon;
+    text-decoration-style: blink;
+}
+
+h1 {
+    text-shadow: -5px 5px 5px #07357F;
+}
+
+div p {
+    background-color: #DCD100;
+}
