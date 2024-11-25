@@ -18,8 +18,8 @@ body{
     margin-right: 10px; */
 }
 
-h3, h2, header{
-    font-family: 'Comic Sans';
+h3, h2, h4, h5, h1, header{
+    font-family: 'Comic Sans Ms';
     color: #F50B78;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -27,6 +27,8 @@ h3, h2, header{
 div#campanas {
     display: grid;
     grid-template-columns: repeat(3,  1fr);
+
+    /* column-count: 3; */
     column-gap: 2.5cm;
 
     /* column-rule: 9mm double green; */

@@ -1,6 +1,8 @@
 /* Parrafos <p> descendientes del id="historia" */
 #historia p {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman';
+    font-size: 9px;
+    color: red;
 }
 
 /* Parrafos <span> nietos o mas descendientes del parrafo <div> con id="cuerpo" */
@@ -17,7 +19,7 @@ h3 + div {
     text-transform:  uppercase;
 }
 
-/* Todos los <li> que sean hijos de un <ol> y que sean descendientes del id="historia" */
+/* odos los <li> que sean hijos de un <ol> y que sean descendientes del id="historia" */
 #historia ol > li {
     color: #1C5C25;
 }

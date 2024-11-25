@@ -1,40 +1,50 @@
 /*a*/
-#divisiones{
+div#divisiones{
     display: grid;
     border: 2px solid magenta;
+
+    grid-template-columns: 32%;
+    grid-template-rows: repeat(9, 500px);
+    grid-auto-flow: row;
+
     grid-row-gap: 10px;
     grid-column-gap: 15px;
 }
 
 @media (width < 400px){
-    #divisiones {
+    div#divisiones {
         grid-template-columns: 32%;
         grid-template-rows: repeat(9, 500px);
     }
 }
 
-@media ((width > 400px) and (width < 800)){
-    #divisiones {
+@media ((width > 400px) and (width < 800px)){
+    div#divisiones {
         grid-template-rows: repeat(5, 500px);
         grid-template-columns: 32% 32%;
     }
 }
 
 @media (width > 800px){
-    #divisiones {
+    div#divisiones {
         grid-template-columns: repeat(3, 32%);
         grid-template-rows: repeat(3, 500px);
     }
 }
 
-#divisiones > div {
+div#divisiones > div {
     border: 2px solid green;
 }
 
 
 /*b*/
-#secciones {
+div#secciones {
     display: grid;
+
+	grid-template-columns:31%;
+	grid-template-rows:repeat(18, 400px);
+	grid-auto-flow:column;
+
     border: 2px solid violet;
     /*gap: 3mm 1%;*/
     grid-row-gap: 3mm;
@@ -44,34 +54,34 @@
 }
 
 @media (width < 300px){
-    #secciones {
+    div#secciones {
         grid-template-columns: 1fr;
         grid-template-rows: repeat(18, 400px);
     }
 }
 
-@media ((width > 300px) and (width < 600)){
-    #secciones {
+@media ((width > 300px) and (width < 600px)){
+    div#secciones {
         grid-template-rows: repeat(9, 400px);
         grid-template-columns: repeat(2, 31%) ;
     }
 }
 
-@media ((width > 600px) and (width < 900)){
-    #secciones {
+@media ((width > 600px) and (width < 900px)){
+    div#secciones {
         grid-template-rows: repeat(6, 400px);
         grid-template-columns: repeat(3, 31%);
     }
 }
 
 @media (width > 900px){
-    #secciones {
+    div#secciones {
         grid-template-columns: repeat(6, 31%);
         grid-template-rows: repeat(3, 400px);
     }
 }
 
-#secciones > div {
+div#secciones > div {
     border: 2px solid blue;
 }
 

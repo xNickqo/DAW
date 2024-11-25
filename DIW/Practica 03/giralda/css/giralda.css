@@ -1,18 +1,15 @@
-@font-face
-{
+@font-face {
     font-family: 'Coldbrringer';
     src: url('../../Coldbringer.ttf') format('truetype');
 }
 
 /* Estilos generales para los párrafos hijos del identificador 'campanas' */
-#campanas > div > p
-{
+#campanas > div > p {
     font-family: Verdana, sans-serif;
     text-transform: uppercase;
 }
 
-@media (max-width < 500px)
-{
+@media (max-width < 500px) {
     #campanas > div > p {
         font-size: 9pt;
         color: brown;
@@ -25,8 +22,7 @@
     }
 }
 
-@media (min-width >= 500px) and (max-width < 1000px)
-{
+@media (min-width >= 500px) and (max-width < 1000px) {
     #campanas > div > p {
         font-size: 10pt;
         color: gray;
@@ -39,8 +35,7 @@
     }
 }
 
-@media (min-width >= 1000px)
-{
+@media (min-width >= 1000px) {
     #campanas > div > p {
         font-size: 11pt;
         color: coral;

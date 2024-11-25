@@ -1,42 +1,37 @@
 /* Etiquetas <h3> con atributo title */
-h3[title]
-{
+h3[title] {
     font-family: Arial, sans-serif;
     color: #948B0E;
 }
 
-.historia
-{
+[class="historia"]{
     font-family: Century, serif;
     color: #CBE68D;
 }
 
-.cantabra
-{
+[class="cantabra"] {
     font-family: Corbel, sans-serif;
     color: #54B3B6;
 }
 
 /* Etiquetas con el atributo title que comiencen por "Cantabria" */
-[title ^= "Cantabra"]
-{
+[title ^= "Cantabra"] {
     font-family: Georgia, serif;
     color: #751A7C;
 }
 
 /* Etiquetas con el atributo title que terminen por "loco" */
-[title $= "loco"]
-{
+[title $= "loco"] {
     font-family: Latha, sans-serif;
     color: #273CDD;
 }
 
 @media (max-width: 449px) {
-    .historia {
+    [class="historia"] {
         font-size: 9pt;
     }
 
-    .cantabra {
+    [class="cantabra"] {
         font-size: 10pt;
     }
 
@@ -50,11 +45,11 @@ h3[title]
 }
 
 @media (min-width: 450px) and (max-width: 899px) {
-    .historia {
+    [class="historia"] {
         font-size: 10pt;
     }
 
-    .cantabra {
+    [class="cantabra"] {
         font-size: 11pt;
     }
 
@@ -69,11 +64,11 @@ h3[title]
 
 
 @media (min-width: 900px) {
-    .historia {
+    [class="historia"] {
         font-size: 11pt;
     }
 
-    .cantabra {
+    [class="cantabra"] {
         font-size: 12pt;
     }
 
