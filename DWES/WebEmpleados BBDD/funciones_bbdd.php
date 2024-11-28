@@ -110,4 +110,47 @@ function insert_emple_dpto_BBDD($conn, $dni, $departamento) {
     }
 }
 
+
+// Función para obtener histórico de empleados por departamento
+function obtenerHistoricoEmpleados($conn, $cod_dpto) {
+    try {
+        $sql = "SELECT e.dni, e.nombre, e.apellidos, ed.fecha_ini, ed.fecha_fin
+                FROM emple_dpto ed
+                JOIN emple e ON ed.dni = e.dni
+                WHERE ed.cod_dpto = :cod_dpto AND ed.fecha_fin IS NOT NULL";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':cod_dpto', $cod_dpto);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener el histórico de empleados: " . $e->getMessage();
+        return [];
+    }
+}
+
+// Función para obtener departamentos
+function obtenerDepartamentos($conn) {
+    try {
+        $sql = "SELECT cod_dpto, nombre FROM dpto";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error al obtener departamentos: " . $e->getMessage();
+        return [];
+    }
+}
+
+// Función para obtener departamentos
+function obtenerEmpleados($conn) {
+    try {
+        $sql = "SELECT dni, nombre, apellidos, salario, fecha_nac FROM emple";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
+    }
+}
 ?>

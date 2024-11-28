@@ -14,19 +14,14 @@
             <?php
                 include "funciones_bbdd.php";
                 
+                // Cargar los departamentos en el formulario
                 $conn = ConexionBBDD();
-                
-                try {
-                    $sql = "SELECT nombre, cod_dpto FROM dpto";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute();
-                    $arrayDpto = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    foreach ($arrayDpto as $dpto) {
+                if ($conn) {
+                    $departamentos = obtenerDepartamentos($conn);
+                    foreach ($departamentos as $dpto) {
                         echo "<option value='" . htmlspecialchars($dpto['cod_dpto']) . "'>" . htmlspecialchars($dpto['nombre']) . "</option>";
                     }
-                } catch(PDOException $e) {
-                    echo "Error: " . $e->getMessage();
+                    $conn = null;
                 }
             ?>
         </select>
@@ -40,6 +35,8 @@
         {
             if (!empty($_POST['dpto']))
             {
+                $conn = ConexionBBDD();
+                
                 $cod_dpto = $_POST['dpto'];
 
                 $sql = "SELECT emple.nombre 
