@@ -53,14 +53,14 @@
 						//Cartas por jugador
 						array_push($jugador['cartas'], $carta);
 						imprimirCartas($num, $letra);
+
+						if($num == "S" || $num == "C" || $num == "R")
+							$jugador['puntos'] += 0.5;
+						else
+							$jugador['puntos'] += $num;
 					}
 					else
 						$i--;
-
-					if($num == "S" || $num == "C" || $num == "R")
-						$jugador['puntos'] += 0.5;
-					else
-						$jugador['puntos'] += $num;
 				}
 
 				echo "</tr></table>";
