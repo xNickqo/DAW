@@ -1,0 +1,55 @@
+article.uno img:hover {
+    /*El nombre del fotograma clave*/
+    animation-name: mover;
+    -o-animation-name: mover;
+    -moz-animation-name: mover;
+    -webkit-animation-name: mover;
+
+    /*La duración de la animación.*/
+    animation-duration: 5s;
+    -o-animation-duration: 5s;
+    -moz-animation-duration: 5s;
+    -webkit-animation-duration: 5s;
+
+    /*Las veces que se repite.*/
+    animation-iteration-count: 20;
+    -o-animation-iteration-count: 20;
+    -moz-animation-iteration-count: 20;
+    -webkit-animation-iteration-count: 20;
+
+    /*Tipo de animacion*/
+    animation-timing-function: ease-in-out;
+    -o-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+
+    /*Sentido de la animación.*/
+    animation-direction: normal;
+    -o-animation-direction: normal;
+    -mozo-animation-direction: normal;
+    -webkit-animation-direction: normal;
+
+    /*Retardo de la animación.*/
+    animation-delay: 0s;
+    -o-animation-delay: 0s;
+    -moz-animation-delay: 0s;
+    -webkit-animation-delay: 0s;
+
+}
+
+@keyframes mover {
+    0%{
+        transform: scale(1);
+        width: 600px;
+        height: 401px;
+    }
+    50%{
+        width: calc(600px - 100px);
+        height: calc(401px - 100px);
+    }
+    100%{
+        transform: scale(1);
+        width: 600px;
+        height: 401px;
+    }
+}

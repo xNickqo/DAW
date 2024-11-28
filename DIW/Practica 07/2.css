@@ -1,0 +1,382 @@
+body{
+    overflow: hidden;
+}
+
+input{
+    background-color: red;
+    color: blue;
+    font-family: 'Arial';
+    font-size: 10pt;
+    width: 50px;
+    height: 50px;
+
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+
+    /*El nombre del fotograma clave*/
+    animation-name: mover;
+    -o-animation-name: mover;
+    -moz-animation-name: mover;
+    -webkit-animation-name: mover;
+
+    /*La duración de la animación.*/
+    animation-duration: 13s;
+    -o-animation-duration: 13s;
+    -moz-animation-duration: 13s;
+    -webkit-animation-duration: 13s;
+
+    /*Las veces que se repite.*/
+    animation-iteration-count: 10;
+    -o-animation-iteration-count: 10;
+    -moz-animation-iteration-count: 10;
+    -webkit-animation-iteration-count: 10;
+}
+
+@keyframes mover {
+    0%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+    }/*Superior izquierda*/
+    12.5%{
+        top: 0;
+        left: 0;
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    25%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Superior derecha*/
+    37.5%{
+        top: 0;
+        left: calc(100% - 150px);
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    50%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior derecha*/
+    62.5%{
+        top: calc(100% - 180px);
+        left: calc(100% - 180px);
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    75%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior izq*/
+    87.5%{
+        top: calc(100% - 150px);
+        left: 0;
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    100%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@-o-keyframes mover{
+    0%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+    }/*Superior izquierda*/
+    12.5%{
+        top: 0;
+        left: 0;
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    25%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Superior derecha*/
+    37.5%{
+        top: 0;
+        left: calc(100% - 150px);
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    50%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior derecha*/
+    62.5%{
+        top: calc(100% - 180px);
+        left: calc(100% - 180px);
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    75%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior izq*/
+    87.5%{
+        top: calc(100% - 150px);
+        left: 0;
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    100%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@-moz-keyframes mover{
+    0%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+    }/*Superior izquierda*/
+    12.5%{
+        top: 0;
+        left: 0;
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    25%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Superior derecha*/
+    37.5%{
+        top: 0;
+        left: calc(100% - 150px);
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    50%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior derecha*/
+    62.5%{
+        top: calc(100% - 180px);
+        left: calc(100% - 180px);
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    75%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior izq*/
+    87.5%{
+        top: calc(100% - 150px);
+        left: 0;
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    100%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@-webkit-keyframes mover{
+    0%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+    }/*Superior izquierda*/
+    12.5%{
+        top: 0;
+        left: 0;
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    25%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Superior derecha*/
+    37.5%{
+        top: 0;
+        left: calc(100% - 150px);
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    50%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior derecha*/
+    62.5%{
+        top: calc(100% - 180px);
+        left: calc(100% - 180px);
+        background-color: orange;
+        color: green;
+        font-family: 'Verdana';
+        font-size: 24pt;
+        width: 180px;
+        height: 180px;
+    }/*Centro*/
+    75%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }/*Inferior izq*/
+    87.5%{
+        top: calc(100% - 150px);
+        left: 0;
+        background-color: violet;
+        color: yellow;
+        font-family: 'Times New Roman';
+        font-size: 18pt;
+        width: 150px;
+        height: 150px;
+    }/*Centro*/
+    100%{
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        background-color: red;
+        color: blue;
+        font-family: 'Arial';
+        font-size: 10pt;
+        width: 50px;
+        height: 50px;
+    }
+}
