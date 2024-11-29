@@ -1,0 +1,87 @@
+/* A: La imagen del encabezado está girando constantemente */
+header img {
+    animation: girar 5s infinite linear;
+    -o-animation: girar 5s infinite linear;
+    -webkit-animation: girar 5s infinite linear;
+    -moz-animation: girar 5s infinite linear;
+}
+
+@keyframes girar {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.uno{
+    position: relative;
+    animation-name: desplazar;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+
+    -o-animation-name: desplazar;
+    -o-animation-duration: 3s;
+    -o-animation-fill-mode: forwards;
+
+    -webkit-animation-name: desplazar;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-fill-mode: forwards;
+
+    -moz-animation-name: desplazar;
+    -moz-animation-duration: 3s;
+    -moz-animation-fill-mode: forwards;
+    
+}
+@keyframes desplazar{
+    from {
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(40px);
+    }
+}
+@-o-keyframes desplazar{
+    from {
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(40px);
+    }
+}
+@-moz-keyframes desplazar{
+    from {
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(40px);
+    }
+}
+@-webkit-keyframes desplazar{
+    from {
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(40px);
+    }
+}
+
+div img {
+    width: 300px;
+    height: auto;
+}
+div img:nth-child(1){
+    transform: rotateX(25deg);
+}
+div img:nth-child(2){
+    transform: rotateY(18deg);
+}
+
+.dos {
+    transform: rotateX(15deg);
+}
+
+.tres {
+    transform: rotateY(20deg);
+}
