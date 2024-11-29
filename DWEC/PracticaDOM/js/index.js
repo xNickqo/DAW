@@ -98,7 +98,7 @@ function registro() {
     if(!existeCookie(nombre, contrasena)) {
         if ((regexNombre.test(nombre)) && (regexContrasena.test(contrasena))) {
             // Crear cookie
-            document.cookie = `${nombre}=${contrasena}; expires=true 31 Dec 2024 00:00:00 GMT;`;
+            document.cookie = `${nombre}=${contrasena}; expires=Wed, 31 Dec 2024 00:00:00 GMT;`;
             alert("Cookie creada con exito");
             ocultarFormularioRegistro();
         } else {
@@ -152,6 +152,7 @@ function cerrarSesion() {
     document.getElementById("entrar").removeEventListener("click", cerrarSesion);
     
     ocultarFormularioInicio();
+    document.getElementById("boton").style.display = "none";
     
     // Reasignar el evento para abrir el formulario de inicio de sesión
     document.getElementById("entrar").addEventListener("click", mostrarFormularioInicio);
@@ -434,22 +435,22 @@ function agregarMensaje() {
     let imagenUrl = "";
     switch (imagenSeleccionada.value) {
         case "image1":
-            imagenUrl = "image1.jpg";
+            imagenUrl = "img/image1.png";
             break;
         case "image2":
-            imagenUrl = "image2.jpg";
+            imagenUrl = "img/image2.png";
             break;
         case "image3":
-            imagenUrl = "image3.jpg";
+            imagenUrl = "img/image3.png";
             break;
         case "image4":
-            imagenUrl = "image4.jpg";
+            imagenUrl = "img/image4.png";
             break;
         case "image5":
-            imagenUrl = "image5.jpg";
+            imagenUrl = "img/image5.png";
             break;
         case "image6":
-            imagenUrl = "image6.jpg";
+            imagenUrl = "img/image6.png";
             break;
     }
 
