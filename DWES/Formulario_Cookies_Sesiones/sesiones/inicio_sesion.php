@@ -51,6 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <input type="hidden" name="logout" value="1">
             <input type="submit" value="Cerrar Sesión">
+            <a href="registro.php">Link 1</a>
+            <a href="https://www.google.com/?hl=es">Link 2</a>
         </form>
     <?php else: ?>
         <!-- Mostrar formulario de inicio de sesión -->
