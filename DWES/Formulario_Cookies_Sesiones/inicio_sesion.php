@@ -72,8 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
     <?php endif; ?>
 
-    <?php if (!empty($mensaje)): ?>
-        <p><?php echo $mensaje; ?></p>
-    <?php endif; ?>
+    <?php if (!empty($mensaje)){echo $mensaje;}?>
 </body>
 </html>

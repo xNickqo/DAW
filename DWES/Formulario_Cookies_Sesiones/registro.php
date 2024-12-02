@@ -1,19 +1,21 @@
 <?php
-include "funciones.php";
-$mensaje = "";
-$conn = ConexionBBDD();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre = trim($_POST['nombre']);
-    $correo = trim($_POST['correo']);
-    $fecha_registro = date('Y-m-d H:i:s'); // Fecha actual en formato MySQL
+    include "funciones.php";
 
-    if ($conn && !usuarioExiste($conn, $correo)) {
-        insert_BBDD($conn, $nombre, $correo, $fecha_registro);
-        $mensaje = "Usuario registrado con éxito.";
-    } else {
-        $mensaje = "El correo ya está registrado. Intente con otro.";
+    $mensaje = "";
+    $conn = ConexionBBDD();
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nombre = trim($_POST['nombre']);
+        $correo = trim($_POST['correo']);
+        $fecha_registro = date('Y-m-d H:i:s');
+
+        if ($conn && !usuarioExiste($conn, $correo)) {
+            insert_BBDD($conn, $nombre, $correo, $fecha_registro);
+            $mensaje = "Usuario registrado con éxito.";
+        } else {
+            $mensaje = "El correo ya está registrado. Intente con otro.";
+        }
     }
-}
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="submit" value="Registrarse">
         </form>
 
-    <?php if (!empty($mensaje)): ?>
-        <p><?php echo $mensaje; ?></p>
-    <?php endif; ?>
+    <?php if (!empty($mensaje)){echo $mensaje;}?>
 </body>
 </html>
