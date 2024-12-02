@@ -17,27 +17,28 @@ function ConexionBBDD() {
 }
 
 // Función para verificar si un usuario ya existe
-function usuarioExiste($conn, $email) {
-    $sql = "SELECT * FROM usuarios WHERE correo = :email";
+function usuarioExiste($conn, $nombre) {
+    $sql = "SELECT 1 FROM usuarios WHERE nombre = :nombre";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':nombre', $nombre);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC); // Devuelve false si no encuentra nada
 }
 
 // Función encargada de hacer inserts en la base de datos
-function insert_BBDD($conn, $nombre, $email, $fecha_registro) {
+function insert_BBDD($conn, $nombre, $pass, $fecha_registro) {
     try {
-        $sql = "INSERT INTO usuarios (nombre, correo, fecha_registro) 
-                VALUES (:nombre, :email, :fecha_registro)";
+        $sql = "INSERT INTO usuarios (nombre, password, fecha_registro) 
+                VALUES (:nombre, :pass, :fecha_registro)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':pass', $pass);
         $stmt->bindParam(':fecha_registro', $fecha_registro);
 
-        $stmt->execute();
+        return $stmt->execute();
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
+        return false;
     }
 }
 ?>

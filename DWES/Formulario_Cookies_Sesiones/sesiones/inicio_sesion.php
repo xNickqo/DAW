@@ -5,8 +5,6 @@ include "funciones.php";
 session_start();
 
 $mensaje = "";
-
-// Crear conexión a la base de datos
 $conn = ConexionBBDD();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -15,27 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         session_unset();
         session_destroy();
 
-        // Elimina la cookie
-        setcookie("usuario", "", time() - 3600, "/");
-
         $mensaje = "Has cerrado sesión correctamente.";
     } else {
         // Proceso de inicio de sesión
         $nombre = trim($_POST['nombre']);
-        $password = trim($_POST['pass']);
+        $pass = trim($_POST['pass']);
 
-        $sql = "SELECT * FROM usuarios WHERE nombre = :nombre";
+        $sql = "SELECT * FROM usuarios WHERE nombre = :nombre AND password = :pass";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':pass', $pass);
         $stmt->execute();
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario) {
-            // Crear cookie y sesión
-            setcookie("usuario", $nombre, time() + (86400 * 30), "/"); // 30 días
             $_SESSION['usuario'] = $nombre;
-
             $mensaje = "Inicio de sesión exitoso. ¡Bienvenido, $nombre!";
+            //var_dump($_SESSION['usuario']);
         } else {
             $mensaje = "Nombre o contraseña incorrectos.";
         }
@@ -75,3 +69,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if (!empty($mensaje)){echo $mensaje;}?>
 </body>
 </html>
+
