@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['logout'])) {
         // Elimina la cookie
         setcookie("usuario", "", time() - 3600, "/");
-
-        $mensaje = "Has cerrado sesión correctamente.";
+        header("Location: $_SERVER[PHP_SELF]");
+        $mensaje = "Has eliminado la cookie correctamente.";
     } else {
         // Proceso de inicio de sesión
         $nombre = trim($_POST['nombre']);
@@ -24,9 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($usuario) {
             //Crea la cookie
-            setcookie("usuario", $nombre, time() + (86400 * 30), "/"); // 30 días
+            setcookie("usuario", $nombre, time() + (300), "/");
 
-            $mensaje = "Inicio de sesión exitoso. ¡Bienvenido, $nombre!";
+            $mensaje = "Cookie creada exitosamente. ¡Bienvenido, $nombre!";
         }
     }
 }

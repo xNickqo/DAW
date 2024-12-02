@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!usuarioExiste($conn, $nombre)) {
             if (insert_BBDD($conn, $nombre, $pass, $fecha_registro)) {
                 setcookie("usuario", $nombre, time() + (86400 * 30), "/");
-                $mensaje = "Usuario registrado con éxito.";
+                header("Location: inicio_sesion.php");
+                exit();
             } else {
                 $mensaje = "Error al registrar el usuario. Intente nuevamente.";
             }
@@ -35,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
         <h1>Formulario de Registro</h1>
-        <form method="POST" action="inicio_sesion.php">
+        <form method="POST" action="registro.php">
             <label for="nombre">Usuario</label>
             <input type="text" id="nombre" name="nombre" required>
             <br>

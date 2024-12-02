@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
         <h1>Formulario de Registro</h1>
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form method="POST" action="inicio_sesion.php">
             <label for="nombre">Usuario</label>
             <input type="text" id="nombre" name="nombre" required>
             <br>

@@ -3,17 +3,30 @@ include "funciones.php";
 
 // Iniciar sesión
 session_start();
+$inactividad = 15 * 60; // 15min
 
 $mensaje = "";
 $conn = ConexionBBDD();
+
+// Verificar si la sesión ha expirado por inactividad
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactividad)) {
+    // Si ha pasado más de 15 minutos, destruir la sesión
+    session_unset();
+    session_destroy();
+    setcookie(session_name(), '', time() - 3600, '/');
+    $mensaje = "Tu sesión ha expirado por inactividad.";
+}
+
+// Actualizar el tiempo de la última actividad
+$_SESSION['last_activity'] = time();
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['logout'])) {
         //Elimina la sesion
         session_unset();
         session_destroy();
-
-        $mensaje = "Has cerrado sesión correctamente.";
+        header("Location: $_SERVER[PHP_SELF]");
     } else {
         // Proceso de inicio de sesión
         $nombre = trim($_POST['nombre']);
