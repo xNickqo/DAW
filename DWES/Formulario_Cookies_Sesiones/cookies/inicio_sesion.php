@@ -27,8 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             setcookie("usuario", $nombre, time() + (86400 * 30), "/"); // 30 días
 
             $mensaje = "Inicio de sesión exitoso. ¡Bienvenido, $nombre!";
-        } else {
-            $mensaje = "Nombre o contraseña incorrectos.";
         }
     }
 }
@@ -45,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if (isset($_COOKIE['usuario'])): ?>
         <!-- Mostrar mensaje de bienvenida y botón de logout -->
         <h1>Bienvenido, <?php echo htmlspecialchars($_COOKIE['usuario']); ?>!</h1>
-        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <form method="POST" action="inicio_sesion.php">
             <input type="hidden" name="logout" value="1">
             <input type="submit" value="Cerrar Sesión">
-            <a href="registro.php">Link 1</a>
-            <a href="https://www.google.com/?hl=es">Link 2</a>
+            <a href="1.html">Link 1</a>
+            <a href="2.html">Link 2</a>
         </form>
     <?php else: ?>
         <!-- Mostrar formulario de inicio de sesión -->

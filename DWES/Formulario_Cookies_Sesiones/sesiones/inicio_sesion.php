@@ -30,8 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['usuario'] = $nombre;
             $mensaje = "Inicio de sesión exitoso. ¡Bienvenido, $nombre!";
             //var_dump($_SESSION['usuario']);
-        } else {
-            $mensaje = "Nombre o contraseña incorrectos.";
         }
     }
 }
@@ -51,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <input type="hidden" name="logout" value="1">
             <input type="submit" value="Cerrar Sesión">
-            <a href="registro.php">Link 1</a>
-            <a href="https://www.google.com/?hl=es">Link 2</a>
+            <a href="1.html">Link 1</a>
+            <a href="2.html">Link 2</a>
         </form>
     <?php else: ?>
         <!-- Mostrar formulario de inicio de sesión -->
