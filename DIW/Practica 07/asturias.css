@@ -71,10 +71,10 @@ div img {
     width: 300px;
     height: auto;
 }
-div img:nth-child(1){
+div img:nth-child(2){
     transform: rotateX(25deg);
 }
-div img:nth-child(2){
+div img:nth-child(3){
     transform: rotateY(18deg);
 }
 
