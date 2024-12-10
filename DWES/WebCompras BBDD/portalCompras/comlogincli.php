@@ -16,6 +16,8 @@
         <input type="password" name="clave" id="clave" required><br><br>
 
         <input type="submit" value="Iniciar Sesión">
+
+        <a href="comregcli.php">Si no tienes cuenta</a>
     </form>
 
     <?php
@@ -23,7 +25,6 @@
         include "../includes/funciones.php";
 
         $error = "";
-        $mensaje = "";
 
         // Verificar si el usuario ya está logeado
         if (isset($_SESSION['usuario'])) {
@@ -32,11 +33,11 @@
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $usuario = strtolower($_POST['usuario']);
+            $usuario = strtolower($_POST['usuario']); // Nombre en minúsculas para asegurar consistencia
             $clave = $_POST['clave'];
 
             $conn = conexionBBDD();
-            
+
             // Consultar si el usuario existe en la base de datos
             $sql_check = "SELECT * FROM cliente WHERE NOMBRE = :usuario";
             $stmt_check = $conn->prepare($sql_check);
@@ -49,7 +50,8 @@
 
                 // Verificar si la clave es correcta
                 if (password_verify($clave, $row['CLAVE'])) {
-                    $_SESSION['usuario'] = $row['USUARIO'];
+                    $_SESSION['usuario'] = $row['NOMBRE'];
+                    $_SESSION['NIF'] = $row['NIF'];
                     header("Location: ../index.php");
                     exit();
                 } else {

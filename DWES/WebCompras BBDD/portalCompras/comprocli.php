@@ -1,15 +1,13 @@
 <?php
-session_start(); // Iniciar la sesión para acceder a la cesta de la compra
-include "../includes/funciones.php"; // Aquí se incluye la conexión a la base de datos y otras funciones
+session_start();
+include "../includes/funciones.php";
 
-$error = '';
-$mensaje = '';
-
-// Verificar que el cliente está logueado
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['usuario']) || !isset($_SESSION['NIF'])) {
     header("Location: comlogincli.php");
     exit();
 }
+
+$conn = conexionBBDD();
 ?>
 
 <!DOCTYPE html>
@@ -22,17 +20,11 @@ if (!isset($_SESSION['usuario'])) {
 <body>
     <h2>Compra de Productos</h2>
 
-    <?php if ($error): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php elseif ($mensaje): ?>
-        <p style="color: green;"><?php echo $mensaje; ?></p>
-    <?php endif; ?>
-
+    <!-- Formulario de Selección de Productos -->
     <form action="comprocli.php" method="POST">
         <label for="producto">Selecciona el Producto:</label>
         <select name="producto" id="producto" required>
             <?php
-            // Aquí se mostrarán los productos disponibles en la base de datos.
             $sql = "SELECT ID_PRODUCTO, NOMBRE FROM producto";
             imprimirOpciones($sql, 'ID_PRODUCTO', 'NOMBRE');
             ?>
@@ -44,23 +36,25 @@ if (!isset($_SESSION['usuario'])) {
         <input type="submit" value="Añadir al Carrito">
     </form>
 
+    <!-- Carrito de la Compra -->
     <h3>Carrito de la Compra</h3>
     <?php
-    if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
+    if (!empty($_SESSION['carrito'])) {
         echo "<ul>";
         foreach ($_SESSION['carrito'] as $id_producto => $cantidad) {
             // Obtener el nombre del producto
             $sql_producto = "SELECT NOMBRE FROM producto WHERE ID_PRODUCTO = :id_producto";
             $stmt_producto = $conn->prepare($sql_producto);
-            $stmt_producto->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
+            $stmt_producto->bindParam(':id_producto', $id_producto, PDO::PARAM_STR);
             $stmt_producto->execute();
             $producto = $stmt_producto->fetch(PDO::FETCH_ASSOC);
-
-            echo "<li>" . $producto['NOMBRE'] . " - Cantidad: " . $cantidad . "</li>";
+            //var_dump($producto);
+            echo "<li>" . htmlspecialchars($producto['NOMBRE']) . " - Cantidad: " . htmlspecialchars($cantidad) . "</li>";
         }
         echo "</ul>";
         echo '<form action="comprocli.php" method="POST">
                 <input type="submit" name="finalizar_compra" value="Finalizar Compra">
+                <input type="submit" name="borrar_carrito" value="Borrar carrito">
               </form>';
     } else {
         echo "<p>No hay productos en el carrito.</p>";
@@ -70,12 +64,7 @@ if (!isset($_SESSION['usuario'])) {
 </html>
 
 <?php
-// Conectar a la base de datos
-$conn = conexionBBDD();
-
-// Procesar el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Añadir productos al carrito
     if (isset($_POST['producto']) && isset($_POST['cantidad'])) {
         $producto = $_POST['producto'];
         $cantidad = $_POST['cantidad'];
@@ -83,42 +72,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar disponibilidad
         $sql_check = "SELECT CANTIDAD FROM almacena WHERE ID_PRODUCTO = :producto";
         $stmt_check = $conn->prepare($sql_check);
-        $stmt_check->bindParam(':producto', $producto, PDO::PARAM_INT);
+        $stmt_check->bindParam(':producto', $producto, PDO::PARAM_STR);
         $stmt_check->execute();
         $row = $stmt_check->fetch(PDO::FETCH_ASSOC);
 
         if ($row && $row['CANTIDAD'] >= $cantidad) {
-            // Añadir al carrito en la sesión
-            if (!isset($_SESSION['carrito'])) {
-                $_SESSION['carrito'] = [];
-            }
+            // Inicializar el carrito si no existe
+if (!isset($_SESSION['carrito'])) {
+    $_SESSION['carrito'] = [];
+}
 
-            // Comprobar si el producto ya está en el carrito
-            if (isset($_SESSION['carrito'][$producto])) {
-                $_SESSION['carrito'][$producto] += $cantidad;
-            } else {
-                $_SESSION['carrito'][$producto] = $cantidad;
-            }
+// Si el producto ya está en el carrito, actualizamos su cantidad
+if (isset($_SESSION['carrito'][$producto])) {
+    $_SESSION['carrito'][$producto] += $cantidad;
+} else {
+    // Si no está en el carrito, lo añadimos
+    $_SESSION['carrito'][$producto] = $cantidad;
+}
 
-            $mensaje = "Producto añadido al carrito.";
+            
+            header("Location: comprocli.php");
+            exit();
+
         } else {
-            $error = "No hay suficiente stock para este producto.";
+            echo "No hay suficiente stock para este producto.";
         }
     }
 
-    // Finalizar la compra
-    if (isset($_POST['finalizar_compra'])) {
-        if (isset($_SESSION['carrito'])) {
-            // Realizar la compra
+    if (isset($_POST['finalizar_compra']) && !empty($_SESSION['carrito'])) {
+        try {
+            $conn->beginTransaction();
+
             foreach ($_SESSION['carrito'] as $id_producto => $cantidad) {
-                // Insertar la compra en la base de datos
-                $sql_compra = "INSERT INTO compra (NIF_CLIENTE, ID_PRODUCTO, FECHA_COMPRA, CANTIDAD) 
-                               VALUES (:nif_cliente, :id_producto, NOW(), :cantidad)";
-                $stmt_compra = $conn->prepare($sql_compra);
-                $stmt_compra->bindParam(':nif_cliente', $_SESSION['nif'], PDO::PARAM_STR);
-                $stmt_compra->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
-                $stmt_compra->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
-                $stmt_compra->execute();
+                // Insertar en la tabla `compra`
+                $datosCompra = [
+                    'NIF' => $_SESSION['NIF'],
+                    'ID_PRODUCTO' => $id_producto,
+                    'FECHA_COMPRA' => date('Y-m-d H:i:s'),
+                    'UNIDADES' => $cantidad
+                ];
+                insertarDatos('compra', $datosCompra);
 
                 // Actualizar el stock
                 $sql_stock = "UPDATE almacena SET CANTIDAD = CANTIDAD - :cantidad WHERE ID_PRODUCTO = :id_producto";
@@ -128,10 +121,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt_stock->execute();
             }
 
+            $conn->commit();
+
             // Vaciar el carrito
             unset($_SESSION['carrito']);
-            $mensaje = "Compra realizada con éxito.";
+            echo "Compra realizada con éxito.";
+        } catch (Exception $e) {
+            $conn->rollBack();
+            echo "Error al realizar la compra: " . htmlspecialchars($e->getMessage());
         }
+
+    }
+    if(isset($_POST['borrar_carrito'])){
+        unset($_SESSION['carrito']);
     }
 }
+
 ?>

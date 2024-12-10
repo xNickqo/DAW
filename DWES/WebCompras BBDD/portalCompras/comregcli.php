@@ -31,6 +31,8 @@
         <input type="submit" value="Registrar Cliente">
     </form>
 
+    <a href="comlogincli.php">Si ya tienes cuenta</a>
+
     <?php
         include "../includes/funciones.php";
 
@@ -77,8 +79,8 @@
                 insertarDatos('cliente', $valores);
                 
                 //Registramos la sesion del cliente
-                $_SESSION['usuario'] = $usuario; // Guardamos el nombre como usuario
-                $_SESSION['nif'] = $nif; // También podemos guardar el NIF para otras operaciones
+                $_SESSION['usuario'] = $usuario;
+                $_SESSION['NIF'] = $nif;
 
                 $mensaje = "Cliente registrado correctamente. Su usuario es: $usuario y su clave es: $clave";
                 echo $mensaje;

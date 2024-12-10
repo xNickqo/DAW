@@ -1,9 +1,8 @@
 <?php
     session_start();
 
-    // Verificar si el usuario está logeado
     if (!isset($_SESSION['usuario'])) {
-        header("Location: portalCompras/comlogincli.php"); // Redirigir al login si no está logeado
+        header("Location: portalCompras/comregcli.php");
         exit();
     }
 ?>
