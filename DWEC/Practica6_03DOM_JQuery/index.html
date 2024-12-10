@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Object Model</title>
+
+    <!-- JQUERY -->
+    <script src="jquery/jquery-3.7.1.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/index.js"></script>
+</head>
+<body>
+    <form id="formulario" action="">
+        <div id="usuario">
+            <h2 id="user">USUARIO</h2>
+
+            <input id="registro" type="button" value="Registrarse">
+            <input id="entrar" type="button" value="Entrar">
+        </div>
+        <br>
+
+        <!-- REGISTRO DE USUARIOS -->
+        <div id="reg">
+            <dialog id="formRegistro">
+                <h3>Registro de Usuario</h3>
+
+                <label>Nombre de Usuario:</label>
+                    <input type="text" id="nombreUsuario"><br>
+                
+                <label>Contraseña:</label>
+                    <input type="password" id="contrasena"><br>
+                
+                <input type="button" id="aceptar" value="Aceptar">
+                <input type="button" id="cancelar" value="Cancelar">
+            </dialog>
+        </div>
+        <br>
+        <br>
+
+        <!-- INICIO DE SESION -->
+        <div id="ini">
+            <dialog id="formInicio">
+                <h3>Iniciar Sesion (Cookie)</h3>
+
+                <label>Nombre de Usuario:</label>
+                    <input type="text" id="nom"><br>
+                
+                <label>Contraseña:</label>
+                    <input type="password" id="pas"><br>
+
+                <input type="button" id="iniciar" value="Iniciar">
+                <input type="button" id="borrar" value="Borrar">
+            </dialog>
+        </div>
+        <br>
+
+        <!-- DEFINICIONES -->
+        <div id="definiciones">
+            <h2>Definiciones</h2>
+            <label for="palabra"> Palabra</label>
+                <input type="text" id="palabra"><br>
+            <label for="concepto"> Concepto</label>
+                <input type="text" id="concepto"><br>
+
+            <input type="button" value="Añadir Definicion" id="crearDef"><br>
+
+            <b>Lista de definiciones</b>
+            <dl id="listaDef"> </dl>
+        </div>
+        <br>
+
+        <!-- LOCALIDADES -->
+        <div id="localidades">
+            <h2>Nombres de localidades</h2>
+            <label for="localidad"> Localidad</label>
+                <input type="text" id="localidad"><br>
+
+            <input type="button" value="Añadir Localidad" id="crearLoc"><br>
+
+            <b>Lista de localidades ordenadas</b>
+            <ul id="listaLoc">
+                <!-- Los mensajes se añadirán aquí -->
+            </ul>
+        </div>
+        <br>
+
+        <!-- COCHES -->
+        <div id="coches">
+                <h2>Lista de coches</h2>
+                <label for="marca"> Marca</label>
+                    <input type="text" id="marca"><br>
+                <label for="modelo"> Modelo</label>
+                    <input type="text" id="modelo"><br>
+                <label for="precio"> Precio</label>
+                    <input type="text" id="precio"><br>
+
+                <input type="button" value="Añadir coche" id="crearCoche"><br>
+
+                <table border="1" id="tablaCoches">
+                    <tr>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>Precio</th>
+                    </tr>
+                </table>
+        </div>
+        <br>
+
+        <!-- COMUNIDADES -->
+        <div id="comunidades">
+            <h2>Comunidades Autonomas</h2>
+
+            <select id="comun">
+                <option>Asturias</option>
+                <option>Andalucia</option>
+                <option>Aragon</option>
+                <option>Baleares</option>
+                <option>Canarias</option>
+                <option>Cantabria</option>
+                <option>Castilla y Leon</option>
+                <option>Castilla-La Mancha</option>
+                <option>Cataluña</option>
+                <option>Valencia</option>
+                <option>Extremadura</option>
+                <option>Galicia</option>
+                <option>Madrid</option>
+                <option>Murcia</option>
+                <option>Navarra</option>
+                <option>Pais Vasco</option>
+                <option>La Rioja</option>
+                <option>Ceuta</option>
+                <option>Melilla</option>
+            </select>
+
+            <label for="provincias">Provincias</label>
+            <select id="provincias"></select>
+            <br>
+            <b>Comentario sobre la comunidad autonoma</b>
+            <p id="coment">
+                <!-- Los comentarios se añadirán aquí -->
+            </p>
+        </div>
+        <br>
+
+        <!-- Boton añadir mensaje (inicialmente oculto) -->
+        <div id="boton">
+            <!-- Lista de mensajes -->
+            <div id="chat">
+                <!-- Los mensajes se añadirán aquí -->
+            </div>
+            <input type="button" value="Añadir mensaje">
+        </div>
+
+        <!-- Formulario para añadir mensaje (inicialmente oculto) -->
+        <div id="formularioMensaje">
+            <h3>Nuevo mensaje</h3>
+            
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" placeholder="Título del mensaje">
+            <br>
+            <br>
+            <label for="comentario">Comentario:</label>
+            <textarea id="comentario" placeholder="Escribe tu comentario"></textarea>
+            <br>
+            <br>
+            <label>Seleccionar imagen:</label>
+            <div>
+                <input type="radio" name="imagen" value="image1" id="img1"><label for="img1">Imagen 1</label>
+                <input type="radio" name="imagen" value="image2" id="img2"><label for="img2">Imagen 2</label>
+                <input type="radio" name="imagen" value="image3" id="img3"><label for="img3">Imagen 3</label>
+                <input type="radio" name="imagen" value="image4" id="img4"><label for="img4">Imagen 4</label>
+                <input type="radio" name="imagen" value="image5" id="img5"><label for="img5">Imagen 5</label>
+                <input type="radio" name="imagen" value="image6" id="img6"><label for="img6">Imagen 6</label>
+            </div>
+            <br>
+            <br>
+            <input type="button" value="Aceptar" id="aceptarMensaje">
+            <input type="button" value="Cancelar" id="cancelarMensaje">
+        </div>
+    </form>
+</body>
+</html>
