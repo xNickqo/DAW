@@ -12,15 +12,12 @@
         <select name="producto" id="producto" required>
             <?php
                 include "../includes/funciones.php";
-
                 $conn = conexionBBDD();
-
                 $sql = "SELECT ID_PRODUCTO, NOMBRE FROM producto";
                 imprimirOpciones($sql, 'ID_PRODUCTO', 'NOMBRE');
             ?>
         </select>
-        <br><br>
-
+        <br>
         <input type="submit" value="Mostrar stock del producto">
     </form>
 
@@ -34,11 +31,8 @@
                       JOIN almacen a ON al.NUM_ALMACEN = a.NUM_ALMACEN 
                       WHERE al.ID_PRODUCTO = :producto";
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':producto', $producto, PDO::PARAM_STR);
-        $stmt->execute();
-
-        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $parametros = array(':producto' => $producto);
+        $resultados = ejecutarConsulta($sql, $parametros);
 
         // Mostrar resultados
         if (count($resultados) > 0) {

@@ -44,10 +44,9 @@ $conn = conexionBBDD();
         foreach ($_SESSION['carrito'] as $id_producto => $cantidad) {
             // Obtener el nombre del producto
             $sql_producto = "SELECT NOMBRE FROM producto WHERE ID_PRODUCTO = :id_producto";
-            $stmt_producto = $conn->prepare($sql_producto);
-            $stmt_producto->bindParam(':id_producto', $id_producto, PDO::PARAM_STR);
-            $stmt_producto->execute();
-            $producto = $stmt_producto->fetch(PDO::FETCH_ASSOC);
+            $parametros = array(':id_producto' => $id_producto);
+
+            $producto = ejecutarConsulta($sql_producto, $parametros);
             //var_dump($producto);
             echo "<li>" . htmlspecialchars($producto['NOMBRE']) . " - Cantidad: " . htmlspecialchars($cantidad) . "</li>";
         }
@@ -71,25 +70,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Verificar disponibilidad
         $sql_check = "SELECT CANTIDAD FROM almacena WHERE ID_PRODUCTO = :producto";
-        $stmt_check = $conn->prepare($sql_check);
-        $stmt_check->bindParam(':producto', $producto, PDO::PARAM_STR);
-        $stmt_check->execute();
-        $row = $stmt_check->fetch(PDO::FETCH_ASSOC);
+        $params = array(':producto'=>$producto);
+        $row =ejecutarConsulta($sql_check, $params);
 
         if ($row && $row['CANTIDAD'] >= $cantidad) {
             // Inicializar el carrito si no existe
-if (!isset($_SESSION['carrito'])) {
-    $_SESSION['carrito'] = [];
-}
+            if (!isset($_SESSION['carrito']))
+                $_SESSION['carrito'] = array();
 
-// Si el producto ya está en el carrito, actualizamos su cantidad
-if (isset($_SESSION['carrito'][$producto])) {
-    $_SESSION['carrito'][$producto] += $cantidad;
-} else {
-    // Si no está en el carrito, lo añadimos
-    $_SESSION['carrito'][$producto] = $cantidad;
-}
-
+            // Si el producto ya está en el carrito, actualizamos su cantidad, Si no está en el carrito, lo añadimos
+            if (isset($_SESSION['carrito'][$producto]))
+                $_SESSION['carrito'][$producto] += $cantidad;
+            else
+                $_SESSION['carrito'][$producto] = $cantidad;
             
             header("Location: comprocli.php");
             exit();
@@ -130,11 +123,9 @@ if (isset($_SESSION['carrito'][$producto])) {
             $conn->rollBack();
             echo "Error al realizar la compra: " . htmlspecialchars($e->getMessage());
         }
-
     }
-    if(isset($_POST['borrar_carrito'])){
+    if (isset($_POST['borrar_carrito']))
         unset($_SESSION['carrito']);
-    }
 }
 
 ?>

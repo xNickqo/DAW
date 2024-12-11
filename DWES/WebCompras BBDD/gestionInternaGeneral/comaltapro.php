@@ -37,44 +37,23 @@
         $precio = $_POST['precioprod'];
         $categoria = $_POST['categoriaprod'];
 
-        if (empty($categoria)) {
-            echo "Debe seleccionar una categoría.";
-            exit();
-        }
+        $sql = 'SELECT MAX(ID_PRODUCTO) FROM producto';
+        $res = ejecutarConsulta($sql, array(), PDO::FETCH_NUM, true);
+        $newnumber = empty($res) ? 1 : (int)substr($res, 1) + 1;
+        $idprod = 'P' . str_pad($newnumber, 4, '0', STR_PAD_LEFT);
 
-        if (!is_numeric($precio)) {
-            echo "El precio debe ser un número.";
-            exit();
-        }
+        $valores = array(
+            'ID_PRODUCTO' => $idprod,
+            'NOMBRE' => $nombreProd,
+            'PRECIO' => $precio,
+            'ID_CATEGORIA' => $categoria
+        );
+        insertarDatos('producto', $valores);
 
-        try {
-            $sql = 'SELECT MAX(ID_PRODUCTO) FROM producto';
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
+        echo "$nombreProd con ID [$idprod] introducido exitosamente.";
 
-            $res = $stmt->fetch(PDO::FETCH_NUM);
-            $newnumber = empty($res[0]) ? 1 : (int)substr($res[0], 1) + 1;
-
-            $idprod = 'P' . str_pad($newnumber, 4, '0', STR_PAD_LEFT);
-
-            $sql = 'INSERT INTO producto (ID_PRODUCTO, NOMBRE, PRECIO, ID_CATEGORIA) 
-                                VALUES (:id_producto, :nombre, :precio, :id_categoria)';
-            $stmt = $conn->prepare($sql);
-
-            $stmt->bindParam(':id_producto', $idprod);
-            $stmt->bindParam(':nombre', $nombreProd);
-            $stmt->bindParam(':precio', $precio);
-            $stmt->bindParam(':id_categoria', $categoria);
-
-            $stmt->execute();
-
-            echo "$nombreProd con ID [$idprod] introducido exitosamente.";
-
-            $mostrarTabla = true;
-            $idCategoriaSeleccionada = $categoria;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+        $mostrarTabla = true;
+        $idCategoriaSeleccionada = $categoria;
     }
 
     if ($mostrarTabla) {
@@ -89,23 +68,26 @@
                 </thead>
                 <tbody>";
 
-        try {
-            $sql = "SELECT ID_PRODUCTO, NOMBRE, PRECIO 
-                    FROM producto 
-                    WHERE ID_CATEGORIA = :id_categoria";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id_categoria', $idCategoriaSeleccionada);
-            $stmt->execute();
 
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $sql = "SELECT ID_PRODUCTO, NOMBRE, PRECIO 
+                FROM producto 
+                WHERE ID_CATEGORIA = :id_categoria";
+
+        $parametros = array(
+            ':id_categoria' => $idCategoriaSeleccionada
+        );
+
+        $productos = ejecutarConsulta($sql, $parametros);
+        if (!empty($productos)) {
+            foreach ($productos as $row) {
                 echo "<tr>";
                 echo "<td>" . htmlspecialchars($row['ID_PRODUCTO']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['NOMBRE']) . "</td>";
                 echo "<td>" . htmlspecialchars($row['PRECIO']) . "</td>";
                 echo "</tr>";
             }
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+        } else {
+            echo "<tr><td colspan='3'>No hay productos en esta categoría.</td></tr>";
         }
 
         echo "</tbody>

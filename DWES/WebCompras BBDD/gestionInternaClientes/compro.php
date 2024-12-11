@@ -36,30 +36,26 @@
     </form>
 
     <?php
-        $error = "";
-        $mensaje = "";
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $producto = $_POST['producto'];
             $cantidad = $_POST['cantidad'];
             $nif_cliente = $_POST['nif_cliente'];
 
             if ($cantidad <= 0) {
-                $error = "La cantidad debe ser mayor que 0";
+                echo "La cantidad debe ser mayor que 0";
             } else {
                 $conn = conexionBBDD();
+
                 $sql = "SELECT SUM(CANTIDAD) AS stock_total
                         FROM almacena
                         WHERE ID_PRODUCTO = :producto";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':producto', $producto, PDO::PARAM_STR);
-                $stmt->execute();
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                $parametros = array(':producto' => $producto);
+
+                $row = ejecutarConsulta($sql, $parametros);
 
                 $stock_disponible = $row['stock_total'];
-
                 if ($stock_disponible < $cantidad) {
-                    $error = "No hay suficiente stock disponible para realizar esta compra.";
+                    echo "No hay suficiente stock disponible para realizar esta compra.";
                 } else {
                     $fecha_compra = date("Y-m-d");
                     $camposValores = array(
@@ -71,18 +67,10 @@
 
                     insertarDatos("compra", $camposValores);
                     
-                    $mensaje = "Compra realizada con éxito. Producto: $producto, Cantidad: $cantidad.";
+                    echo "Compra realizada con éxito. Producto: $producto, Cantidad: $cantidad.";
                 }
             }
         }
     ?>
-
-    <!-- Mostrar mensajes de error o éxito -->
-    <?php if ($error): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php elseif ($mensaje): ?>
-        <p style="color: green;"><?php echo $mensaje; ?></p>
-    <?php endif; ?>
-
 </body>
 </html>

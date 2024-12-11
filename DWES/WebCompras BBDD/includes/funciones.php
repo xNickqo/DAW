@@ -1,7 +1,7 @@
 <?php
 function conexionBBDD(){
     try{
-        $conn = new PDO("mysql:host=localhost;dbname=comprasweb", "root", "");
+        $conn = new PDO("mysql:host=localhost;dbname=comprasweb", "root", "rootroot");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
     }catch(PDOException $e){
@@ -65,6 +65,45 @@ function imprimirOpciones($sql, $valor, $texto) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo "<option value='" . $row[$valor] . "'>" . $row[$texto] . "</option>";
+    }
+}
+
+/* Funcion que ejecutara cualquier consulta select dando la opcion de como devuelve los datos
+Ejemplo de uso:
+  -CONSULTA BASICA
+    $sql = "SELECT * FROM producto";
+    $resultado = ejecutarConsulta($sql);
+    
+  -CONSULTA CON WHERE  
+    $sql = "SELECT * FROM producto WHERE ID_PRODUCTO = :id";
+    $parametros = [':id' => 10];
+    $resultado = ejecutarConsulta($sql, $parametros);
+    
+  -CONSULTA CON JOIN
+    $sql = "
+        SELECT p.NOMBRE AS nombre_producto, c.NOMBRE AS nombre_categoria
+        FROM producto p
+        INNER JOIN categoria c ON p.ID_CATEGORIA = c.ID_CATEGORIA
+        WHERE p.ID_PRODUCTO = :id_producto";
+    $parametros = [':id_producto' => $id_producto];
+    $resultados = ejecutarConsulta($sql, $parametros);  
+    
+SI NECESITAS DEVOLVER LOS DATOS DE OTRO TIPO SOLO DEBERAS ESPECIFICARLO EN FETCHMODE*/
+function ejecutarConsulta($sql, $parametros = [], $fetchMode = PDO::FETCH_ASSOC, $singleValue=false) {
+    $conn = conexionBBDD();
+
+    try {
+        $stmt = $conn->prepare($sql);
+        foreach ($parametros as $clave => $valor) {
+            $stmt->bindValue($clave, $valor);
+        }
+        $stmt->execute();
+        if ($singleValue) {
+            return $stmt->fetch($fetchMode)[0]; // Obtiene el primer valor de la fila
+        }
+        return $stmt->fetchAll($fetchMode);
+    } catch (Exception $e) {
+        die("Error en la consulta: " . $e->getMessage());
     }
 }
 

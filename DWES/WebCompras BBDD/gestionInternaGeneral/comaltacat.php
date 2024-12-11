@@ -23,26 +23,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['nombrecat'])) {
 
     try {
         $sql = 'SELECT MAX(ID_CATEGORIA) FROM categoria';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-
-        $res = $stmt->fetch(PDO::FETCH_NUM);
-        if ($res && $res[0] != null) {
-            $num = substr($res[0], 1); // Elimina el prefijo 'C'
+        $res = ejecutarConsulta($sql, array(), PDO::FETCH_NUM, true);
+        if ($res != null) {
+            $num = substr($res, 1); // Elimina el prefijo 'C'
             $newnumber = (int)$num + 1; // Convierte a entero y suma 1
-        }else{
+        } else {
             $newnumber = 1;
         }
 
         $idcat = 'C' . str_pad($newnumber, 3, '0', STR_PAD_LEFT);
 
-        $sql = 'INSERT INTO categoria (ID_CATEGORIA, NOMBRE) VALUES (:id_categoria, :nombre)';
-        $stmt = $conn->prepare($sql);
+        $valores = array(
+            'ID_CATEGORIA' => $idcat,
+            'NOMBRE' => $nombreCategoria
+        );
 
-        $stmt->bindParam(':id_categoria', $idcat);
-        $stmt->bindParam(':nombre', $nombreCategoria);
-
-        $stmt->execute();
+        insertarDatos('categoria', $valores);
 
         echo "Categoría [$nombreCategoria] con ID [$idcat] introducida exitosamente.";
     } catch (PDOException $e) {

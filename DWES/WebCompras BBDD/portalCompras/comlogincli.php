@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,10 +22,7 @@
     </form>
 
     <?php
-        session_start();
         include "../includes/funciones.php";
-
-        $error = "";
 
         // Verificar si el usuario ya está logeado
         if (isset($_SESSION['usuario'])) {
@@ -33,20 +31,20 @@
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $usuario = strtolower($_POST['usuario']); // Nombre en minúsculas para asegurar consistencia
+            $usuario = strtolower($_POST['usuario']);
             $clave = $_POST['clave'];
 
             $conn = conexionBBDD();
 
             // Consultar si el usuario existe en la base de datos
             $sql_check = "SELECT * FROM cliente WHERE NOMBRE = :usuario";
-            $stmt_check = $conn->prepare($sql_check);
-            $stmt_check->bindParam(':usuario', $usuario, PDO::PARAM_STR);
-            $stmt_check->execute();
+            $parametros = [':usuario' => $usuario];
+
+            $resultado = ejecutarConsulta($sql_check, $parametros);
 
             // Si el usuario existe, verificar la clave
-            if ($stmt_check->rowCount() > 0) {
-                $row = $stmt_check->fetch(PDO::FETCH_ASSOC);
+            if (!empty($resultado)) {
+                $row = $resultado[0];
 
                 // Verificar si la clave es correcta
                 if (password_verify($clave, $row['CLAVE'])) {
@@ -55,16 +53,12 @@
                     header("Location: ../index.php");
                     exit();
                 } else {
-                    $error = "La clave es incorrecta.";
+                    echo "La clave es incorrecta.";
                 }
             } else {
-                $error = "El usuario no existe.";
+                echo "El usuario no existe.";
             }
         }
     ?>
-
-    <?php if ($error): ?>
-        <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
 </body>
 </html>

@@ -32,12 +32,8 @@
                           FROM almacena al 
                           JOIN producto p ON al.ID_PRODUCTO = p.ID_PRODUCTO 
                           WHERE al.NUM_ALMACEN = :almacen";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':almacen', $alm, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $parametros = array(':almacen' => $alm);
+        $resultados = ejecutarConsulta($sql, $parametros);
 
         // Mostrar resultados
         if (count($resultados) > 0) {

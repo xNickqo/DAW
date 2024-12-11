@@ -13,21 +13,17 @@
             <?php
                 include "../includes/funciones.php";
                 $conn = conexionBBDD();
-
                 $sql = "SELECT NIF, NOMBRE FROM cliente";
                 imprimirOpciones($sql, "NOMBRE", "NIF");
             ?>
         </select>
         <br>
-
         <label for="fecha_desde">Fecha Desde:</label>
         <input type="date" name="fecha_desde" id="fecha_desde" required>
         <br>
-
         <label for="fecha_hasta">Fecha Hasta:</label>
         <input type="date" name="fecha_hasta" id="fecha_hasta" required>
         <br>
-
         <input type="submit" value="Consultar Compras">
     </form>
 
@@ -37,8 +33,8 @@
 
         // Convertir a formato YYYY-MM-DD
         $fecha_desde = date('Y-m-d', strtotime($_POST['fecha_desde']));
-        $fecha_hasta = date('Y-m-d', strtotime($_POST['fecha_hasta'])); 
-        
+        $fecha_hasta = date('Y-m-d', strtotime($_POST['fecha_hasta']));
+
         $sql = "SELECT  c.ID_PRODUCTO, 
                         p.NOMBRE AS NOMBRE_PRODUCTO, 
                         p.PRECIO, 
@@ -48,14 +44,12 @@
                 FROM compra c
                 JOIN producto p ON c.ID_PRODUCTO = p.ID_PRODUCTO
                 WHERE c.NIF = :nif AND c.FECHA_COMPRA BETWEEN :fecha_desde AND :fecha_hasta;";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':nif', $nif_cliente, PDO::PARAM_STR);
-        $stmt->bindParam(':fecha_desde', $fecha_desde, PDO::PARAM_STR);
-        $stmt->bindParam(':fecha_hasta', $fecha_hasta, PDO::PARAM_STR);
-        $stmt->execute();
-
-        $compras = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $parametros = array(
+            ':nif' => $nif_cliente,
+            ':fecha_desde' => $fecha_desde,
+            ':fecha_hasta' => $fecha_hasta
+        );
+        $compras = ejecutarConsulta($sql, $parametros);
 
         if (count($compras) > 0) {
             echo "<h3>Compras Realizadas</h3>";
@@ -90,6 +84,6 @@
             echo "<p>No se encontraron compras para el cliente en el rango de fechas seleccionado.</p>";
         }
     }
-    ?>
+?>
 </body>
 </html>

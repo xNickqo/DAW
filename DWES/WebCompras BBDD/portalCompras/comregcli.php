@@ -36,9 +36,6 @@
     <?php
         include "../includes/funciones.php";
 
-        $error = "";
-        $mensaje = "";
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nif = $_POST['nif'];
             $nombre = $_POST['nombre'];
@@ -49,7 +46,7 @@
 
             // Validación del NIF (asegurarse de que no esté vacío y siga el formato)
             if (empty($nif) || !preg_match("/^\d{8}[A-Z]$/", $nif)) {
-                $error = "El NIF no es válido o está vacío.";
+                echo "El NIF no es válido o está vacío.";
             }
 
             // Verificar si el cliente ya existe
@@ -60,7 +57,7 @@
             $stmt_check->execute();
 
             if ($stmt_check->rowCount() > 0) {
-                $error = "Ya existe un cliente con este NIF.";
+                echo "Ya existe un cliente con este NIF.";
             }
 
             if (empty($error)) {
@@ -82,7 +79,7 @@
                 $_SESSION['usuario'] = $usuario;
                 $_SESSION['NIF'] = $nif;
 
-                $mensaje = "Cliente registrado correctamente. Su usuario es: $usuario y su clave es: $clave";
+                echo "Cliente registrado correctamente. Su usuario es: $usuario y su clave es: $clave";
                 echo $mensaje;
             } else {
                 echo $error;

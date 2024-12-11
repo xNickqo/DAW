@@ -56,34 +56,26 @@
             } elseif (!preg_match("/^[0-9]{8}[A-Z]$/", $nif)) {
                 $error = "El NIF debe tener 8 dígitos seguidos de una letra mayúscula.";
             } else {
-                // Comprobar si ya existe un cliente con el mismo NIF
                 $conn = conexionBBDD();
+
+                // Comprobar si ya existe un cliente con el mismo NIF
                 $sql_check = "SELECT COUNT(*) AS total FROM cliente WHERE NIF = :nif";
-                $stmt_check = $conn->prepare($sql_check);
-                $stmt_check->bindParam(':nif', $nif, PDO::PARAM_STR);
-                $stmt_check->execute();
-                $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
+                $parametros = array(":nif" => $nif);
+
+                $result = ejecutarConsulta($sql, $parametros);
 
                 if ($result['total'] > 0) {
                     $error = "Ya existe un cliente con el NIF $nif.";
                 } else {
-                    // Insertar el cliente si no hay errores
-                    $sql_insert = "INSERT INTO cliente (NIF, NOMBRE, APELLIDO, CP, DIRECCION, CIUDAD)
-                                VALUES (:nif, :nombre, :apellido, :cp, :direccion, :ciudad)";
-                    $stmt_insert = $conn->prepare($sql_insert);
-
-                    $stmt_insert->bindParam(':nif', $nif, PDO::PARAM_STR);
-                    $stmt_insert->bindParam(':nombre', $nombre, PDO::PARAM_STR);
-                    $stmt_insert->bindParam(':apellido', $apellido, PDO::PARAM_STR);
-                    $stmt_insert->bindParam(':cp', $cp, PDO::PARAM_STR);
-                    $stmt_insert->bindParam(':direccion', $direccion, PDO::PARAM_STR);
-                    $stmt_insert->bindParam(':ciudad', $ciudad, PDO::PARAM_STR);
-
-                    if ($stmt_insert->execute()) {
-                        $mensaje = "Cliente con NIF $nif dado de alta correctamente.";
-                    } else {
-                        $error = "Error al registrar el cliente. Intente nuevamente.";
-                    }
+                    $valores = array(
+                        'NIF' =>$nif, 
+                        'NOMBRE'=>$nombre, 
+                        'APELLIDO'=>$apellido, 
+                        'CP'=>$cp,
+                        'DIRECCION'=>$direccion, 
+                        'CIUDAD'=>$ciudad
+                    );
+                    insertarDatos('cliente', $valores);
                 }
             }
         }
