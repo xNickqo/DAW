@@ -1,7 +1,7 @@
 <?php
 function conexionBBDD(){
     try{
-        $conn = new PDO("mysql:host=localhost;dbname=pedidos", "root", "rootroot");
+        $conn = new PDO("mysql:host=localhost;dbname=pedidos", "root", "");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
     }catch(PDOException $e){
@@ -89,7 +89,7 @@ Ejemplo de uso:
     $resultados = ejecutarConsulta($sql, $parametros);  
     
 SI NECESITAS DEVOLVER LOS DATOS DE OTRO TIPO SOLO DEBERAS ESPECIFICARLO EN FETCHMODE*/
-function ejecutarConsulta($sql, $parametros = [], $fetchMode = PDO::FETCH_ASSOC, $singleValue=false) {
+function ejecutarConsulta($sql, $parametros = [], $fetchMode = PDO::FETCH_ASSOC) {
     $conn = conexionBBDD();
 
     try {
@@ -98,9 +98,6 @@ function ejecutarConsulta($sql, $parametros = [], $fetchMode = PDO::FETCH_ASSOC,
             $stmt->bindValue($clave, $valor);
         }
         $stmt->execute();
-        if ($singleValue) {
-            return $stmt->fetch($fetchMode)[0]; // Obtiene el primer valor de la fila
-        }
         return $stmt->fetchAll($fetchMode);
     } catch (Exception $e) {
         die("Error en la consulta: " . $e->getMessage());

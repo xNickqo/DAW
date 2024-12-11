@@ -64,11 +64,13 @@ if (!isset($_SESSION['carrito'])) {
                 <td>
                     <?php
                         // Obtener nombre del producto
+                        $conn = conexionBBDD();
                         $sql = "SELECT productName FROM products WHERE productCode = :productCode";
-                        $params = [':productCode' => $item['productCode']];
-                        $productName = ejecutarConsulta($sql, $params, PDO::FETCH_ASSOC);
-                        //var_dump($productName);
-                        echo $productName[0]['productName'];
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bindValue(':productCode', $item['productCode']);
+                        $stmt->execute();
+                        $productName = $stmt->fetch(PDO::FETCH_ASSOC);
+                        echo $productName['productName'];
                     ?>
                 </td>
                 <td><?= $item['quantity'] ?></td>
@@ -96,7 +98,7 @@ if (!isset($_SESSION['carrito'])) {
             }
 
             // Reindexar el carrito para evitar claves no consecutivas
-            //$_SESSION['carrito'] = array_values($_SESSION['carrito']);
+            $_SESSION['carrito'] = array_values($_SESSION['carrito']);
         }
 
     ?>
@@ -115,71 +117,107 @@ if (!isset($_SESSION['carrito'])) {
     <?php
         // Procesar el pedido
         if (isset($_POST['realizar_pedido'])) {
-            $sql = 'SELECT MAX(orderNumber) FROM orders';
-            $orderNumber = ejecutarConsulta($sql)[0];
-            $orderNumber = (int)$orderNumber + 1;
+            try {
+                // Obtener el siguiente número de pedido
+                $conn = conexionBBDD();
 
-            $orderDate = date('Y-m-d');
-            $requiredDate = $_POST['requiredDate'];
+                $conn->beginTransaction();
 
-            $insertOrderData = [
-                'orderNumber' => $orderNumber,
-                'orderDate' => $orderDate,
-                'requiredDate' => $requiredDate,
-                'shippedDate' => null,
-                'status' => 'Pending'
-            ];
-            insertarDatos('orders', $insertOrderData);
+                $sql = 'SELECT MAX(orderNumber) FROM orders';
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $orderNumber = $stmt->fetchColumn();
+                $orderNumber = (int)$orderNumber + 1;
 
+                $orderDate = date('Y-m-d');
+                $requiredDate = $_POST['requiredDate'];
 
-            // Insertar los detalles del pedido y actualizar el stock
-            foreach ($_SESSION['carrito'] as $item) {
-                $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
-                $params = array(':productCode' => $item['productCode']);
-                $buyPrice = ejecutarConsulta($sql, $params)[0];
-
-                $productCodee = $item['productCode'];
-                $quantity = $item['quantity'];
-                // Insertar detalle del pedido
-                $insertOrderDetails = [
+                // Insertar datos del pedido
+                $insertOrderData = [
                     'orderNumber' => $orderNumber,
-                    'productCode' => $productCodee,
-                    'quantityOrdered' => $quantity,
-                    'priceEach' => $buyPrice,
-                    'orderLineNumber' => null
+                    'orderDate' => $orderDate,
+                    'requiredDate' => $requiredDate,
+                    'shippedDate' => null,
+                    'status' => 'Pending',
+                    'customerNumber' => $_SESSION['usuario']
                 ];
-                insertarDatos('orderdetails', $insertOrderDetails);
+                insertarDatos('orders', $insertOrderData);
 
-                // Actualizar el stock del producto
-                $sql = "UPDATE products SET quantityInStock = quantityInStock - :quantity WHERE productCode = :productCode";
-                $params = array(
-                    ':quantity' => $item['quantity'], 
-                    ':productCode' => $item['productCode']
-                );
-                ejecutarConsulta($sql, $params);
+                echo "<br>";
+                echo "<b>orders</b><br>";
+                echo "OrderNumber: $orderNumber <br>";
+                echo "OrderDate: $orderDate <br>";
+                echo "RequiredDate: $requiredDate <br>";
+                echo "CustomerNumber: $orderNumber <br>";
+                echo "<br>";
 
-                // Calcular el total
                 $totalAmount = 0;
-                $totalAmount += $buyPrice * $item['quantity'];
+
+                // Insertar los detalles del pedido y actualizar el stock
+                foreach ($_SESSION['carrito'] as $item) {
+                    // Obtener el precio de compra del producto
+                    $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindValue(':productCode', $item['productCode']);
+                    $stmt->execute();
+                    $buyPrice = $stmt->fetchColumn();
+
+                    // Insertar detalle del pedido
+                    $insertOrderDetails = [
+                        'orderNumber' => $orderNumber,
+                        'productCode' => $item['productCode'],
+                        'quantityOrdered' => $item['quantity'],
+                        'priceEach' => $buyPrice,
+                        'orderLineNumber' => 1
+                    ];
+                    insertarDatos('orderdetails', $insertOrderDetails);
+
+                    echo "<br>";
+                    echo "<b>orderDetails</b><br>";
+                    echo "OrderNumber: $orderNumber <br>";
+                    echo "precio: $buyPrice <br>";
+                    echo "<br>";
+
+                    // Actualizar el stock del producto
+                    $sql = "UPDATE products SET quantityInStock = quantityInStock - :quantity WHERE productCode = :productCode";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bindValue(':quantity', $item['quantity']);
+                    $stmt->bindValue(':productCode', $item['productCode']);
+                    $stmt->execute();
+
+                    // Calcular el total
+                    $totalAmount += $buyPrice * $item['quantity'];
+                }
+
+                // Registrar el pago
+                $checkNumber = $_POST['checkNumber'];
+                $insertPaymentData = [
+                    'customerNumber' => $_SESSION['usuario'],
+                    'checkNumber' => $checkNumber,
+                    'paymentDate' => $orderDate,
+                    'amount' => $totalAmount
+                ];
+                insertarDatos('payments', $insertPaymentData);
+
+                echo "<br>";
+                echo "<b>payments</b><br>";
+                echo $_SESSION['usuario'];
+                echo "checkNumber: $checkNumber <br>";
+                echo "paymentDate: $orderDate <br>";
+                echo "amount: $totalAmount <br>";
+                echo "<br>";
+
+                // Vaciar el carrito
+                $_SESSION['carrito'] = array();
+
+                $conn->commit();
+
+                echo "Pedido realizado con éxito. Total: $" . number_format($totalAmount, 2);
             }
-
-
-            $customerNumber = $_SESSION['usuario'];
-            $checkNumber = $_POST['checkNumber'];
-
-            // Registrar el pago
-            $insertPaymentData = [
-                'customerNumber' => $customerNumber,
-                'checkNumber' => $checkNumber,
-                'paymentDate' => $orderDate,
-                'amount' => $totalAmount
-            ];
-            insertarDatos('payments', $insertPaymentData);
-
-            // Vaciar el carrito
-            $_SESSION['carrito'] = array();
-
-            echo "Pedido realizado con éxito. Total: $" . number_format($totalAmount, 2);
+            catch (PDOException $e) {
+                $conn->rollBack();
+                echo "Error al realizar el pedido: " . $e->getMessage();
+            }
         }
     ?>
 </body>
