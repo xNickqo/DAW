@@ -1,0 +1,42 @@
+.sprite{
+    background-image: url("../../imagenes/andando.png" );
+    background-repeat:no-repeat;
+
+}
+
+.primero{
+    width:49px;
+    height:124px;
+    background-position: -87px 0px;
+}
+
+.segundo{
+    width: 45px;
+    height:129px;
+    background-position: -136px 0px;
+}
+.tercero{
+    width:50px;
+    height:136px;
+    background-position: -183px 0px;
+}
+.cuarto{
+    width:81px;
+    height:137px;
+    background-position: -232px 0px;
+}
+.quinto{
+    width:45px;
+    height:136px;
+    background-position: -311px 0px;
+}
+.sexto{
+    width:50px;
+    height:136px;
+    background-position: -355px 0px;
+}
+.septimo{
+    width:80px;
+    height:136px;
+    background-position: -403px 0px;
+}
