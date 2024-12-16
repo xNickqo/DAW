@@ -1,17 +1,15 @@
 <?php
-session_start();
-include('includes/funciones.php');
+    session_start();
+    include('includes/funciones.php');
 
-if (!isset($_SESSION['usuario'])) {
-    header("Location: pe_login.php");
-    exit();
-}
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: pe_login.php");
+        exit();
+    }
 
-// Si el carrito no existe en la sesión, lo inicializamos
-if (!isset($_SESSION['carrito'])) {
-    $_SESSION['carrito'] = array();
-}
-
+    if (!isset($_SESSION['carrito'])) {
+        $_SESSION['carrito'] = array();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -63,13 +61,12 @@ if (!isset($_SESSION['carrito'])) {
             <tr>
                 <td>
                     <?php
-                        // Obtener nombre del producto
                         $conn = conexionBBDD();
+
                         $sql = "SELECT productName FROM products WHERE productCode = :productCode";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->bindValue(':productCode', $item['productCode']);
-                        $stmt->execute();
-                        $productName = $stmt->fetch(PDO::FETCH_ASSOC);
+                        $parametros = array('productCode' =>  $item['productCode']);
+                        $productName = ejecutarConsultaValores($sql, $parametros);
+
                         echo $productName['productName'];
                     ?>
                 </td>
@@ -115,20 +112,14 @@ if (!isset($_SESSION['carrito'])) {
     </form>
 
     <?php
-        // Procesar el pedido
-        if (isset($_POST['realizar_pedido'])) {
+        if (isset($_POST['realizar_pedido'])){
             try {
-                // Obtener el siguiente número de pedido
-                $conn = conexionBBDD();
-
                 $conn->beginTransaction();
 
                 $sql = 'SELECT MAX(orderNumber) FROM orders';
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $orderNumber = $stmt->fetchColumn();
-                $orderNumber = (int)$orderNumber + 1;
+                $orderNumber = ejecutarConsultaValor($sql);
 
+                $orderNumber = (int)$orderNumber + 1;
                 $orderDate = date('Y-m-d');
                 $requiredDate = $_POST['requiredDate'];
 
@@ -157,10 +148,8 @@ if (!isset($_SESSION['carrito'])) {
                 foreach ($_SESSION['carrito'] as $item) {
                     // Obtener el precio de compra del producto
                     $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bindValue(':productCode', $item['productCode']);
-                    $stmt->execute();
-                    $buyPrice = $stmt->fetchColumn();
+                    $parametros = array('productCode' => $item['productCode']);
+                    $buyPrice = ejecutarConsultaValor($sql, $parametros);
 
                     // Insertar detalle del pedido
                     $insertOrderDetails = [

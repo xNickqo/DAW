@@ -1,13 +1,11 @@
 <?php
-session_start();
-include('includes/funciones.php');
+    session_start();
+    include('includes/funciones.php');
 
-// Verificar si el usuario está autenticado
-if (!isset($_SESSION['usuario'])) {
-    header("Location: pe_login.php");
-    exit();
-}
-
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: pe_login.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>

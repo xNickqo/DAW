@@ -1,11 +1,11 @@
 <?php
-session_start();
-include('includes/funciones.php');
+    session_start();
+    include('includes/funciones.php');
 
-if (!isset($_SESSION['usuario'])) {
-    header("Location: pe_login.php");
-    exit();
-}
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: pe_login.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +22,8 @@ if (!isset($_SESSION['usuario'])) {
         <select name="productLine" required>
             <option value="">--Seleccione una línea de producto--</option>
             <?php
+                $conn = conexionBBDD();
+                
                 $sql = "SELECT DISTINCT productLine FROM products";
                 imprimirOpciones($sql, 'productLine', 'productLine');
             ?>
@@ -34,14 +36,11 @@ if (!isset($_SESSION['usuario'])) {
     if (isset($_POST['consultar'])) {
         $productLine = $_POST['productLine'];
 
-        $conn = conexionBBDD();
-
         $sql = "SELECT productName, quantityInStock FROM products WHERE productLine = :productLine ORDER BY quantityInStock DESC";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':productLine', $productLine);
         $stmt->execute();
 
-        // Verificar si se encontraron productos en la línea seleccionada
         if ($stmt->rowCount() > 0) {
             echo "<h3>Stock de Productos en la Línea: " . htmlspecialchars($productLine) . "</h3>";
             echo "<table border='1'>";

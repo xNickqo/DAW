@@ -1,7 +1,7 @@
 <?php
 function conexionBBDD(){
     try{
-        $conn = new PDO("mysql:host=localhost;dbname=pedidos", "root", "");
+        $conn = new PDO("mysql:host=localhost;dbname=pedidos", "root", "rootroot");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
     }catch(PDOException $e){
@@ -28,7 +28,7 @@ function conexionBBDD(){
     ]);
 
     echo "Producto insertado exitosamente.";
- */
+*/
 function insertarDatos($tabla, $camposValores) {
     try {
         $conn = conexionBBDD();
@@ -89,7 +89,7 @@ Ejemplo de uso:
     $resultados = ejecutarConsulta($sql, $parametros);  
     
 SI NECESITAS DEVOLVER LOS DATOS DE OTRO TIPO SOLO DEBERAS ESPECIFICARLO EN FETCHMODE*/
-function ejecutarConsulta($sql, $parametros = [], $fetchMode = PDO::FETCH_ASSOC) {
+function ejecutarConsultaValores($sql, $parametros = [], $fetchMode = PDO::FETCH_ASSOC) {
     $conn = conexionBBDD();
 
     try {
@@ -104,4 +104,19 @@ function ejecutarConsulta($sql, $parametros = [], $fetchMode = PDO::FETCH_ASSOC)
     }
 }
 
+function ejecutarConsultaValor($sql, $parametros = []) {
+    $conn = conexionBBDD();
+
+    try {
+        $stmt = $conn->prepare($sql);
+        foreach ($parametros as $clave => $valor) {
+            $stmt->bindValue($clave, $valor);
+        }
+        $stmt->execute();
+
+        return $stmt->fetchColumn(); // Devuelve el primer valor de la primera columna
+    } catch (Exception $e) {
+        die("Error en la consulta: " . $e->getMessage());
+    }
+}
 ?>

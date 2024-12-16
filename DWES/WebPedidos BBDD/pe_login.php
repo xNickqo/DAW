@@ -33,7 +33,7 @@
             $customerNumber = $_POST['customerNumber'];
             $clave = $_POST['contactLastName'];
 
-            $conn = conexionBBDD();
+            $conn = conexionBBDD(); 
 
             // Consultar si el usuario existe en la base de datos
             $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";

@@ -1,13 +1,11 @@
 <?php
-session_start();
-include('includes/funciones.php');
+    session_start();
+    include('includes/funciones.php');
 
-// Verificar si el usuario está autenticado (esto depende de tu sistema de autenticación)
-if (!isset($_SESSION['usuario'])) {
-    header("Location: pe_login.php");
-    exit();
-}
-
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: pe_login.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -19,34 +17,26 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
     <h2>Consultar Stock de Producto</h2>
-
-    <!-- Formulario para seleccionar el nombre del producto -->
     <form method="POST">
         <label for="productName">Seleccionar Producto:</label>
         <select name="productName" required>
             <option value="">--Seleccione un producto--</option>
             <?php
-                // Conexión a la base de datos
                 $conn = conexionBBDD();
 
-                // Consulta SQL para obtener los nombres de los productos
+                // obtener los nombres de los productos
                 $sql = "SELECT productName FROM products";
                 imprimirOpciones($sql, 'productName', 'productName');
             ?>
         </select><br><br>
-
         <input type="submit" name="consultar" value="Consultar Stock">
     </form>
 
     <?php
     if (isset($_POST['consultar'])) {
-        // Obtener el nombre del producto seleccionado
         $productName = $_POST['productName'];
 
-        // Conexión a la base de datos
-        $conn = conexionBBDD();
-
-        // Consulta SQL para obtener el stock del producto seleccionado
+        // obtener el stock del producto seleccionado
         $sql = "SELECT productName, quantityInStock FROM products WHERE productName = :productName";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':productName', $productName);

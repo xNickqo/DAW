@@ -1,15 +1,12 @@
 <?php
-session_start();
-include('includes/funciones.php');
+    session_start();
+    include('includes/funciones.php');
 
-// Verificar si el usuario está autenticado (esto depende de tu sistema de autenticación)
-if (!isset($_SESSION['usuario'])) {
-    header("Location: pe_login.php");
-    exit();
-}
-
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: pe_login.php");
+        exit();
+    }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,8 +16,6 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
     <h2>Consultar Pedidos</h2>
-
-    <!-- Formulario para seleccionar un número de cliente -->
     <form method="POST">
         <label for="customerNumber">Número de Cliente:</label>
         <select name="customerNumber" id="customerNumber">
@@ -38,7 +33,7 @@ if (!isset($_SESSION['usuario'])) {
 
         $conn = conexionBBDD();
 
-        // Consulta SQL para obtener los pedidos del cliente
+        // obtener los pedidos del cliente
         $sql = "SELECT o.orderNumber, o.orderDate, o.status, od.orderLineNumber, p.productName, od.quantityOrdered, od.priceEach
             FROM orders o
             JOIN orderdetails od ON o.orderNumber = od.orderNumber
@@ -46,14 +41,11 @@ if (!isset($_SESSION['usuario'])) {
             WHERE o.customerNumber = :customerNumber
             ORDER BY od.orderLineNumber";
         
-        // Preparar y ejecutar la consulta
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':customerNumber', $customerNumber);
         $stmt->execute();
 
-        // Verificar si se encontraron pedidos
         if ($stmt->rowCount() > 0) {
-            // Mostrar los resultados
             echo "<h3>Pedidos de Cliente: $customerNumber</h3>";
             echo "<table border='1'>
                     <tr>
@@ -66,7 +58,6 @@ if (!isset($_SESSION['usuario'])) {
                         <th>Precio Unidad</th>
                     </tr>";
 
-            // Iterar sobre los resultados y mostrar los detalles
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo "<tr>
                         <td>" . htmlspecialchars($row['orderNumber']) . "</td>
