@@ -65,9 +65,9 @@
 
                         $sql = "SELECT productName FROM products WHERE productCode = :productCode";
                         $parametros = array('productCode' =>  $item['productCode']);
-                        $productName = ejecutarConsultaValores($sql, $parametros);
+                        $productName = ejecutarConsultaValor($sql, $parametros);
 
-                        echo $productName['productName'];
+                        echo $productName;
                     ?>
                 </td>
                 <td><?= $item['quantity'] ?></td>
@@ -164,7 +164,7 @@
                     echo "<br>";
                     echo "<b>orderDetails</b><br>";
                     echo "OrderNumber: $orderNumber <br>";
-                    echo "precio: $buyPrice <br>";
+                    echo "buyPrice: $buyPrice <br>";
                     echo "<br>";
 
                     // Actualizar el stock del producto
@@ -190,7 +190,7 @@
 
                 echo "<br>";
                 echo "<b>payments</b><br>";
-                echo $_SESSION['usuario'];
+                echo "CustomerNumber: " . $_SESSION['usuario'] . "</br>";
                 echo "checkNumber: $checkNumber <br>";
                 echo "paymentDate: $orderDate <br>";
                 echo "amount: $totalAmount <br>";

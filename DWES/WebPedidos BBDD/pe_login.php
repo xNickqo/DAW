@@ -38,7 +38,7 @@
             // Consultar si el usuario existe en la base de datos
             $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
             $parametros = array(':customerNumber' => $customerNumber);
-            $resultado = ejecutarConsultaValor($sql, $parametros);
+            $resultado = ejecutarConsultaValores($sql, $parametros);
             //var_dump($resultado);
 
             // Si el usuario existe, verificar la clave

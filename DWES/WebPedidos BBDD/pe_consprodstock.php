@@ -44,7 +44,7 @@
 
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<h3>Stock de Producto: " . htmlspecialchars($row['productName']) . "</h3>";
-            echo "<p>Cantidad en Stock: " . htmlspecialchars($row['quantityInStock']) . "</p>";
+            echo "<p>Stock: " . htmlspecialchars($row['quantityInStock']) . "</p>";
         } else {
             echo "<p>Producto no encontrado.</p>";
         }
