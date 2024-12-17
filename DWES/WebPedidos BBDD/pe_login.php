@@ -1,11 +1,5 @@
-<?php 
-    session_start();
-    include "includes/funciones.php";
-
-    if (isset($_SESSION['usuario'])) {
-        header("Location: pe_inicio.php");
-        exit();
-    }    
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,7 +10,6 @@
 </head>
 <body>
     <h2>Login</h2>
-
     <form action="pe_login.php" method="POST">
         <label for="customerNumber">Usuario (customerName):</label>
         <input type="text" name="customerNumber" id="customerNumber" required><br><br>
@@ -34,6 +27,8 @@
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $customerNumber = $_POST['customerNumber'];
             $clave = $_POST['contactLastName'];
+
+            include "includes/funciones.php";
 
             $conn = conexionBBDD(); 
 

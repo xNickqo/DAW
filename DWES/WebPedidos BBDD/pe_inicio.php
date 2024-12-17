@@ -22,5 +22,7 @@
     <a href="pe_topprod.php">Unidades totales de cada uno de los productos vendidos entre dos fechas</a><br>
     <a href="pe_conspago.php">Relación de pagos realizados entre dos fechas, así como el importe total de los mismos</a><br>
 
+    <br><br>
+    <a href="pe_logout.php">Cerrar Sesion</a>
 </body>
 </html>
