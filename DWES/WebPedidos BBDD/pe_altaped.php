@@ -43,10 +43,23 @@
             $productCode = $_POST['productCode'];
             $quantity = $_POST['quantity'];
 
-            $_SESSION['carrito'][] = array(
-                'productCode' => $productCode, 
-                'quantity' => $quantity
-            );
+            $productoEncontrado = false;
+
+            // Recorrer el carrito para buscar el producto
+            foreach ($_SESSION['carrito'] as &$item) {
+                if ($item['productCode'] == $productCode) {
+                    $item['quantity'] += $quantity;
+                    $productoEncontrado = true;
+                    break;
+                }
+            }
+
+            if(!$productoEncontrado) {
+                $_SESSION['carrito'][] = array(
+                    'productCode' => $productCode, 
+                    'quantity' => $quantity
+                );
+            }
         }
     ?>
 
@@ -111,6 +124,8 @@
         <input type="submit" name="realizar_pedido" value="Confirmar Pedido">
     </form>
 
+    <a href="pe_inicio.php">Volver al inicio</a>
+
     <?php
         if (isset($_POST['realizar_pedido'])){
             try {
@@ -143,13 +158,14 @@
                 echo "<br>";
 
                 $totalAmount = 0;
-
+                $orderLineNumber = 1;
                 // Insertar los detalles del pedido y actualizar el stock
                 foreach ($_SESSION['carrito'] as $item) {
                     // Obtener el precio de compra del producto
                     $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
                     $parametros = array('productCode' => $item['productCode']);
                     $buyPrice = ejecutarConsultaValor($sql, $parametros);
+                    
 
                     // Insertar detalle del pedido
                     $insertOrderDetails = [
@@ -157,7 +173,7 @@
                         'productCode' => $item['productCode'],
                         'quantityOrdered' => $item['quantity'],
                         'priceEach' => $buyPrice,
-                        'orderLineNumber' => 1
+                        'orderLineNumber' => $orderLineNumber
                     ];
                     insertarDatos('orderdetails', $insertOrderDetails);
 
@@ -176,6 +192,7 @@
 
                     // Calcular el total
                     $totalAmount += $buyPrice * $item['quantity'];
+                    $orderLineNumber++;
                 }
 
                 // Registrar el pago

@@ -27,6 +27,8 @@
         <input type="submit" value="Iniciar Sesión">
     </form>
 
+    <a href="pe_reg.php">Si no tienes cuenta</a>
+
     <?php
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -45,7 +47,7 @@
             if (!empty($resultado)) {
                 $row = $resultado[0];
 
-                if ($clave == $row['contactLastName']) {
+                if (password_verify($clave, $row['contactLastName'])) {
                     $_SESSION['usuario'] = $row['customerNumber'];
                     header("Location: pe_inicio.php");
                     exit();

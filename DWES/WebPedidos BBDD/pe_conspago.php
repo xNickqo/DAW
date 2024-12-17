@@ -36,6 +36,8 @@
         <input type="submit" name="consultar" value="Consultar">
     </form>
 
+    <a href="pe_inicio.php">Volver al inicio</a>
+
     <?php
         if (isset($_POST['consultar']) && (!empty($startDate) && !empty($endDate))) {
             $customerNumber = $_POST['customerNumber'];

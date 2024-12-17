@@ -32,23 +32,25 @@
         <input type="submit" name="consultar" value="Consultar Stock">
     </form>
 
+    <a href="pe_inicio.php">Volver al inicio</a>
+
     <?php
-    if (isset($_POST['consultar'])) {
-        $productName = $_POST['productName'];
+        if (isset($_POST['consultar'])) {
+            $productName = $_POST['productName'];
 
-        // obtener el stock del producto seleccionado
-        $sql = "SELECT productName, quantityInStock FROM products WHERE productName = :productName";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':productName', $productName);
-        $stmt->execute();
+            // obtener el stock del producto seleccionado
+            $sql = "SELECT productName, quantityInStock FROM products WHERE productName = :productName";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':productName', $productName);
+            $stmt->execute();
 
-        if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<h3>Stock de Producto: " . htmlspecialchars($row['productName']) . "</h3>";
-            echo "<p>Stock: " . htmlspecialchars($row['quantityInStock']) . "</p>";
-        } else {
-            echo "<p>Producto no encontrado.</p>";
+            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<h3>Stock de Producto: " . htmlspecialchars($row['productName']) . "</h3>";
+                echo "<p>Stock: " . htmlspecialchars($row['quantityInStock']) . "</p>";
+            } else {
+                echo "<p>Producto no encontrado.</p>";
+            }
         }
-    }
     ?>
 </body>
 </html>
