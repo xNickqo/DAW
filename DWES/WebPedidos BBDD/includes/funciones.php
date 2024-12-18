@@ -190,7 +190,7 @@ function imprimirDatosOrder($orderNumber, $orderDate, $requiredDate) {
     echo "shippedDate: null<br>";
     echo "status: Pending<br>";
     echo "CustomerNumber:". $_SESSION['usuario'] . "<br>";
-    echo "<br>";
+    echo "<br><br>";
 }
 
 // Función para imprimir los datos de la tabla "orderdetails"
@@ -202,7 +202,7 @@ function imprimirDatosOrderDetails($orderNumber, $productCode, $quantity , $buyP
     echo "quantityOrdered: ". $quantity . "<br>";
     echo "buyPrice: $buyPrice <br>";
     echo "orderLineNumber: $orderLineNumber";
-    echo "<br>";
+    echo "<br><br>";
 }
 
 // Función para imprimir los datos de la tabla "payments"
@@ -213,7 +213,7 @@ function imprimirDatosPayment($customerNumber, $checkNumber, $orderDate, $totalA
     echo "checkNumber: $checkNumber <br>";
     echo "paymentDate: $orderDate <br>";
     echo "amount: $totalAmount <br>";
-    echo "<br>";
+    echo "<br><br>";
 }
 
 // Función para actualizar el stock de un producto
@@ -225,13 +225,9 @@ function actualizarStockProducto($conn, $productCode, $quantity) {
     $stmt->execute();
 }
 
-function realizarPedido($conn){
+function realizarPedido($conn, $orderNumber){
     try {
         $conn->beginTransaction();
-
-        $sql = 'SELECT MAX(orderNumber) FROM orders';
-        $orderNumber = ejecutarConsultaValor($sql);
-        $orderNumber = (int)$orderNumber + 1;
 
         $orderDate = date('Y-m-d');
         $requiredDate = $_POST['requiredDate'];
@@ -298,5 +294,118 @@ function realizarPedido($conn){
         $conn->rollBack();
         echo "Error al realizar el pedido: " . $e->getMessage();
     }
+
+    return $totalAmount;
 }
+
+
+function consultarPayments($customerNumber, $startDate, $endDate){
+    $conn = conexionBBDD();
+    $sql = "SELECT paymentDate, checkNumber, amount 
+                FROM payments 
+                WHERE customerNumber = :customerNumber
+                AND paymentDate BETWEEN :startDate AND :endDate";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':customerNumber', $customerNumber);
+    $stmt->bindValue(':startDate', $startDate);
+    $stmt->bindValue(':endDate', $endDate);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo "<h3>Pagos Realizados</h3>";
+        echo "<table border='1'>";
+        echo "<tr><th>Fecha</th><th>Número de Pago</th><th>Importe</th></tr>";
+
+        $totalAmount = 0;
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['paymentDate']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['checkNumber']) . "</td>";
+            echo "<td>$" . number_format($row['amount'], 2) . "</td>";
+            echo "</tr>";
+
+            $totalAmount += $row['amount'];
+        }
+
+        echo "</table>";
+        echo "<p><b>Total Pagado:</b> $" . number_format($totalAmount, 2) . "</p>";
+    } else {
+        echo "<p>No se encontraron pagos para el cliente seleccionado en el rango de fechas proporcionado.</p>";
+    }
+}
+
+// Función para consultar y mostrar los pedidos de un cliente
+function consultarPedidos($customerNumber) {
+    $conn = conexionBBDD();
+
+    $sql = "SELECT o.orderNumber, o.orderDate, o.status, od.orderLineNumber, p.productName, od.quantityOrdered, od.priceEach
+            FROM orders o
+            JOIN orderdetails od ON o.orderNumber = od.orderNumber
+            JOIN products p ON od.productCode = p.productCode
+            WHERE o.customerNumber = :customerNumber
+            ORDER BY od.orderLineNumber";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':customerNumber', $customerNumber);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo "<h3>Pedidos de Cliente: $customerNumber</h3>";
+        echo "<table border='1'>
+                <tr>
+                    <th>Número Pedido</th>
+                    <th>Fecha Pedido</th>
+                    <th>Estado</th>
+                    <th>Número de Línea</th>
+                    <th>Nombre Producto</th>
+                    <th>Cantidad Pedida</th>
+                    <th>Precio Unidad</th>
+                </tr>";
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>
+                    <td>" . htmlspecialchars($row['orderNumber']) . "</td>
+                    <td>" . htmlspecialchars($row['orderDate']) . "</td>
+                    <td>" . htmlspecialchars($row['status']) . "</td>
+                    <td>" . htmlspecialchars($row['orderLineNumber']) . "</td>
+                    <td>" . htmlspecialchars($row['productName']) . "</td>
+                    <td>" . htmlspecialchars($row['quantityOrdered']) . "</td>
+                    <td>" . number_format($row['priceEach'], 2) . "</td>
+                </tr>";
+        }
+
+        echo "</table>";
+    } else {
+        echo "No se encontraron pedidos para este cliente.";
+    }
+}
+
+function consultarStock($productLine){
+    $conn = conexionBBDD();
+
+    $sql = "SELECT productName, quantityInStock FROM products WHERE productLine = :productLine ORDER BY quantityInStock DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':productLine', $productLine);
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo "<h3>Stock de Productos en la Línea: " . htmlspecialchars($productLine) . "</h3>";
+        echo "<table border='1'>";
+        echo "<tr><th>Producto</th><th>Cantidad en Stock</th></tr>";
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['productName']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['quantityInStock']) . "</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+    } else {
+        echo "<p>No se encontraron productos en la línea seleccionada.</p>";
+    }
+}
+
 ?>

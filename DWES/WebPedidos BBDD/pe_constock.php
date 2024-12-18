@@ -35,31 +35,9 @@
     <a href="pe_inicio.php">Volver al inicio</a>
 
     <?php
-        if (isset($_POST['consultar'])) {
-            $productLine = $_POST['productLine'];
-
-            $sql = "SELECT productName, quantityInStock FROM products WHERE productLine = :productLine ORDER BY quantityInStock DESC";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':productLine', $productLine);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                echo "<h3>Stock de Productos en la Línea: " . htmlspecialchars($productLine) . "</h3>";
-                echo "<table border='1'>";
-                echo "<tr><th>Producto</th><th>Cantidad en Stock</th></tr>";
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['productName']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['quantityInStock']) . "</td>";
-                    echo "</tr>";
-                }
-
-                echo "</table>";
-            } else {
-                echo "<p>No se encontraron productos en la línea seleccionada.</p>";
-            }
-        }
+        $productLine = $_POST['productLine'];
+        if (isset($_POST['consultar']))
+            consultarStock($productLine);
     ?>
 </body>
 </html>

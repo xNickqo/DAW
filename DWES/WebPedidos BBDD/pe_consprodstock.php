@@ -23,8 +23,6 @@
             <option value="">--Seleccione un producto--</option>
             <?php
                 $conn = conexionBBDD();
-
-                // obtener los nombres de los productos
                 $sql = "SELECT productName FROM products";
                 imprimirOpciones($sql, 'productName', 'productName');
             ?>
