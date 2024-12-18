@@ -38,29 +38,30 @@
     </form>
 
     <?php
-        //Agregamos a la sesion del carrito los productos y su cantidad
         if (isset($_POST['agregar'])) {
             $productCode = $_POST['productCode'];
             $quantity = $_POST['quantity'];
-
-            $productoEncontrado = false;
-
-            // Recorrer el carrito para buscar el producto
-            foreach ($_SESSION['carrito'] as &$item) {
-                if ($item['productCode'] == $productCode) {
-                    $item['quantity'] += $quantity;
-                    $productoEncontrado = true;
-                    break;
+        
+            // Agregar el producto al carrito
+            $_SESSION['carrito'][] = array(
+                'productCode' => $productCode,
+                'quantity' => $quantity
+            );
+        
+            // Agrupar productos duplicados en el carrito
+            $carritoAgrupado = [];
+            foreach ($_SESSION['carrito'] as $item) {
+                if (isset($carritoAgrupado[$item['productCode']])) {
+                    $carritoAgrupado[$item['productCode']]['quantity'] += $item['quantity'];
+                } else {
+                    $carritoAgrupado[$item['productCode']] = $item;
                 }
             }
-
-            if(!$productoEncontrado) {
-                $_SESSION['carrito'][] = array(
-                    'productCode' => $productCode, 
-                    'quantity' => $quantity
-                );
-            }
+        
+            // Reemplazar el carrito original con el agrupado
+            $_SESSION['carrito'] = array_values($carritoAgrupado);
         }
+        
     ?>
 
     <h3>Carrito de Compras</h3>
@@ -109,6 +110,8 @@
 
             // Reindexar el carrito para evitar claves no consecutivas
             $_SESSION['carrito'] = array_values($_SESSION['carrito']);
+
+            header("refresh:1;url=" . $_SERVER['PHP_SELF']);
         }
 
     ?>

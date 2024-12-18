@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,22 +33,22 @@ session_start();
             $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
             $parametros = array(':customerNumber' => $customerNumber);
             $resultado = ejecutarConsultaValores($sql, $parametros);
-            //var_dump($resultado);
 
             // Si el usuario existe, verificar la clave
             if (!empty($resultado)) {
                 $row = $resultado[0];
 
-                if (password_verify($clave, $row['contactLastName'])) {
+                if (($clave == $row['contactLastName']) || (password_verify($clave, $row['contactLastName']))) {
+                    session_start();
                     $_SESSION['usuario'] = $row['customerNumber'];
                     header("Location: pe_inicio.php");
                     exit();
-                } else {
-                    echo "La clave es incorrecta.";
                 }
-            } else {
-                echo "El usuario no existe.";
+                else
+                    echo "La clave es incorrecta.";
             }
+            else
+                echo "El usuario no existe.";
         }
     ?>
 </body>
