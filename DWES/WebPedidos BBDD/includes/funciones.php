@@ -104,6 +104,7 @@ function ejecutarConsultaValores($sql, $parametros = [], $fetchMode = PDO::FETCH
     }
 }
 
+// Devuelve el primer valor de la primera columna
 function ejecutarConsultaValor($sql, $parametros = []) {
     $conn = conexionBBDD();
 
@@ -114,9 +115,188 @@ function ejecutarConsultaValor($sql, $parametros = []) {
         }
         $stmt->execute();
 
-        return $stmt->fetchColumn(); // Devuelve el primer valor de la primera columna
+        return $stmt->fetchColumn();
     } catch (Exception $e) {
         die("Error en la consulta: " . $e->getMessage());
+    }
+}
+
+
+// Agrega los productos al carrito, en el caso de estar repetidos se agrupa la cantidad
+function agregarProd($productCode, $quantity){
+    $existe = false;
+
+    // Verificar si el producto ya existe en el carrito, si existe sumamos la cantidad
+    foreach ($_SESSION['carrito'] as &$item) {
+        if ($item['productCode'] === $productCode) {
+            $item['quantity'] += $quantity;
+            $existe = true;
+            break;
+        }
+    }
+
+    // Si no existe lo añadimos al carrito
+    if (!$existe) {
+        $_SESSION['carrito'][] = array(
+            'productCode' => $productCode,
+            'quantity' => $quantity
+        );
+    }
+
+    //var_dump($_SESSION['carrito']);
+}
+
+// Funcion para eliminar el producto al pulsar el boton
+function eliminarProductoDelCarrito($botonEliminar){
+    foreach ($_SESSION['carrito'] as $index => $item) {
+        if ($item['productCode'] == $botonEliminar) {
+            unset($_SESSION['carrito'][$index]);
+            break;
+        }
+    }
+    $_SESSION['carrito'] = array_values($_SESSION['carrito']);
+    //var_dump($_SESSION['carrito']);
+}
+
+
+// Función para mostrar la tabla de productos en el carrito
+function mostrarCarrito() {
+    foreach ($_SESSION['carrito'] as $item) {
+        $sql = "SELECT productName FROM products WHERE productCode = :productCode";
+        $parametros = array('productCode' => $item['productCode']);
+        $productName = ejecutarConsultaValor($sql, $parametros);
+        
+        echo "<tr>";
+        echo "<td>" . $productName . "</td>";
+        echo "<td>" . $item['quantity'] . "</td>";
+        echo "<td>
+                <form method='POST' action=''>
+                    <input type='hidden' name='productCodeToRemove' value='" . $item['productCode'] . "'>
+                    <input type='submit' name='eliminar' value='Eliminar'>
+                </form>
+            </td>";
+        echo "</tr>";
+    }
+}
+
+
+// Función para imprimir los datos de la tabla "orders"
+function imprimirDatosOrder($orderNumber, $orderDate, $requiredDate) {
+    echo "<br>";
+    echo "<b>orders</b><br>";
+    echo "OrderNumber: $orderNumber <br>";
+    echo "OrderDate: $orderDate <br>";
+    echo "RequiredDate: $requiredDate <br>";
+    echo "shippedDate: null<br>";
+    echo "status: Pending<br>";
+    echo "CustomerNumber:". $_SESSION['usuario'] . "<br>";
+    echo "<br>";
+}
+
+// Función para imprimir los datos de la tabla "orderdetails"
+function imprimirDatosOrderDetails($orderNumber, $productCode, $quantity , $buyPrice, $orderLineNumber) {
+    echo "<br>";
+    echo "<b>orderDetails</b><br>";
+    echo "OrderNumber: $orderNumber <br>";
+    echo "productCode: ". $productCode . "<br>";
+    echo "quantityOrdered: ". $quantity . "<br>";
+    echo "buyPrice: $buyPrice <br>";
+    echo "orderLineNumber: $orderLineNumber";
+    echo "<br>";
+}
+
+// Función para imprimir los datos de la tabla "payments"
+function imprimirDatosPayment($customerNumber, $checkNumber, $orderDate, $totalAmount) {
+    echo "<br>";
+    echo "<b>payments</b><br>";
+    echo "CustomerNumber: $customerNumber <br>";
+    echo "checkNumber: $checkNumber <br>";
+    echo "paymentDate: $orderDate <br>";
+    echo "amount: $totalAmount <br>";
+    echo "<br>";
+}
+
+// Función para actualizar el stock de un producto
+function actualizarStockProducto($conn, $productCode, $quantity) {
+    $sql = "UPDATE products SET quantityInStock = quantityInStock - :quantity WHERE productCode = :productCode";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':quantity', $quantity);
+    $stmt->bindValue(':productCode', $productCode);
+    $stmt->execute();
+}
+
+function realizarPedido($conn){
+    try {
+        $conn->beginTransaction();
+
+        $sql = 'SELECT MAX(orderNumber) FROM orders';
+        $orderNumber = ejecutarConsultaValor($sql);
+        $orderNumber = (int)$orderNumber + 1;
+
+        $orderDate = date('Y-m-d');
+        $requiredDate = $_POST['requiredDate'];
+
+        // Insertar datos del pedido
+        $insertOrderData = [
+            'orderNumber' => $orderNumber,
+            'orderDate' => $orderDate,
+            'requiredDate' => $requiredDate,
+            'shippedDate' => null,
+            'status' => 'Pending',
+            'customerNumber' => $_SESSION['usuario']
+        ];
+        insertarDatos('orders', $insertOrderData);
+        imprimirDatosOrder($orderNumber, $orderDate, $requiredDate);
+
+        $totalAmount = 0;
+        $orderLineNumber = 1;
+        // Insertar los detalles del pedido y actualizar el stock
+        foreach ($_SESSION['carrito'] as $item) {
+            // Obtener el precio de compra del producto
+            $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
+            $parametros = array('productCode' => $item['productCode']);
+            $buyPrice = ejecutarConsultaValor($sql, $parametros);
+            
+            // Insertar detalle del pedido
+            $insertOrderDetails = [
+                'orderNumber' => $orderNumber,
+                'productCode' => $item['productCode'],
+                'quantityOrdered' => $item['quantity'],
+                'priceEach' => $buyPrice,
+                'orderLineNumber' => $orderLineNumber
+            ];
+            insertarDatos('orderdetails', $insertOrderDetails);
+            imprimirDatosOrderDetails($orderNumber,  $item['productCode'], $item['quantity'], $buyPrice, $orderLineNumber);
+
+            // Actualizar el stock del producto
+            actualizarStockProducto($conn, $item['productCode'], $item['quantity']);
+
+            // Calcular el total
+            $totalAmount += $buyPrice * $item['quantity'];
+            $orderLineNumber++;
+        }
+
+        // Registrar el pago
+        $checkNumber = $_POST['checkNumber'];
+        $insertPaymentData = [
+            'customerNumber' => $_SESSION['usuario'],
+            'checkNumber' => $checkNumber,
+            'paymentDate' => $orderDate,
+            'amount' => $totalAmount
+        ];
+        insertarDatos('payments', $insertPaymentData);
+        imprimirDatosPayment($_SESSION['usuario'], $checkNumber, $orderDate, $totalAmount);
+
+        // Vaciar el carrito
+        $_SESSION['carrito'] = array();
+
+        $conn->commit();
+
+        echo "Pedido realizado con éxito. Total: $" . number_format($totalAmount, 2);
+    }
+    catch (PDOException $e) {
+        $conn->rollBack();
+        echo "Error al realizar el pedido: " . $e->getMessage();
     }
 }
 ?>
