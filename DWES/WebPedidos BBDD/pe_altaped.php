@@ -89,19 +89,21 @@
 
             $totalAmount = realizarPedido($conn, $orderNumber);
 
+            //Llamamos al objeto de la api de Redsys
             $miObj = new RedsysAPI;
-
-            // Valores de entrada que no hemos cmbiado para ningun ejemplo
+            
+            /* Calcular el parámetro Ds_MerchantParameters. Para llevar a cabo el cálculo
+            de este parámetro, inicialmente se deben añadir todos los parámetros de la
+            petición de pago que se desea enviar, tal y como se muestra a continuación: */
             $fuc="263100000";
-            $terminal="15";
+            $terminal="5";
             $moneda="978";
             $trans="0";
             $url="";
-            $urlOKKO="";
+	        $urlOKKO="http://192.168.206.212/ddaw/DWES/WebPedidos BBDD/API_PHP/redsysHMAC256_API_PHP_7.0.0/ejemploRecepcionaPet.php";
             $id=time();
             $amount=strval($totalAmount*100);	
             
-            // Se Rellenan los campos
             $miObj->setParameter("DS_MERCHANT_AMOUNT", $amount);
             $miObj->setParameter("DS_MERCHANT_ORDER", $id);
             $miObj->setParameter("DS_MERCHANT_MERCHANTCODE", $fuc);
@@ -116,7 +118,7 @@
             $version="HMAC_SHA256_V1";
             $kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
             
-            // Se generan los parámetros de la petición
+            //Se generan los parámetros de la petición
             $request = "";
             $params = $miObj->createMerchantParameters();
             $signature = $miObj->createMerchantSignature($kc);
