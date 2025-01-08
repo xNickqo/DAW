@@ -4,32 +4,43 @@ $(document).ready(function () {
 
 function inicio() {
     // Registrar cookie
+
+    $("#aceptar").on("click",registro);
+    $("#registro").on("click",mostrarFormularioRegistro);
+    $("#cancelar").on("click",ocultarFormularioRegistro);
+    /* 
     $("#aceptar").click(registro);
     $("#registro").click(mostrarFormularioRegistro);
-    $("#cancelar").click(ocultarFormularioRegistro);
+    $("#cancelar").click(ocultarFormularioRegistro); 
+    */
 
     // Entrar con cookie existente
+    $("#entrar").on("click",mostrarFormularioInicio);
+    $("#iniciar").on("click",entrar);
+    $("#borrar").on("click",ocultarFormularioInicio);
+    /* 
     $("#entrar").click(mostrarFormularioInicio);
     $("#iniciar").click(entrar);
-    $("#borrar").click(ocultarFormularioInicio);
+    $("#borrar").click(ocultarFormularioInicio); 
+    */
 
     // Definiciones
-    $("#crearDef").click(crearDefiniciones);
+    $("#crearDef").on("click",crearDefiniciones);
 
     // Localidades
-    $("#crearLoc").click(crearLocalidades);
+    $("#crearLoc").on("click",crearLocalidades);
 
     // Coches
-    $("#crearCoche").click(crearTablaCoches);
+    $("#crearCoche").on("click",crearTablaCoches);
 
     // Comunidades autónomas
-    $("#comun").change(actualizarProvincias);
-    $("#provincias").change(mostrarComentario);
+    $("#comun").on("change", actualizarProvincias);
+    $("#provincias").on("change", mostrarComentario);
 
     // Mostrar el formulario de mensaje
-    $("#boton").click(mostrarFormularioMensaje);
-    $("#aceptarMensaje").click(agregarMensaje);
-    $("#cancelarMensaje").click(ocultarFormularioMensaje);
+    $("#boton").on("click",mostrarFormularioMensaje);
+    $("#aceptarMensaje").on("click",agregarMensaje);
+    $("#cancelarMensaje").on("click",ocultarFormularioMensaje);
 }
 
 function mostrarFormularioRegistro() {
