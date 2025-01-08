@@ -1,8 +1,8 @@
 <?php
-    include_once "includes/apiRedsys.php";
     session_start();
 
     include('includes/funciones.php');
+    include_once "includes/apiRedsys.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
@@ -25,8 +25,6 @@
         $botonEliminar = $_POST['productCodeToRemove'];
         eliminarProductoDelCarrito($botonEliminar);
     }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -43,10 +41,12 @@
     <form method="POST">
         <label for="productCode">Producto:</label>
         <select name="productCode" required>
+
             <?php
                 $sql = "SELECT productCode, productName FROM products WHERE quantityInStock > 0";
                 imprimirOpciones($sql, 'productCode', 'productName');
             ?>
+
         </select>
         <br>
         <label for="quantity">Cantidad:</label>
@@ -61,11 +61,12 @@
             <th>Cantidad</th>
             <th>Acción</th>
         </tr>
+
         <?php
             $conn = conexionBBDD();
-
             mostrarCarrito();
         ?>
+
     </table>
 
     <h3>Realizar Pedido</h3>
@@ -79,7 +80,7 @@
         <input type="submit" name="realizar_pedido" value="Confirmar Pedido">
     </form>
 
-    <a href="pe_inicio.php">Volver al inicio</a><br><br>
+    <br><br><a href="pe_inicio.php">Volver al inicio</a><br><br>
 
     <?php
         if (isset($_POST['realizar_pedido'])){
@@ -87,7 +88,24 @@
             $orderNumber = ejecutarConsultaValor($sql);
             $orderNumber = (int)$orderNumber + 1;
 
-            $totalAmount = realizarPedido($conn, $orderNumber);
+            $totalAmount = 0;
+
+            // Insertar los detalles del pedido y actualizar el stock
+            foreach ($_SESSION['carrito'] as $item) {
+                // Obtener el precio de compra del producto
+                $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
+                $parametros = array('productCode' => $item['productCode']);
+                $buyPrice = ejecutarConsultaValor($sql, $parametros);
+                
+                // Calcular el total
+                $totalAmount += $buyPrice * $item['quantity'];
+            }
+
+            $_SESSION['orderNumber'] = $orderNumber;
+            $_SESSION['totalAmount'] = $totalAmount;
+            $_SESSION['checkNumber'] = $_POST['checkNumber'];
+            $_SESSION['requiredDate'] = $_POST['requiredDate'];
+
 
             //Llamamos al objeto de la api de Redsys
             $miObj = new RedsysAPI;
@@ -100,7 +118,7 @@
             $moneda="978";
             $trans="0";
             $url="";
-	        $urlOKKO="http://192.168.206.212/ddaw/DWES/WebPedidos BBDD/API_PHP/redsysHMAC256_API_PHP_7.0.0/ejemploRecepcionaPet.php";
+	        $urlOKKO="http://localhost/DAW/DWES/WebPedidos%20BBDD/confirmar_pago.php";
             $id=time();
             $amount=strval($totalAmount*100);	
             
@@ -125,15 +143,17 @@
 
             ?>
 
-            <form style="opacity: 0" id="formu" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" target="_blank">
+            <form style="opacity: 0" id="formu" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" >
                 Ds_Merchant_SignatureVersion <input type="text" name="Ds_SignatureVersion" value="<?php echo $version; ?>"/></br>
                 Ds_Merchant_MerchantParameters <input type="text" name="Ds_MerchantParameters" value="<?php echo $params; ?>"/></br>
                 Ds_Merchant_Signature <input type="text" name="Ds_Signature" value="<?php echo $signature; ?>"/></br>
                 <input type="submit" value="Enviar" >
             </form>
-            
+
+            <script type="text/javascript">
+                document.getElementById('formu').submit();
+            </script>
             <?php
-            echo "<script type='text/javascript'>document.getElementById('formu').submit();</script>";
         }
     ?>
 </body>

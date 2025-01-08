@@ -225,12 +225,11 @@ function actualizarStockProducto($conn, $productCode, $quantity) {
     $stmt->execute();
 }
 
-function realizarPedido($conn, $orderNumber){
+function realizarPedido($conn, $orderNumber, $requiredDate, $checkNumber){
     try {
         $conn->beginTransaction();
 
         $orderDate = date('Y-m-d');
-        $requiredDate = $_POST['requiredDate'];
 
         // Insertar datos del pedido
         $insertOrderData = [
@@ -273,7 +272,6 @@ function realizarPedido($conn, $orderNumber){
         }
 
         // Registrar el pago
-        $checkNumber = $_POST['checkNumber'];
         $insertPaymentData = [
             'customerNumber' => $_SESSION['usuario'],
             'checkNumber' => $checkNumber,
