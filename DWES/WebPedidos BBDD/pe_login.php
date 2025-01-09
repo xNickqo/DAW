@@ -20,35 +20,42 @@
     <a href="pe_reg.php">Si no tienes cuenta</a>
 
     <?php
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $customerNumber = $_POST['customerNumber'];
             $clave = $_POST['contactLastName'];
 
             include "includes/funciones.php";
 
+            // Crear la conexión a la base de datos
             $conn = conexionBBDD(); 
 
-            // Consultar si el usuario existe en la base de datos
-            $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
-            $parametros = array(':customerNumber' => $customerNumber);
-            $resultado = ejecutarConsultaValores($sql, $parametros);
+            try {
+                // Consultar si el usuario existe en la base de datos
+                $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue(':customerNumber', $customerNumber);
+                $stmt->execute();
+                $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Si el usuario existe, verificar la clave
-            if (!empty($resultado)) {
-                $row = $resultado[0];
+                // Si el usuario existe, verificar la clave
+                if (!empty($resultado)) {
+                    $row = $resultado[0];
 
-                if (($clave == $row['contactLastName']) || (password_verify($clave, $row['contactLastName']))) {
-                    session_start();
-                    $_SESSION['usuario'] = $row['customerNumber'];
-                    header("Location: pe_inicio.php");
-                    exit();
+                    // Verificar si la clave ingresada es correcta
+                    if (($clave == $row['contactLastName']) || (password_verify($clave, $row['contactLastName']))) {
+                        session_start();
+                        $_SESSION['usuario'] = $row['customerNumber'];
+                        header("Location: pe_inicio.php");
+                        exit();
+                    } else {
+                        echo "La clave es incorrecta.";
+                    }
+                } else {
+                    echo "El usuario no existe.";
                 }
-                else
-                    echo "La clave es incorrecta.";
+            } catch (Exception $e) {
+                echo "Error en la consulta: " . $e->getMessage();
             }
-            else
-                echo "El usuario no existe.";
         }
     ?>
 </body>

@@ -78,46 +78,52 @@
 
             $conn = conexionBBDD(); 
 
-            $sql = "SELECT MAX(customerNumber) FROM customers";
-            $customerNumber = ejecutarConsultaValor($sql);
-            $customerNumber += 1;
-            //var_dump($customerNumber);
+            try {
+                // Consultar el número máximo de cliente
+                $sql = "SELECT MAX(customerNumber) FROM customers";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $customerNumber = $stmt->fetchColumn();
+                $customerNumber += 1;
+                //var_dump($customerNumber);
 
-            // Consultar si el usuario existe en la base de datos
-            $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
-            $parametros = array(':customerNumber' => $customerNumber);
-            $resultado = ejecutarConsultaValor($sql, $parametros);
-            //var_dump($resultado);
+                // Consultar si el usuario ya existe en la base de datos
+                $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue(':customerNumber', $customerNumber);
+                $stmt->execute();
+                $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                //var_dump($resultado);
 
-            if (empty($resultado)) {
-                try{
-                    $conn->beginTransaction();
+                if (empty($resultado)) {
+                    try {
+                        $params = array(
+                                    'customerNumber' => $customerNumber,
+                                    'customerName' => $customerName,
+                                    'contactLastName' => password_hash($contactLastName, PASSWORD_DEFAULT),
+                                    'contactFirstName' => $contactFirstName,
+                                    'phone' => $phone,
+                                    'addrebLine1' => $address,
+                                    'addrebLine2' => $address2,
+                                    'city' => $city,
+                                    'state_code' => $stateCode,
+                                    'postalCode' => $postalCode,
+                                    'country' => $country,
+                                    'salesRepEmployeeNumber' => $salesRepEmployeeNumber,
+                                    'creditLimit' => $creditLimit
+                        );
 
-                    $params = array(
-                                'customerNumber' => $customerNumber,
-                                'customerName' => $customerName,
-                                'contactLastName' => password_hash($contactLastName, PASSWORD_DEFAULT),
-                                'contactFirstName' => $contactFirstName,
-                                'phone' => $phone,
-                                'addrebLine1' => $address,
-                                'addrebLine2' => $address2,
-                                'city' => $city,
-                                'state_code' => $stateCode,
-                                'postalCode' => $postalCode,
-                                'country' => $country,
-                                'salesRepEmployeeNumber' => $salesRepEmployeeNumber,
-                                'creditLimit' => $creditLimit
-                    );
+                        insertarDatos('customers', $params);
 
-                    insertarDatos('customers', $params);
-
-                    $conn->commit();
-                }catch(PDOException $e){
-                    $conn->rollBack();
-                    $e->getMessage();
+                    } catch(PDOException $e) {
+                        $e->getMessage();
+                    }
+                } else {
+                    echo "El usuario ya existe.";
                 }
-            } else {
-                echo "El usuario ya existe.";
+
+            } catch(Exception $e) {
+                echo "Error en la consulta: " . $e->getMessage();
             }
         }
     ?>
