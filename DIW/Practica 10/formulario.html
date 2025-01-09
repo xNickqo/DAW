@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilos/formulario.css">
     <title>Formulario</title>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+    <script src="js/formulario.js"></script>
 </head>
 <body>
-    <h2>Formulario de datos personales</h2>
     <form 
-    action="submit" 
+    action="" 
     method="post" 
     enctype="application/x-www-form-urlencoded" 
     accept-charset="UTF-8"
@@ -17,12 +21,15 @@
     autocomplete="off" 
     target="_self">
 
+    <h2>Formulario de datos personales</h2>
+
         Nombre
         <input 
         type="text" 
         name="nombre" 
         placeholder="Nombre de la persona"
-        pattern="^[A-Za-záéíóúöñ][A-Za-záéíóúöñ\s\.\-\º\ª]{1,23}[A-Za-záéíóúöñ]$"  
+        pattern="/^[A-Za-záéíóúöñ][A-Za-záéíóúöñ\s\.\-\º\ª]{1,23}[A-Za-záéíóúöñ]$/i"
+        title="Hola"  
         form="formulario"
         autofocus
         required>
@@ -131,7 +138,7 @@
         <input 
         type="color" 
         name="colorPreferido" 
-        value="#008000">
+        value="#009900">
 
         <br>
 
@@ -165,10 +172,7 @@
         <input 
         type="range" 
         name="horasSemanales" 
-        min="0" 
-        max="40" 
-        step="1" 
-        value="2">
+        value="2" id="hrSm">
 
         <span id="horasDisplay">2</span> horas
 
@@ -183,6 +187,7 @@
         min="3"
         max="15"
         step="2"
+        id="prHt"
         required>
 
         <br>
