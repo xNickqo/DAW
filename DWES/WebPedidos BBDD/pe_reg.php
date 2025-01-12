@@ -1,6 +1,9 @@
 <?php 
     session_start();
-    include "includes/funciones.php";
+    
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (isset($_SESSION['usuario'])) {
         header("Location: pe_inicio.php");
@@ -60,70 +63,12 @@
     <a href="pe_login.php">Si ya tienes cuenta</a>
 
     <?php
+        $conn = conexionBBDD();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $customerName = $_POST['customerName'];
-            $contactLastName = $_POST['contactLastName'];
-            $contactFirstName = $_POST['contactFirstName'];
-            $phone = $_POST['phone'];
-            $address = $_POST['address'];
-            $address2 = $_POST['address2'];
-            $city = $_POST['city'];
-            $stateCode = $_POST['stateCode'];
-            $postalCode = $_POST['postalCode'];
-            $country = $_POST['country'];
-            $salesRepEmployeeNumber = $_POST['salesRepEmployeeNumber'];
-            $creditLimit = $_POST['creditLimit'];
-
-
-            $conn = conexionBBDD(); 
-
-            try {
-                // Consultar el número máximo de cliente
-                $sql = "SELECT MAX(customerNumber) FROM customers";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $customerNumber = $stmt->fetchColumn();
-                $customerNumber += 1;
-                //var_dump($customerNumber);
-
-                // Consultar si el usuario ya existe en la base de datos
-                $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
-                $stmt = $conn->prepare($sql);
-                $stmt->bindValue(':customerNumber', $customerNumber);
-                $stmt->execute();
-                $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                //var_dump($resultado);
-
-                if (empty($resultado)) {
-                    try {
-                        $params = array(
-                                    'customerNumber' => $customerNumber,
-                                    'customerName' => $customerName,
-                                    'contactLastName' => password_hash($contactLastName, PASSWORD_DEFAULT),
-                                    'contactFirstName' => $contactFirstName,
-                                    'phone' => $phone,
-                                    'addrebLine1' => $address,
-                                    'addrebLine2' => $address2,
-                                    'city' => $city,
-                                    'state_code' => $stateCode,
-                                    'postalCode' => $postalCode,
-                                    'country' => $country,
-                                    'salesRepEmployeeNumber' => $salesRepEmployeeNumber,
-                                    'creditLimit' => $creditLimit
-                        );
-
-                        insertarDatos('customers', $params);
-
-                    } catch(PDOException $e) {
-                        $e->getMessage();
-                    }
-                } else {
-                    echo "El usuario ya existe.";
-                }
-
-            } catch(Exception $e) {
-                echo "Error en la consulta: " . $e->getMessage();
+            $mensaje = procesarRegistro($conn);
+            if ($mensaje != '') {
+                echo "<p>$mensaje</p>";
             }
         }
     ?>

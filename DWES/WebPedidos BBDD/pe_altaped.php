@@ -1,30 +1,28 @@
 <?php
     session_start();
 
-    include('includes/funciones.php');
     include_once "includes/apiRedsys.php";
+
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
         exit();
     }
 
-    if (!isset($_SESSION['carrito'])) {
+    if (!isset($_SESSION['carrito']))
         $_SESSION['carrito'] = array();
-    }
 
     // Agregar productos al carrito
-    if (isset($_POST['agregar'])) {
-        $productCode = $_POST['productCode'];
-        $quantity = $_POST['quantity'];
-        agregarProd($productCode, $quantity);
-    }
+    if (isset($_POST['agregar']))
+        agregarProductoAlCarrito();
 
     // Eliminar producto del carrito
-    if (isset($_POST['eliminar'])) {
-        $botonEliminar = $_POST['productCodeToRemove'];
-        eliminarProductoDelCarrito($botonEliminar);
-    }
+    if (isset($_POST['eliminar']))
+        eliminarProductoDelCarrito();
+
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +62,10 @@
 
         <?php
             $conn = conexionBBDD();
-            mostrarCarrito();
+            foreach ($_SESSION['carrito'] as $item) {
+                $productName = obtenerNombreProducto($conn, $item['productCode']);
+                imprimirCarrito($productName, $item['quantity'], $item['productCode']);
+            }
         ?>
 
     </table>
@@ -75,7 +76,7 @@
         <input type="text" name="checkNumber" required>
         <br>
         <label for="requiredDate">Fecha de Solicitud:</label>
-        <input type="date" name="requiredDate" required>
+        <input type="date" name="requiredDate" value="<?php echo date('Y-m-d'); ?>" required>
         <br>
         <input type="submit" name="realizar_pedido" value="Confirmar Pedido">
     </form>
@@ -84,35 +85,21 @@
 
     <?php
         if (isset($_POST['realizar_pedido'])){
-            $sql = 'SELECT MAX(orderNumber) FROM orders';
-            $orderNumber = ejecutarConsultaValor($sql);
-            $orderNumber = (int)$orderNumber + 1;
+            // Generar un nuevo numero de pedido
+            $orderNumber = generarNumeroPedido($conn);
 
-            $totalAmount = 0;
-
-            // Insertar los detalles del pedido y actualizar el stock
-            foreach ($_SESSION['carrito'] as $item) {
-                // Obtener el precio de compra del producto
-                $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
-                $parametros = array('productCode' => $item['productCode']);
-                $buyPrice = ejecutarConsultaValor($sql, $parametros);
-                
-                // Calcular el total
-                $totalAmount += $buyPrice * $item['quantity'];
-            }
+            // Obtener el precio total de la compra
+            $totalAmount = precioTotal($conn);
 
             $_SESSION['orderNumber'] = $orderNumber;
             $_SESSION['totalAmount'] = $totalAmount;
             $_SESSION['checkNumber'] = $_POST['checkNumber'];
             $_SESSION['requiredDate'] = $_POST['requiredDate'];
 
-
             //Llamamos al objeto de la api de Redsys
             $miObj = new RedsysAPI;
             
-            /* Calcular el parámetro Ds_MerchantParameters. Para llevar a cabo el cálculo
-            de este parámetro, inicialmente se deben añadir todos los parámetros de la
-            petición de pago que se desea enviar, tal y como se muestra a continuación: */
+            //Calcular el parámetro Ds_MerchantParameters
             $fuc="263100000";
             $terminal="5";
             $moneda="978";

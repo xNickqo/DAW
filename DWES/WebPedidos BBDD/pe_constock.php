@@ -1,6 +1,9 @@
 <?php
     session_start();
-    include('includes/funciones.php');
+
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
@@ -35,9 +38,14 @@
     <a href="pe_inicio.php">Volver al inicio</a>
 
     <?php
-        $productLine = $_POST['productLine'];
-        if (isset($_POST['consultar']))
-            consultarStock($productLine);
+        if (isset($_POST['consultar'])) {
+            $productLine = $_POST['productLine'];
+            $conn = conexionBBDD();
+
+            $productos = obtenerStockPorLinea($conn, $productLine);
+
+            imprimirStockPorLinea($productos, $productLine);
+        }
     ?>
 </body>
 </html>

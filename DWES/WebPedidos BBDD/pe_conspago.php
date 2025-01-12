@@ -1,6 +1,9 @@
 <?php
     session_start();
-    include('includes/funciones.php');
+
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
@@ -39,12 +42,20 @@
     <a href="pe_inicio.php">Volver al inicio</a>
 
     <?php
-        $customerNumber = $_POST['customerNumber'];
-        $startDate = $_POST['startDate'];
-        $endDate = $_POST['endDate'];
+        if (isset($_POST['consultar'])) {
+            $customerNumber = $_POST['customerNumber'];
+            $startDate = $_POST['startDate'];
+            $endDate = $_POST['endDate'];
 
-        if (isset($_POST['consultar']) && (!empty($startDate) && !empty($endDate)))
-            consultarPayments($customerNumber, $startDate, $endDate);
+            if (!empty($startDate) && !empty($endDate)) {
+                $conn = conexionBBDD();
+
+                // Obtenemos los pagos
+                $pagos = obtenerPagos($conn, $customerNumber, $startDate, $endDate);
+
+                imprimirPagos($pagos);
+            }
+        }
     ?>
 </body>
 </html>

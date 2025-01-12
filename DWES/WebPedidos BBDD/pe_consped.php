@@ -1,12 +1,16 @@
 <?php
     session_start();
-    include('includes/funciones.php');
+
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
         exit();
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,7 +29,12 @@
     <?php
         if (isset($_POST['consultar'])) {
             $customerNumber = $_SESSION['usuario'];
-            consultarPedidos($customerNumber);
+
+            $conn = conexionBBDD();
+            
+            $pedidos = obtenerPedidosPorCliente($conn, $customerNumber);
+            
+            imprimirPedidosPorCliente($pedidos, $customerNumber);
         }
     ?>
 </body>
