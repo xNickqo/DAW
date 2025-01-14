@@ -22,8 +22,8 @@
 	<!-- INICIO DEL FORMULARIO -->
 	<form action="" method="post">
 	
-		<B>Bienvenido/a:</B>  <BR><BR>
-		<B>Identificador Cliente:</B>  <BR><BR>
+		<B>Bienvenido/a:</B> <?php echo $_SESSION['usuario']['email']?> <BR><BR>
+		<B>Identificador Cliente:</B> <?php echo $_SESSION['usuario']['idcliente']?> <BR><BR>
 				
 			<B>Matricula/Marca/Modelo: </B><select name="vehiculos" class="form-control">
 				
@@ -35,7 +35,7 @@
 		</div>		
 	</form>
 	<!-- FIN DEL FORMULARIO -->
-	<a href = "">Cerrar Sesion</a>
+	<a href = "logout.php">Cerrar Sesion</a>
 	
   </body>
    

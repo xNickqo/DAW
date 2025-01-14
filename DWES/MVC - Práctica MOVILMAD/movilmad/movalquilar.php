@@ -1,45 +1,61 @@
-<html>
-   
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <title>Bienvenido a MovilMAD</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
- </head>
-   
- <body>
-    <h1>Servicio de ALQUILER DE E-CARS</h1> 
+<?php
+session_start();
 
-    <div class="container ">
-        <!--Aplicacion-->
-		<div class="card border-success mb-3" style="max-width: 30rem;">
-		<div class="card-header">Menú Usuario - ALQUILAR VEHÍCULOS</div>
-		<div class="card-body">
-	  	  
+if (!isset($_SESSION['usuario'])) {
+	header("Location: movinicio.php");
+	exit();
+}
 
-	<!-- INICIO DEL FORMULARIO -->
-	<form action="" method="post">
-	
-		<B>Bienvenido/a:</B>  <BR><BR>
-		<B>Identificador Cliente:</B>   <BR><BR>
-		
-		<B>Vehiculos disponibles en este momento:</B>  <BR><BR>
-		
-			<B>Matricula/Marca/Modelo: </B><select name="vehiculos" class="form-control">
-				
-			</select>
-			
-		
-		<BR> <BR><BR><BR><BR><BR>
-		<div>
-			<input type="submit" value="Agregar a Cesta" name="agregar" class="btn btn-warning disabled">
-			<input type="submit" value="Realizar Alquiler" name="alquilar" class="btn btn-warning disabled">
-			<input type="submit" value="Vaciar Cesta" name="vaciar" class="btn btn-warning disabled">
-		</div>		
-	</form>
-	<!-- FIN DEL FORMULARIO -->
-  </body>
-   
-</html>
+//Si el carrito no existe lo creamos
+if (!isset($_SESSION['carrito']))
+	$_SESSION['carrito'] = array();
+
+
+// Agregar productos al carrito
+if (isset($_POST['agregar'])) {
+	$existe = false;
+
+	if(isset($_SESSION['carrito'])){
+		foreach ($_SESSION['carrito'] as $matricula) {
+			if($matricula == $_POST['vehiculos'])
+				$existe = true;
+		}
+	}
+
+	if($existe == false){
+		if(count($_SESSION['carrito']) < 3)
+			$_SESSION['carrito'][] = $_POST['vehiculos'];
+		else
+			$mensaje = "Solo se puede añadir hasta un maximo de 3 vehiculos al carrito";
+	} else {
+		$mensaje = "El vehiculo ya se encuentra en el carrito";
+	}
+}
+
+//Vaciar el carrito
+if(isset($_POST['vaciar'])){
+	$_SESSION['carrito'] = array();
+}
+
+//Realizar alquiler
+if(isset($_POST['alquilar'])){
+	if (count($_SESSION['carrito']) > 0) {
+		include_once "db/conexionBBDD.php";
+		$conn = conexionBBDD();
+
+		try{
+			include_once "models/actualizarVehiculosDisponibles.php";
+			actualizarVehiculosDisponibles($conn);
+			$_SESSION['carrito'] = array();
+			$mensaje = "¡Alquiler realizado con exito!";
+		}catch(PDOException $e){
+			$mensaje = "mensaje en la consulta: ". $e->getMessage();
+		}
+
+		$conn = null;
+	}
+}
+
+include_once "views/formularioAlquilar.php";
+?>
 

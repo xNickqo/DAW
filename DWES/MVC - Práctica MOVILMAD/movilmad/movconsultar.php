@@ -23,8 +23,8 @@
 	<!-- INICIO DEL FORMULARIO -->
 	<form action="" method="post">
 				
-		<B>Bienvenido/a:</B>   <BR><BR>
-		<B>Identificador Cliente:</B> <BR><BR>
+		<B>Bienvenido/a:</B> <?php echo $_SESSION['usuario']['email']?>  <BR><BR>
+		<B>Identificador Cliente:</B> <?php echo $_SESSION['usuario']['idcliente']?> <BR><BR>
 		     
 			 Fecha Desde: <input type='date' name='fechadesde' value='' size=10 placeholder="fechadesde" class="form-control">
 			 Fecha Hasta: <input type='date' name='fechahasta' value='' size=10 placeholder="fechahasta" class="form-control"><br><br>
@@ -37,7 +37,7 @@
 		</div>		
 	</form>
 	<!-- FIN DEL FORMULARIO -->
-    <a href = "">Cerrar Sesion</a>
+    <a href = "logout.php">Cerrar Sesion</a>
 
   </body>
    

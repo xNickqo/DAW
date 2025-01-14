@@ -6,7 +6,7 @@ function obtenerCliente($conn, $email) {
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch(PDOException $e) {
         echo "Error en la obtencion de los datos del usuario: " . $e->getMessage();
         return null;
