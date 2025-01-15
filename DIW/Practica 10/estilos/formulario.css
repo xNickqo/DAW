@@ -1,6 +1,7 @@
-body{
+body {
     background-color: blue;
     color: white;
+    font-family: Arial, sans-serif;
 }
 
 form {
@@ -8,6 +9,8 @@ form {
     padding: 30px;
 }
 
-form input {
-    margin-bottom: 8px;
+form label {
+    float: left;
+    text-align: left;
+    margin-right: 10px;
 }

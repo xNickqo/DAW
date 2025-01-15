@@ -23,7 +23,7 @@
 
     <h2>Formulario de datos personales</h2>
 
-        Nombre
+        <label for="nombre">Nombre</label>
         <input 
         type="text" 
         name="nombre" 
@@ -32,36 +32,40 @@
         title="Hola"  
         form="formulario"
         autofocus
-        required>
+        required
+        id="nombre">
 
         <br>
         
-        Apellidos
+        <label for="apellidos">Apellidos</label>
         <input 
         type="text" 
         name="apellidos" 
         placeholder="Apellidos de la persona"
         pattern="^[A-Za-záéíóúöñ][A-Za-záéíóúöñ\s\.\-]{4,28}[A-Za-záéíóúöñ]$" 
-        required>
+        required
+        id="apellidos">
 
         <br>
 
-        Edad
+        <label for="edad">Edad</label>
         <input 
         type="text" 
         name="edad" 
         value="20" 
         size="3px"
-        required>
+        required
+        id="edad">
 
         <br>
 
-        Comunidad Autonoma
+        <label for="comunidadAutonoma">Comunidad Autonoma</label>
         <input 
         type="text" 
         name="comunidadAutonoma" 
         placeholder="Nombre de la comunidad Autonoma"
         required
+        id="comunidadAutonoma"
         list="comAut">
         <datalist id="comAut">
             <option value="Andalucía">
@@ -87,88 +91,97 @@
 
         <br>
 
-        Telefono de contacto
+        <label for="telefono">Telefono de contacto</label>
         <input 
         type="tel" 
         name="telefono" 
         placeholder="Nueve digitos"
         pattern="^[6789]\d{8}$" 
-        required>
+        required
+        id="telefono">
 
         <br>
 
-        Contraseña
+        <label for="contraseña">Contraseña</label>
         <input 
         type="password" 
         name="contraseña" 
         placeholder="Entre 8 y 14 caracteres"
         pattern="^[A-Za-z0-9]{8,14}$" 
-        required>
+        required
+        id="contraseña">
 
         <br>
 
-        Fecha de nacimiento
+        <label for="fechaNac">Fecha de nacimiento</label>
         <input 
         type="date" 
-        name="fechaNac">
+        name="fechaNac"
+        id="fechaNac">
 
         <br>
 
-        Página web personal
+        <label for="webPersonal">Página web personal</label>
         <input 
         type="text" 
         name="webPersonal" 
         placeholder="https://www.mipagina.com"
         pattern="^https?://[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}$" 
-        required>
+        required
+        id="webPersonal">
 
         <br>
 
-        Direccion de Correo electronico
+        <label for="email">Dirección de Correo electronico</label>
         <input 
         type="text" 
         name="email" 
         placeholder="yomismo@mipagina.com"
         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
-        required>
+        required
+        id="email">
 
         <br>
 
-        Color preferido
+        <label for="colorPreferido">Color preferido</label>
         <input 
         type="color" 
         name="colorPreferido" 
-        value="#009900">
+        value="#009900"
+        id="colorPreferido">
 
         <br>
 
-        Selecciona el mes preferido del año
+        <label for="mesPreferido">Selecciona el mes preferido del año</label>
         <input 
         type="month" 
         name="mesPreferido" 
         value="--------- de ----" 
         size="30px"
-        required>
+        required
+        id="mesPreferido">
 
         <br>
 
-        Mejor semana de tus vacaciones
+        <label for="mejorSemana">Mejor semana de tus vacaciones</label>
         <input 
         type="week" 
         name="mejorSemana" 
         value="Semana, --, ----" 
-        required>
+        required
+        id="mejorSemana">
 
         <br>
 
-        Hora de entrada a trabajar
+        <label for="horaEntrada">Hora de entrada a trabajar</label>
         <input 
         type="time" 
-        name="horaEntrada">
+        name="horaEntrada"
+        id="horaEntrada">
 
         <br>
 
-        Horas semanales de Trabajo
+        <label for="hrSm">Horas semanales de Trabajo</label>
         <input 
         type="range" 
         name="horasSemanales" 
@@ -178,7 +191,7 @@
 
         <br>
 
-        Precio de la hora trabajada
+        <label for="prHt">Precio de la hora trabajada</label>
         <input 
         type="number" 
         name="precioHora" 
@@ -192,7 +205,8 @@
 
         <br>
 
-        Sueldo <span id="sueldo">10</span>
+        <label for="sueldo">Sueldo</label>
+        <span id="sueldo">10</span>
 
         <br>
 
