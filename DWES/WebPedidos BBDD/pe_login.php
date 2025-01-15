@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +8,7 @@ session_start();
 <body>
     <h2>Login</h2>
     <form action="pe_login.php" method="POST">
-        <label for="customerNumber">Usuario (customerName):</label>
+        <label for="customerNumber">Usuario (customerNumber):</label>
         <input type="text" name="customerNumber" id="customerNumber" required><br><br>
 
         <label for="contactLastName">Password (contactLastName):</label>
@@ -23,35 +20,19 @@ session_start();
     <a href="pe_reg.php">Si no tienes cuenta</a>
 
     <?php
+        include "includes/1_funcionesModelo.php";
+        include "includes/2_funcionesVista.php";
+        include "includes/3_funcionesControlador.php";
+
+        $conn = conexionBBDD();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $customerNumber = $_POST['customerNumber'];
             $clave = $_POST['contactLastName'];
 
-            include "includes/funciones.php";
-
-            $conn = conexionBBDD(); 
-
-            // Consultar si el usuario existe en la base de datos
-            $sql = "SELECT * FROM customers WHERE customerNumber = :customerNumber";
-            $parametros = array(':customerNumber' => $customerNumber);
-            $resultado = ejecutarConsultaValores($sql, $parametros);
-            //var_dump($resultado);
-
-            // Si el usuario existe, verificar la clave
-            if (!empty($resultado)) {
-                $row = $resultado[0];
-
-                if (password_verify($clave, $row['contactLastName'])) {
-                    $_SESSION['usuario'] = $row['customerNumber'];
-                    header("Location: pe_inicio.php");
-                    exit();
-                } else {
-                    echo "La clave es incorrecta.";
-                }
-            } else {
-                echo "El usuario no existe.";
-            }
+            $mensaje = procesarLogin($conn, $customerNumber, $clave);
+            if ($mensaje)
+                echo "<p style='color: red;'>$mensaje</p>";
         }
     ?>
 </body>

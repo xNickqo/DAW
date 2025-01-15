@@ -1,15 +1,28 @@
 <?php
     session_start();
-    include('includes/funciones.php');
+
+    include_once "includes/apiRedsys.php";
+
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
         exit();
     }
 
-    if (!isset($_SESSION['carrito'])) {
+    if (!isset($_SESSION['carrito']))
         $_SESSION['carrito'] = array();
-    }
+
+    // Agregar productos al carrito
+    if (isset($_POST['agregar']))
+        agregarProductoAlCarrito();
+
+    // Eliminar producto del carrito
+    if (isset($_POST['eliminar']))
+        eliminarProductoDelCarrito();
+
 ?>
 
 <!DOCTYPE html>
@@ -26,42 +39,18 @@
     <form method="POST">
         <label for="productCode">Producto:</label>
         <select name="productCode" required>
+
             <?php
                 $sql = "SELECT productCode, productName FROM products WHERE quantityInStock > 0";
                 imprimirOpciones($sql, 'productCode', 'productName');
             ?>
+
         </select>
         <br>
         <label for="quantity">Cantidad:</label>
         <input type="number" name="quantity" min="1" required><br>
         <input type="submit" name="agregar" value="Agregar al carrito">
     </form>
-
-    <?php
-        //Agregamos a la sesion del carrito los productos y su cantidad
-        if (isset($_POST['agregar'])) {
-            $productCode = $_POST['productCode'];
-            $quantity = $_POST['quantity'];
-
-            $productoEncontrado = false;
-
-            // Recorrer el carrito para buscar el producto
-            foreach ($_SESSION['carrito'] as &$item) {
-                if ($item['productCode'] == $productCode) {
-                    $item['quantity'] += $quantity;
-                    $productoEncontrado = true;
-                    break;
-                }
-            }
-
-            if(!$productoEncontrado) {
-                $_SESSION['carrito'][] = array(
-                    'productCode' => $productCode, 
-                    'quantity' => $quantity
-                );
-            }
-        }
-    ?>
 
     <h3>Carrito de Compras</h3>
     <table border="1">
@@ -70,48 +59,16 @@
             <th>Cantidad</th>
             <th>Acción</th>
         </tr>
-        <?php foreach ($_SESSION['carrito'] as $item): ?>
-            <tr>
-                <td>
-                    <?php
-                        $conn = conexionBBDD();
 
-                        $sql = "SELECT productName FROM products WHERE productCode = :productCode";
-                        $parametros = array('productCode' =>  $item['productCode']);
-                        $productName = ejecutarConsultaValor($sql, $parametros);
-
-                        echo $productName;
-                    ?>
-                </td>
-                <td><?= $item['quantity'] ?></td>
-                <td>
-                    <form method="POST" action="">
-                        <input type="hidden" name="productCodeToRemove" value="<?= $item['productCode'] ?>">
-                        <input type="submit" name="eliminar" value="Eliminar">
-                    </form>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-
-    <?php
-        // Eliminar producto del carrito
-        if (isset($_POST['eliminar'])) {
-            $productCodeToRemove = $_POST['productCodeToRemove'];
-
-            // Buscar el producto en el carrito y eliminarlo
-            foreach ($_SESSION['carrito'] as $key => $item) {
-                if ($item['productCode'] == $productCodeToRemove) {
-                    unset($_SESSION['carrito'][$key]);
-                    break;
-                }
+        <?php
+            $conn = conexionBBDD();
+            foreach ($_SESSION['carrito'] as $item) {
+                $productName = obtenerNombreProducto($conn, $item['productCode']);
+                imprimirCarrito($productName, $item['quantity'], $item['productCode']);
             }
+        ?>
 
-            // Reindexar el carrito para evitar claves no consecutivas
-            $_SESSION['carrito'] = array_values($_SESSION['carrito']);
-        }
-
-    ?>
+    </table>
 
     <h3>Realizar Pedido</h3>
     <form method="POST">
@@ -119,111 +76,71 @@
         <input type="text" name="checkNumber" required>
         <br>
         <label for="requiredDate">Fecha de Solicitud:</label>
-        <input type="date" name="requiredDate" required>
+        <input type="date" name="requiredDate" value="<?php echo date('Y-m-d'); ?>" required>
         <br>
         <input type="submit" name="realizar_pedido" value="Confirmar Pedido">
     </form>
 
-    <a href="pe_inicio.php">Volver al inicio</a>
+    <br><br><a href="pe_inicio.php">Volver al inicio</a><br><br>
 
     <?php
         if (isset($_POST['realizar_pedido'])){
-            try {
-                $conn->beginTransaction();
+            // Generar un nuevo numero de pedido
+            $orderNumber = generarNumeroPedido($conn);
 
-                $sql = 'SELECT MAX(orderNumber) FROM orders';
-                $orderNumber = ejecutarConsultaValor($sql);
+            // Obtener el precio total de la compra
+            $totalAmount = precioTotal($conn);
 
-                $orderNumber = (int)$orderNumber + 1;
-                $orderDate = date('Y-m-d');
-                $requiredDate = $_POST['requiredDate'];
+            $_SESSION['orderNumber'] = $orderNumber;
+            $_SESSION['totalAmount'] = $totalAmount;
+            $_SESSION['checkNumber'] = $_POST['checkNumber'];
+            $_SESSION['requiredDate'] = $_POST['requiredDate'];
 
-                // Insertar datos del pedido
-                $insertOrderData = [
-                    'orderNumber' => $orderNumber,
-                    'orderDate' => $orderDate,
-                    'requiredDate' => $requiredDate,
-                    'shippedDate' => null,
-                    'status' => 'Pending',
-                    'customerNumber' => $_SESSION['usuario']
-                ];
-                insertarDatos('orders', $insertOrderData);
+            //Llamamos al objeto de la api de Redsys
+            $miObj = new RedsysAPI;
+            
+            //Calcular el parámetro Ds_MerchantParameters
+            $fuc="263100000";
+            $terminal="5";
+            $moneda="978";
+            $trans="0";
+            $url="";
+	        $urlOKKO="http://localhost/DAW/DWES/WebPedidos%20BBDD/confirmar_pago.php";
+            $id=time();
+            $amount=strval($totalAmount*100);	
+            
+            $miObj->setParameter("DS_MERCHANT_AMOUNT", $amount);
+            $miObj->setParameter("DS_MERCHANT_ORDER", $id);
+            $miObj->setParameter("DS_MERCHANT_MERCHANTCODE", $fuc);
+            $miObj->setParameter("DS_MERCHANT_CURRENCY", $moneda);
+            $miObj->setParameter("DS_MERCHANT_TRANSACTIONTYPE", $trans);
+            $miObj->setParameter("DS_MERCHANT_TERMINAL", $terminal);
+            $miObj->setParameter("DS_MERCHANT_MERCHANTURL", $url);
+            $miObj->setParameter("DS_MERCHANT_URLOK", $urlOKKO);
+            $miObj->setParameter("DS_MERCHANT_URLKO", $urlOKKO);
 
-                echo "<br>";
-                echo "<b>orders</b><br>";
-                echo "OrderNumber: $orderNumber <br>";
-                echo "OrderDate: $orderDate <br>";
-                echo "RequiredDate: $requiredDate <br>";
-                echo "CustomerNumber: $orderNumber <br>";
-                echo "<br>";
+            //Datos de configuración
+            $version="HMAC_SHA256_V1";
+            $kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
+            
+            //Se generan los parámetros de la petición
+            $request = "";
+            $params = $miObj->createMerchantParameters();
+            $signature = $miObj->createMerchantSignature($kc);
 
-                $totalAmount = 0;
-                $orderLineNumber = 1;
-                // Insertar los detalles del pedido y actualizar el stock
-                foreach ($_SESSION['carrito'] as $item) {
-                    // Obtener el precio de compra del producto
-                    $sql = "SELECT buyPrice FROM products WHERE productCode = :productCode";
-                    $parametros = array('productCode' => $item['productCode']);
-                    $buyPrice = ejecutarConsultaValor($sql, $parametros);
-                    
+            ?>
 
-                    // Insertar detalle del pedido
-                    $insertOrderDetails = [
-                        'orderNumber' => $orderNumber,
-                        'productCode' => $item['productCode'],
-                        'quantityOrdered' => $item['quantity'],
-                        'priceEach' => $buyPrice,
-                        'orderLineNumber' => $orderLineNumber
-                    ];
-                    insertarDatos('orderdetails', $insertOrderDetails);
+            <form style="opacity: 0" id="formu" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" >
+                Ds_Merchant_SignatureVersion <input type="text" name="Ds_SignatureVersion" value="<?php echo $version; ?>"/></br>
+                Ds_Merchant_MerchantParameters <input type="text" name="Ds_MerchantParameters" value="<?php echo $params; ?>"/></br>
+                Ds_Merchant_Signature <input type="text" name="Ds_Signature" value="<?php echo $signature; ?>"/></br>
+                <input type="submit" value="Enviar" >
+            </form>
 
-                    echo "<br>";
-                    echo "<b>orderDetails</b><br>";
-                    echo "OrderNumber: $orderNumber <br>";
-                    echo "buyPrice: $buyPrice <br>";
-                    echo "<br>";
-
-                    // Actualizar el stock del producto
-                    $sql = "UPDATE products SET quantityInStock = quantityInStock - :quantity WHERE productCode = :productCode";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bindValue(':quantity', $item['quantity']);
-                    $stmt->bindValue(':productCode', $item['productCode']);
-                    $stmt->execute();
-
-                    // Calcular el total
-                    $totalAmount += $buyPrice * $item['quantity'];
-                    $orderLineNumber++;
-                }
-
-                // Registrar el pago
-                $checkNumber = $_POST['checkNumber'];
-                $insertPaymentData = [
-                    'customerNumber' => $_SESSION['usuario'],
-                    'checkNumber' => $checkNumber,
-                    'paymentDate' => $orderDate,
-                    'amount' => $totalAmount
-                ];
-                insertarDatos('payments', $insertPaymentData);
-
-                echo "<br>";
-                echo "<b>payments</b><br>";
-                echo "CustomerNumber: " . $_SESSION['usuario'] . "</br>";
-                echo "checkNumber: $checkNumber <br>";
-                echo "paymentDate: $orderDate <br>";
-                echo "amount: $totalAmount <br>";
-                echo "<br>";
-
-                // Vaciar el carrito
-                $_SESSION['carrito'] = array();
-
-                $conn->commit();
-
-                echo "Pedido realizado con éxito. Total: $" . number_format($totalAmount, 2);
-            }
-            catch (PDOException $e) {
-                $conn->rollBack();
-                echo "Error al realizar el pedido: " . $e->getMessage();
-            }
+            <script type="text/javascript">
+                document.getElementById('formu').submit();
+            </script>
+            <?php
         }
     ?>
 </body>

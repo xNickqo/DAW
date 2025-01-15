@@ -1,6 +1,9 @@
 <?php
     session_start();
-    include('includes/funciones.php');
+
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
@@ -37,28 +40,11 @@
     <?php
         if (isset($_POST['consultar'])) {
             $productLine = $_POST['productLine'];
+            $conn = conexionBBDD();
 
-            $sql = "SELECT productName, quantityInStock FROM products WHERE productLine = :productLine ORDER BY quantityInStock DESC";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':productLine', $productLine);
-            $stmt->execute();
+            $productos = obtenerStockPorLinea($conn, $productLine);
 
-            if ($stmt->rowCount() > 0) {
-                echo "<h3>Stock de Productos en la Línea: " . htmlspecialchars($productLine) . "</h3>";
-                echo "<table border='1'>";
-                echo "<tr><th>Producto</th><th>Cantidad en Stock</th></tr>";
-
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['productName']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['quantityInStock']) . "</td>";
-                    echo "</tr>";
-                }
-
-                echo "</table>";
-            } else {
-                echo "<p>No se encontraron productos en la línea seleccionada.</p>";
-            }
+            imprimirStockPorLinea($productos, $productLine);
         }
     ?>
 </body>

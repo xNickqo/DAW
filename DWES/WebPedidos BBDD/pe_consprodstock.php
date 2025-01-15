@@ -1,6 +1,9 @@
 <?php
     session_start();
-    include('includes/funciones.php');
+
+    include "includes/1_funcionesModelo.php";
+    include "includes/2_funcionesVista.php";
+    include "includes/3_funcionesControlador.php";
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: pe_login.php");
@@ -22,9 +25,6 @@
         <select name="productName" required>
             <option value="">--Seleccione un producto--</option>
             <?php
-                $conn = conexionBBDD();
-
-                // obtener los nombres de los productos
                 $sql = "SELECT productName FROM products";
                 imprimirOpciones($sql, 'productName', 'productName');
             ?>
@@ -35,21 +35,13 @@
     <a href="pe_inicio.php">Volver al inicio</a>
 
     <?php
+        $conn = conexionBBDD();
         if (isset($_POST['consultar'])) {
             $productName = $_POST['productName'];
 
-            // obtener el stock del producto seleccionado
-            $sql = "SELECT productName, quantityInStock FROM products WHERE productName = :productName";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':productName', $productName);
-            $stmt->execute();
+            $row = obtenerStockProducto($conn, $productName);
 
-            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<h3>Stock de Producto: " . htmlspecialchars($row['productName']) . "</h3>";
-                echo "<p>Stock: " . htmlspecialchars($row['quantityInStock']) . "</p>";
-            } else {
-                echo "<p>Producto no encontrado.</p>";
-            }
+            imprimirStockProducto($row);
         }
     ?>
 </body>

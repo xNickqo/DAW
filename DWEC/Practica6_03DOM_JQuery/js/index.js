@@ -4,29 +4,31 @@ $(document).ready(function () {
 
 function inicio() {
     // Registrar cookie
-    $("#aceptar").click(registro);
-    $("#registro").click(mostrarFormularioRegistro);
-    $("#cancelar").click(ocultarFormularioRegistro);
+    $("#aceptar").on("click",registro);
+    $("#registro").on("click",mostrarFormularioRegistro);
+    $("#cancelar").on("click",ocultarFormularioRegistro);
 
     // Entrar con cookie existente
-    $("#entrar").click(mostrarFormularioInicio);
-    $("#iniciar").click(entrar);
-    $("#borrar").click(ocultarFormularioInicio);
+    $("#entrar").on("click",mostrarFormularioInicio);
+    $("#iniciar").on("click",entrar);
+    $("#borrar").on("click",ocultarFormularioInicio);
 
     // Definiciones
-    $("#crearDef").click(crearDefiniciones);
-    $("#quitarDef").click(quitarDefiniciones);
+    $("#crearDef").on("click",crearDefiniciones);
+    $("#quitarDef").on("click",quitarDefiniciones);
 
     // Localidades
-    $("#crearLoc").click(crearLocalidades);
+    $("#crearLoc").on("click",crearLocalidades);
 
     // Coches
     $("#crearCoche").click(crearTablaCoches);
     $("#quitarCoche").click(quitarTablaCoches);
+    $("#crearCoche").on("click",crearTablaCoches);
+
 
     // Comunidades autónomas
-    $("#comun").change(actualizarProvincias);
-    $("#provincias").change(mostrarComentario);
+    $("#comun").on("change", actualizarProvincias);
+    $("#provincias").on("change", mostrarComentario);
 
     $("#aplicarColores").click(aplicarColores);
     $("#texto").on("mouseenter", function() {
@@ -61,7 +63,8 @@ function ocultarFormularioInicio() {
     $("#formInicio").removeAttr("open");
 }
 
-function existeCookie(nombre, contrasena){
+function existeCookie(nombre, contrasena) {
+
     let misCookies = document.cookie.split("; ");
     let existe = false;
     let i = 0;
@@ -86,8 +89,9 @@ function registro() {
     if(!existeCookie(nombre, contrasena)) {
         if ((regexNombre.test(nombre)) && (regexContrasena.test(contrasena))) {
             // Crear cookie
-            document.cookie = `${nombre}=${contrasena}; expires=Wed, 31 Dec 2024 00:00:00 GMT;`;
+            document.cookie = `${nombre}=${contrasena}; expires=Wed, 31 Dec 2025 00:00:00 GMT;`;
             alert("Cookie creada con exito");
+            console.log("Cookies:\n" + document.cookie);
             ocultarFormularioRegistro();
         } else {
             alert("Error nombre o contraseña");
@@ -149,10 +153,8 @@ function crearDefiniciones() {
     let palabra = $("#palabra").val().trim();
     let concepto = $("#concepto").val().trim();
 
-    if (palabra.length > 0 && concepto.length > 0)
-    {
+    if (palabra.length > 0 && concepto.length > 0) {
         let $listaDef = $("#listaDef");
-
         let $todos = $("dt");
         let palabraExistente = null;
         let i = 0;
@@ -165,15 +167,13 @@ function crearDefiniciones() {
         }
 
         // Si la palabra ya existe, solo agregamos una nueva definición debajo de ella
-        if (palabraExistente)
-        {
+        if (palabraExistente) {
             let $nuevoDD = $("<dd>").text(concepto);
             // Añadimos el dd debajo del dt existente
             $(palabraExistente).parent().append($nuevoDD);
-        }
-        // Si la palabra no existe, creamos un nuevo <dt> y <dd>
-        else
-        {
+        } else {
+            // Si la palabra no existe, creamos un nuevo <dt> y <dd>
+
             // Creamos los elementos que vamos a introducir dentro del dl
             let $nuevoDT = $("<dt>").text(palabra);
             let $nuevoDD = $("<dd>").text(concepto);
@@ -182,9 +182,13 @@ function crearDefiniciones() {
             $listaDef.append($nuevoDT);
             $listaDef.append($nuevoDD);
         }
-	}
-    else
+	} else {
         alert("Ambos campos, palabra y concepto deben tener contenido");
+    }
+}
+
+function quitarDefiniciones() {
+
 }
 
 function quitarDefiniciones(){
@@ -212,7 +216,7 @@ function quitarDefiniciones(){
 }
 
 function crearLocalidades() {
-    let loc = $("#loc").val().trim();
+    let loc = $("#localidad").val();
     let $listaLoc = $("#listaLoc");
 
     if (loc.length === 0) {

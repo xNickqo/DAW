@@ -15,12 +15,12 @@
 </head>
 <body>
 
-    <a href="pe_altaped.php">Alta de pedidos</a><br>
+    <a href="pe_altaped.php">Realizar un pedido</a><br>
     <a href="pe_consped.php">Consultar pedidos</a><br>
-    <a href="pe_consprodstock.php">Consultar Stock d un producto</a><br>
-    <a href="pe_constock.php">Consulta de Stock de todos los productos</a><br>
-    <a href="pe_topprod.php">Unidades totales de cada uno de los productos vendidos entre dos fechas</a><br>
-    <a href="pe_conspago.php">Relación de pagos realizados entre dos fechas, así como el importe total de los mismos</a><br>
+    <a href="pe_consprodstock.php">Consultar stock de un producto</a><br>
+    <a href="pe_constock.php">Consulta de Stock de todos los productos de un tipo</a><br>
+    <a href="pe_topprod.php">Productos vendidos entre dos fechas</a><br>
+    <a href="pe_conspago.php">Relación de pagos realizados entre dos fechas</a><br>
 
     <br><br>
     <a href="pe_logout.php">Cerrar Sesion</a>
