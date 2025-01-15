@@ -15,21 +15,34 @@ function inicio() {
 
     // Definiciones
     $("#crearDef").click(crearDefiniciones);
+    $("#quitarDef").click(quitarDefiniciones);
 
     // Localidades
     $("#crearLoc").click(crearLocalidades);
 
     // Coches
     $("#crearCoche").click(crearTablaCoches);
+    $("#quitarCoche").click(quitarTablaCoches);
 
     // Comunidades autónomas
     $("#comun").change(actualizarProvincias);
     $("#provincias").change(mostrarComentario);
 
-    // Mostrar el formulario de mensaje
-    $("#boton").click(mostrarFormularioMensaje);
-    $("#aceptarMensaje").click(agregarMensaje);
-    $("#cancelarMensaje").click(ocultarFormularioMensaje);
+    $("#aplicarColores").click(aplicarColores);
+    $("#texto").on("mouseenter", function() {
+        $(this).css({
+            "font-family": "Comic Sans MS, sans-serif",
+            "font-size": "16px",
+            "font-weight": "bold",
+            "background-color": "green",
+            "color": "white"
+        });
+    });
+
+    $("#texto").on("mouseleave", function() {
+        $(this).removeAttr("style");
+    });
+
 }
 
 function mostrarFormularioRegistro() {
@@ -46,14 +59,6 @@ function mostrarFormularioInicio() {
 
 function ocultarFormularioInicio() {
     $("#formInicio").removeAttr("open");
-}
-
-function mostrarFormularioMensaje() {
-    $("#formularioMensaje").show();
-}
-
-function ocultarFormularioMensaje() {
-    $("#formularioMensaje").hide();
 }
 
 function existeCookie(nombre, contrasena){
@@ -120,8 +125,6 @@ function entrar() {
 
             ocultarFormularioInicio();
 
-            // Mostrar el botón de "añadir mensaje"
-            $("#boton").show();
         }
         i++;
     }
@@ -137,7 +140,6 @@ function cerrarSesion() {
     $("#entrar").off("click", cerrarSesion);
     
     ocultarFormularioInicio();
-    $("#boton").hide();
     
     // Reasignar el evento para abrir el formulario de inicio de sesión
     $("#entrar").on("click", mostrarFormularioInicio);
@@ -183,6 +185,30 @@ function crearDefiniciones() {
 	}
     else
         alert("Ambos campos, palabra y concepto deben tener contenido");
+}
+
+function quitarDefiniciones(){
+    let palabra = $("#palabra").val();
+
+    if (palabra.length > 0) {
+        let $todosDT = $("dt");
+        let $palabraEncontrada = null;
+
+        let i = 0;
+        while (i < $todosDT.length) {
+            if ($($todosDT[i]).text() === palabra) {
+                $palabraEncontrada = $todosDT[i];
+                break;
+            }
+            i+=1;
+        }
+
+        if ($palabraEncontrada) {
+            let $definiciones = $($palabraEncontrada).nextAll("dd");
+            $palabraEncontrada.remove();
+            $definiciones.remove();
+        }
+    }
 }
 
 function crearLocalidades() {
@@ -260,6 +286,32 @@ function crearTablaCoches() {
     } else {
         alert("Complete todos los campos [marca, modelo, precio]");
     }
+}
+
+function quitarTablaCoches(){
+    let marca = $("#marca").val();
+    let modelo = $("#modelo").val();
+
+    if (marca && modelo) {
+        let $tablaCoches = $("#tablaCoches");
+        let $padre = $tablaCoches.find("tbody");
+        let $filas = $padre.find("tr");
+
+        let filaEncontrada = false;
+
+        let i = 0;
+        while (i < $filas.length) {
+            let $celdas = $($filas[i]).find("td");
+            let marcaExistente = $celdas.eq(0).text();
+            let modeloExistente = $celdas.eq(1).text();
+
+            if (marcaExistente === marca && modeloExistente === modelo) {
+                $($filas[i]).remove();
+                filaEncontrada = true;
+            }
+            i+=1;
+        }
+    } 
 }
 
 let comunidades = {
@@ -373,67 +425,15 @@ function mostrarComentario() {
     }
 }
 
-function agregarMensaje() {
-    let titulo = $("#titulo").val().trim();
-    let comentario = $("#comentario").val().trim();
-    let imagenSeleccionada = $('input[name="imagen"]:checked');
+function aplicarColores(){
+    // Generar seis números aleatorios entre 0 y 255
+    let numeros = Array.from({ length: 6 }, () => Math.floor(Math.random() * 256));
 
-    if (titulo === "" || comentario === "" || !imagenSeleccionada) {
-        alert("Por favor, completa todos los campos.");
-        return;
-    }
+    // Crear colores rgb a partir de los números generados
+    let colorPar = `rgb(${numeros[0]}, ${numeros[1]}, ${numeros[2]})`;
+    let colorImpar = `rgb(${numeros[3]}, ${numeros[4]}, ${numeros[5]})`;
 
-    // Obtener la imagen seleccionada
-    let imagenUrl = "";
-    switch (imagenSeleccionada.val()) {
-        case "image1":
-            imagenUrl = "img/image1.png";
-            break;
-        case "image2":
-            imagenUrl = "img/image2.png";
-            break;
-        case "image3":
-            imagenUrl = "img/image3.png";
-            break;
-        case "image4":
-            imagenUrl = "img/image4.png";
-            break;
-        case "image5":
-            imagenUrl = "img/image5.png";
-            break;
-        case "image6":
-            imagenUrl = "img/image6.png";
-            break;
-    }
-
-    // Crear el contenedor para el mensaje
-    let $chatDiv = $("#chat");
-
-    let $nuevoMensaje = $("<div>").addClass("mensaje");
-
-    // Crear la imagen del usuario
-    let $imagenElemento = $("<img>").attr("src", imagenUrl).attr("alt", "Fallo Imagen");
-    
-    // Crear el nombre de usuario
-    let $nombreUsuario = $("<strong>").text($("#user").text());
-
-    // Crear el título del mensaje
-    let $mensajeTitulo = $("<h4>").text(titulo);
-
-    // Crear el comentario
-    let $mensajeComentario = $("<p>").text(comentario);
-
-    // Añadir los elementos al contenedor del mensaje
-    $nuevoMensaje.append($imagenElemento, $nombreUsuario, $mensajeTitulo, $mensajeComentario);
-
-    // Añadir el mensaje al chat
-    $chatDiv.append($nuevoMensaje);
-
-    // Ocultar el formulario
-    ocultarFormularioMensaje();
-
-    // Limpiar los campos del formulario
-    $("#titulo").val("");
-    $("#comentario").val("");
-    $('input[name="imagen"]:checked').prop("checked", false);
+    // Aplicar colores a las filas pares e impares
+    $("#tablaColores tbody tr:even").css("background-color", colorPar); // Filas pares
+    $("#tablaColores tbody tr:odd").css("background-color", colorImpar); // Filas impares
 }
