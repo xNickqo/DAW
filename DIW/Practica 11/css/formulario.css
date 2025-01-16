@@ -1,0 +1,21 @@
+body {
+    background-color: blue;
+    color: white;
+}
+
+form {
+    width: 70%;
+    position: absolute;
+    top: 25%; 
+    left: 25%;
+    
+}
+
+form input {
+    margin: 3px;
+}
+
+form label {
+    display: inline-block;
+    width: 30%;
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/formulario.css">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="jquery/jquery-ui-1.14.1/jquery-ui.css">
+    <link rel="stylesheet" href="jquery/jquery-ui-1.14.1/jquery-ui.theme.css">
+    <script src="jquery/jquery-3.7.1.min.js"></script>
+    <script src="jquery/jquery-ui-1.14.1/jquery-ui.js"></script>
+
+    <script src="js/ej2.js"></script>
+</head>
+<body>
+    <form 
+    action="" 
+    method="post" 
+    enctype="application/x-www-form-urlencoded" 
+    accept-charset="UTF-8"
+    name="formulario" 
+    autocomplete="off" 
+    target="_self"
+    id="formu"
+    oninput="   x.value=parseInt(horasSemanales.value); 
+                y.value=parseInt(horasSemanales.value)*parseInt(precioHora.value)">
+
+    <h2>Formulario de datos personales</h2>
+
+        <label for="nombre">Nombre</label>
+        <input 
+        type="text" 
+        name="nombre" 
+        placeholder="Nombre de la persona"
+        pattern="/^[A-Za-záéíóúöñ][A-Za-záéíóúöñ\s\.\-\º\ª]{1,23}[A-Za-záéíóúöñ]$/i"
+        title="Hola"  
+        form="formulario"
+        autofocus
+        required
+        id="nombre">
+
+        <br>
+        
+        <label for="apellidos">Apellidos</label>
+        <input 
+        type="text" 
+        name="apellidos" 
+        placeholder="Apellidos de la persona"
+        pattern="^[A-Za-záéíóúöñ][A-Za-záéíóúöñ\s\.\-]{4,28}[A-Za-záéíóúöñ]$" 
+        required
+        id="apellidos">
+
+        <br>
+
+        <label for="edad">Edad</label>
+        <input 
+        type="text" 
+        name="edad" 
+        value="20" 
+        size="3px"
+        required
+        id="edad">
+
+        <br>
+
+        <label for="comunidadAutonoma">Comunidad Autonoma</label>
+        <input 
+        type="text" 
+        name="comunidadAutonoma" 
+        placeholder="Nombre de la comunidad Autonoma"
+        required
+        id="comunidadAutonoma"
+        list="comAut">
+        <datalist id="comAut">
+            <option value="Andalucía">
+            <option value="Aragón">
+            <option value="Asturias">
+            <option value="Islas Baleares">
+            <option value="Canarias">
+            <option value="Cantabria">
+            <option value="Castilla y León">
+            <option value="Castilla-La Mancha">
+            <option value="Cataluña">
+            <option value="Extremadura">
+            <option value="Galicia">
+            <option value="Madrid">
+            <option value="Murcia">
+            <option value="Navarra">
+            <option value="La Rioja">
+            <option value="País Vasco">
+            <option value="Comunidad Valenciana">
+            <option value="Ceuta">
+            <option value="Melilla">
+        </datalist>
+
+        <br>
+
+        <label for="telefono">Telefono de contacto</label>
+        <input 
+        type="tel" 
+        name="telefono" 
+        placeholder="Nueve digitos"
+        pattern="^[6789]\d{8}$" 
+        required
+        id="telefono">
+
+        <br>
+
+        <label for="contraseña">Contraseña</label>
+        <input 
+        type="password" 
+        name="contraseña" 
+        placeholder="Entre 8 y 14 caracteres"
+        pattern="^[A-Za-z0-9]{8,14}$" 
+        required
+        id="contraseña">
+
+        <br>
+
+        <label for="fechaNac">Fecha de nacimiento</label>
+        <input 
+        type="date" 
+        name="fechaNac"
+        id="fechaNac">
+
+        <br>
+
+        <label for="webPersonal">Página web personal</label>
+        <input 
+        type="text" 
+        name="webPersonal" 
+        placeholder="https://www.mipagina.com"
+        pattern="^https?://[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}$" 
+        required
+        id="webPersonal">
+
+        <br>
+
+        <label for="email">Dirección de Correo electronico</label>
+        <input 
+        type="text" 
+        name="email" 
+        placeholder="yomismo@mipagina.com"
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" 
+        required
+        id="email">
+
+        <br>
+
+        <label for="colorPreferido">Color preferido</label>
+        <input 
+        type="color" 
+        name="colorPreferido" 
+        value="#009900"
+        id="colorPreferido">
+
+        <br>
+
+        <label for="mesPreferido">Selecciona el mes preferido del año</label>
+        <input 
+        type="month" 
+        name="mesPreferido" 
+        value="--------- de ----" 
+        size="30px"
+        required
+        id="mesPreferido">
+
+        <br>
+
+        <label for="mejorSemana">Mejor semana de tus vacaciones</label>
+        <input 
+        type="week" 
+        name="mejorSemana" 
+        value="Semana, --, ----" 
+        required
+        id="mejorSemana">
+
+        <br>
+
+        <label for="horaEntrada">Hora de entrada a trabajar</label>
+        <input 
+        type="time" 
+        name="horaEntrada"
+        id="horaEntrada">
+
+        <br>
+
+        <label for="hrSm">Horas semanales de Trabajo</label>
+        <input 
+        type="range" 
+        name="horasSemanales" 
+        value="2" id="hrSm">
+
+        <span id="horasDisplay">
+            <output name="x" for="horasSemanales">2</output>
+        </span> horas
+
+        <br>
+
+        <label for="prHt">Precio de la hora trabajada</label>
+        <input 
+        type="number" 
+        name="precioHora" 
+        value="5" 
+        size=""
+        min="3"
+        max="15"
+        step="2"
+        id="prHt"
+        required>
+
+        <br>
+
+        <label for="sueldo">Sueldo</label>
+        <span id="sueldo">
+            <output name="y" for="horasSemanales precio">10</output>€
+        </span>
+
+        <br>
+
+        <input 
+        type="submit"
+        value="Enviar"
+        formaction=""
+        formenctype="application/x-www-form-urlencoded"
+        formmethod="post"
+        formtarget="_self">
+    </form>
+</body>
+</html>
