@@ -9,7 +9,6 @@
   src="https://code.jquery.com/jquery-3.7.1.js"
   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
   crossorigin="anonymous"></script>
-    <script src="js/formulario.js"></script>
 </head>
 <body>
     <form 
@@ -19,7 +18,10 @@
     accept-charset="UTF-8"
     name="formulario" 
     autocomplete="off" 
-    target="_self">
+    target="_self"
+    id="formu"
+    oninput="   x.value=parseInt(horasSemanales.value); 
+                y.value=parseInt(horasSemanales.value)*parseInt(precioHora.value)">
 
     <h2>Formulario de datos personales</h2>
 
@@ -187,7 +189,9 @@
         name="horasSemanales" 
         value="2" id="hrSm">
 
-        <span id="horasDisplay">2</span> horas
+        <span id="horasDisplay">
+            <output name="x" for="horasSemanales">2</output>
+        </span> horas
 
         <br>
 
@@ -206,7 +210,9 @@
         <br>
 
         <label for="sueldo">Sueldo</label>
-        <span id="sueldo">10</span>
+        <span id="sueldo">
+            <output name="y" for="horasSemanales precio">10</output>€
+        </span>
 
         <br>
 

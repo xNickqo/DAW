@@ -1,16 +1,21 @@
 body {
     background-color: blue;
     color: white;
-    font-family: Arial, sans-serif;
 }
 
 form {
-    margin: 30px;
-    padding: 30px;
+    width: 70%;
+    position: absolute;
+    top: 25%; 
+    left: 25%;
+    
+}
+
+form input {
+    margin: 3px;
 }
 
 form label {
-    float: left;
-    text-align: left;
-    margin-right: 10px;
+    display: inline-block;
+    width: 30%;
 }
