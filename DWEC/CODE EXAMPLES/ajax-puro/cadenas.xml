@@ -1,0 +1,71 @@
+<fabrica>
+	<empleado>
+		<nombre>Felix</nombre><apellidos>Muñoz</apellidos>
+	</empleado>
+</fabrica>
+
+-------------------------------
+<fabrica>
+	<empleado>
+		<nombre>Felix</nombre><apellidos>Muñoz</apellidos><sueldo>1530</sueldo>
+	</empleado>
+</fabrica>
+-----------------------------------
+<fabrica>
+	<empleado><nombre>Felix</nombre><apellidos>Muñoz</apellidos></empleado>
+	<empleado><nombre>Angel</nombre><apellidos>Bayón</apellidos></empleado>
+	<empleado><nombre>María</nombre><apellidos>Lopez</apellidos></empleado>
+	<empleado><nombre>Sara</nombre><apellidos>Gómez</apellidos></empleado>
+</fabrica>
+-------------------------------
+<fabrica>
+	<empleado><nombre>Felix</nombre><apellidos>Muñoz</apellidos><sueldo>2687</sueldo></empleado>
+	<empleado><nombre>Angel</nombre><apellidos>Bayón</apellidos><sueldo>3208</sueldo></empleado>
+	<empleado><nombre>María</nombre><apellidos>Lopez</apellidos><sueldo>5678</sueldo></empleado>
+	<empleado><nombre>Sara</nombre><apellidos>Gómez</apellidos><sueldo>8024</sueldo></empleado>
+</fabrica>
+
+--------------------------------
+<fabrica>
+	<empleado>
+		<trabajador nombre='Félix' apellidos='Muñoz' />
+	</empleado>
+</fabrica>
+--------------------------------
+<fabrica>
+	<empleado>
+		<trabajador nombre='Félix' apellidos='Muñoz' sueldo='4398' />
+	</empleado>
+</fabrica>
+
+---------------------------------------
+<fabrica>
+	<empleado>
+		<trabajador nombre='Félix' apellidos='Muñoz' />
+	</empleado>
+	<empleado>
+		<trabajador nombre='María' apellidos='López' />
+	</empleado>
+	<empleado>
+		<trabajador nombre='Sara' apellidos='Gómez' />
+	</empleado>
+	<empleado>
+		<trabajador nombre='Ángel' apellidos='Bayón' />
+	</empleado>
+</fabrica>
+
+---------------
+<fabrica>
+	<empleado>
+		<trabajador nombre='Félix' apellidos='Muñoz' sueldo='7354' />
+	</empleado>
+	<empleado>
+		<trabajador nombre='María' apellidos='López' sueldo='8365' />
+	</empleado>
+	<empleado>
+		<trabajador nombre='Sara' apellidos='Gómez' sueldo='5341' />
+	</empleado>
+	<empleado>
+		<trabajador nombre='Ángel' apellidos='Bayón' sueldo='1934' />
+	</empleado>
+</fabrica>

@@ -1,0 +1,13 @@
+[
+	{nombre: "Sara", apellidos: "López"},
+	{nombre: "María", apellidos: "Jimenez"},
+	{nombre: "Felix", apellidos: "Muñoz"} ,
+	{nombre: "Angel", apellidos: "Bayón"}
+]
+---------------------------------------------
+[
+	{"nombre":"Sara","apellidos":"L\u00f3pez","sueldo":6916},
+	{"nombre":"Mar\u00eda","apellidos":"Jimenez","sueldo":9331},
+	{"nombre":"Felix","apellidos":"Mu\u00f1oz","sueldo":7712},
+	{"nombre":"Angel","apellidos":"Bay\u00f3n","sueldo":7493}
+]

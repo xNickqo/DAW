@@ -1,13 +1,12 @@
 $(window).on("load", inicio);
 
-function inicio(){
+function inicio() {
     $("#desplegable").accordion({
-        collapsible:true,
-        active:true,
-        animate:{'easing':'easeInOutExpo', 'duration':2000},
-        disabled:false,
-        header:"h5",
-        heightStyle:"content",
-        icons:"header"
+        collapsible: true,
+        active: false,
+        animate: { 'easing': 'easeInOutExpo', 'duration': 1000 },
+        disabled: false,
+        heightStyle: "content",
+        icons: { header: "ui-icon-plus", activeHeader: "ui-icon-minus" }
     });
 }

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+   <head>
+		<meta charset="utf-8" />
+		<title>Cantabria </title>
+		<link type="text/css" href="estilos/cantabria.css" rel="stylesheet"/>
+		<style type="text/css">
+		</style>
+		<script type="text/javascript">
+		</script>
+	</head>
+	<body>
+		<header>
+		</header>
+		<nav>
+		</nav>
+		<main>
+			<section>
+				<article>
+					<div>
+						<div id="contenido">
+							El Capricho de Gaud&iacute; es uno de los emblemas de la Comillas monumental, salpicada de 
+							edificios modernistas y que tiene su origen bajo el patronazgo de don Antonio L&oacute;pez,
+							 primer Marqu&eacute;s de Comillas, quien consigui&oacute; que durante el verano de 1881 el rey 
+							 Alfonso XII disfrutase sus vacaciones en la localidad, convirti&eacute;ndose as&iacute; en el lugar 
+							 elegido por la aristocracia como centro de veraneo. Esto permiti&oacute; que importantes 
+							 arquitectos modernistas catalanes del momento realizaran all&iacute; buena parte de sus obras,
+							 dot&aacute;ndola as&iacute; de un conjunto de extraordinaria belleza. Adem&aacute;s de El Capricho, el 
+							 modernismo se respira en el Palacio de Sobrellano, obra de Juan Martorell, y la
+							 Universidad Pontificia (de Martorell y Cascante con detalles ornamentales y la 
+							 portada de acceso de Dom&eacute;nech).
+						</div>
+						<img src="imagenes/comillas.jpg" />
+					</div>
+				</article>
+			</section>
+		</main>
+		<footer>
+		</footer>
+		<aside>
+		</aside>
+	</body>
+</html>
+	   
