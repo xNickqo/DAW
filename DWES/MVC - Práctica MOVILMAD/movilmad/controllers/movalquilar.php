@@ -11,6 +11,13 @@ if (!isset($_SESSION['carrito']))
 	$_SESSION['carrito'] = array();
 
 
+//Obtenemos los vehiculos disponibles para mostrarlo en un desplegable en la vista
+include_once "../db/conexionBBDD.php";
+$conn = conexionBBDD();
+include_once "../models/obtenerVehiculosDisponibles.php";
+$resultado = obtenerVehiculosDisponibles($conn);
+
+
 // Agregar productos al carrito
 if (isset($_POST['agregar'])) {
 	$existe = false;
@@ -40,15 +47,25 @@ if(isset($_POST['vaciar'])){
 //Realizar alquiler
 if(isset($_POST['alquilar'])){
 	if (count($_SESSION['carrito']) > 0) {
-		include_once "db/conexionBBDD.php";
+		include_once "../db/conexionBBDD.php";
 		$conn = conexionBBDD();
 
+		$conn->beginTransaction();
+
 		try{
-			include_once "models/actualizarVehiculosDisponibles.php";
+			include_once "../models/insertarAlquiler.php";
+			insertarAlquiler($conn);
+
+			include_once "../models/actualizarVehiculosDisponibles.php";
 			actualizarVehiculosDisponibles($conn);
+			
 			$_SESSION['carrito'] = array();
+			
+			$conn->commit();
+
 			$mensaje = "¡Alquiler realizado con exito!";
 		}catch(PDOException $e){
+			$conn->rollBack();
 			$mensaje = "mensaje en la consulta: ". $e->getMessage();
 		}
 
@@ -56,6 +73,6 @@ if(isset($_POST['alquilar'])){
 	}
 }
 
-include_once "views/formularioAlquilar.php";
+include_once "../views/formularioAlquilar.php";
 ?>
 

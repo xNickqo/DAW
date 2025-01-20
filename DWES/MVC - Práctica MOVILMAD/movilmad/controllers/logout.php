@@ -7,6 +7,6 @@ session_unset();
 // Destruir la sesión
 session_destroy();
 
-header("Location: movlogin.php");
+header("Location: ../index.php");
 exit();
 ?>

@@ -13,16 +13,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     echo "</pre>";
 
     if (!empty($resultado)) {
-        if ($clave != $resultado['idcliente']) {
-            $mensaje =  "Clave incorrecta";
-        } else if ($resultado['fecha_baja'] != NULL){
-            $mensaje =  "Usted se dio de baja";
-        } else if ($resultado['pendiente_pago'] != 0){
-            $mensaje =  "Tiene pagos pendientes";
-        } else {
+        if($clave != $resultado['idcliente']) {
+            $mensaje = "Clave incorrecta";
+        }else if($resultado['fecha_baja'] != NULL){
+            $mensaje = "Usted se dio de baja";
+        }else if($resultado['pendiente_pago'] != 0){
+            $mensaje = "Tiene pagos pendientes";
+        }else {
             session_start();
             $_SESSION['usuario'] = $resultado;
-            header("Location: movwelcome.php");
+            header("Location: controllers/movwelcome.php");
             exit();
         }
     } else {

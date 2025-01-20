@@ -1,4 +1,4 @@
-﻿<html>
+<html>
    
   <head>
     <meta charset="UTF-8">
@@ -26,20 +26,29 @@
 		<B>Identificador Cliente:</B> <?php echo $_SESSION['usuario']['idcliente']?> <BR><BR>
 				
 			<B>Matricula/Marca/Modelo: </B><select name="vehiculos" class="form-control">
-				
+				<?php
+				if(count($resultado) > 0) {
+					foreach($resultado as $vehiculo){
+						echo "<option value='" . $vehiculo['matricula'] . "'>" . $vehiculo['matricula'] . " " . $vehiculo['marca'] . " " . $vehiculo['modelo'] . "</option>";
+					}
+				}
+				?>
 			</select>
 		<BR><BR>
 		<div>
 			<input type="submit" value="Devolver Vehiculo" name="devolver" class="btn btn-warning disabled">
 			<input type="submit" value="Volver" name="volver" class="btn btn-warning disabled">
-		</div>		
+		</div>
+		
+		<?php
+			if(isset($mensaje))
+				echo $mensaje;
+		?>
+
 	</form>
 	<!-- FIN DEL FORMULARIO -->
-	<a href = "logout.php">Cerrar Sesion</a>
+	<a href = "../controllers/logout.php">Cerrar Sesion</a>
 	
   </body>
    
 </html>
-
-
-

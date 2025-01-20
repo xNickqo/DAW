@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
      <title>Bienvenido a MovilMAD</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
  </head>
 
  <body>
@@ -28,12 +28,6 @@
 			<B>Matricula/Marca/Modelo: </B>
 			<select name="vehiculos" class="form-control">
 				<?php
-					include_once "db/conexionBBDD.php";
-					$conn = conexionBBDD();
-
-					include_once "models/obtenerVehiculosDisponibles.php";
-					$resultado = obtenerVehiculosDisponibles($conn);
-
 					if(count($resultado) > 0) {
 						foreach ($resultado as $vehiculo){
 							echo "<option value='" . $vehiculo['matricula'] . "'>" . $vehiculo['matricula'] . " " . $vehiculo['marca'] . " " . $vehiculo['modelo'] . "</option>";
@@ -65,7 +59,11 @@
 			<input type="submit" value="Agregar a Cesta" name="agregar" class="btn btn-warning disabled">
 			<input type="submit" value="Realizar Alquiler" name="alquilar" class="btn btn-warning disabled">
 			<input type="submit" value="Vaciar Cesta" name="vaciar" class="btn btn-warning disabled">
-		</div>		
+		</div>
+		<a href = "../controllers/logout.php">Cerrar Sesion</a>
+		<br>
+		<a href = "movwelcome.php">Volver al inicio</a>
+		
 	</form>
   </body>
 </html>

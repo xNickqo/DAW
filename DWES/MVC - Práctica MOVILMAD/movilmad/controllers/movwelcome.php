@@ -3,7 +3,7 @@
 	session_start();
 
 	if (!isset($_SESSION['usuario'])) {
-        header("Location: movinicio.php");
+        header("Location: movlogin.php");
         exit();
     }
 
@@ -11,7 +11,7 @@
     var_dump($_SESSION['usuario']);
     echo "</pre>";
 
-	include_once "views/formularioWelcome.php";
+	include_once "../views/formularioWelcome.php";
 ?>
 
 
