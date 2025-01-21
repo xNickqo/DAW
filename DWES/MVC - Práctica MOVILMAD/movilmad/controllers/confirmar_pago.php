@@ -30,6 +30,8 @@ if (!empty( $_POST ) ) {
 		actualizarAlquileres($conn, $fechaDevolucion, $precioTotal, $matricula);
 		echo "Pago realizado con exito";
 	} else {
+		include_once "../models/actualizaPendientePago.php";
+		actualizaPendientePago($conn, $precioTotal);
 		echo "FIRMA KO";
 	}
 
@@ -48,6 +50,8 @@ if (!empty( $_POST ) ) {
 			actualizarAlquileres($conn, $fechaDevolucion, $precioTotal, $matricula);
 			echo "Pago realizado con exito";
 		} else {
+			include_once "../models/actualizaPendientePago.php";
+			actualizaPendientePago($conn, $precioTotal);
 			echo "FIRMA KO";
 		}
 
@@ -55,6 +59,8 @@ if (!empty( $_POST ) ) {
 		die("No se recibió respuesta");
 	}
 }
+
+$conn = null;
 
 ?>
 <html>

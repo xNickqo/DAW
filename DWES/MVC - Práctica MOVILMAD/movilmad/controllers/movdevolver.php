@@ -39,7 +39,7 @@ if(isset($_POST['devolver'])){
 		$url="";
 		$urlOKKO="http://192.168.206.212/DAW/DWES/MVC%20-%20Pr%c3%a1ctica%20MOVILMAD/movilmad/controllers/confirmar_pago.php";
 		$id=time();
-		$amount=$precioTotal;
+		$amount=$precioTotal*100;
 		
 		$miObj->setParameter("DS_MERCHANT_AMOUNT", $amount);
 		$miObj->setParameter("DS_MERCHANT_ORDER", $id);
@@ -74,15 +74,6 @@ if(isset($_POST['devolver'])){
 		</script>
 		<?php
 
-		//Actualizamos si el cliente esta pendiente de pago en la tabla rclientes
-        $sql = "UPDATE rclientes 
-                SET pendiente_pago = pendiente_pago + :precio_total 
-                WHERE idcliente = :id_cliente";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':precio_total', $precioTotal);
-        $stmt->bindParam(':id_cliente', $_SESSION['usuario']['idcliente']);
-        $stmt->execute();
-
         $mensaje = "Vehículo devuelto exitosamente. Precio total: $precioTotal €.";
     } catch (Exception $e) {
         $mensaje = "Error al devolver el vehículo: " . $e->getMessage();
@@ -97,6 +88,8 @@ if(isset($_POST['volver'])){
 }
 
 include "../views/formularioDevolver.php";
+
+$conn = null;
 ?>
 
 

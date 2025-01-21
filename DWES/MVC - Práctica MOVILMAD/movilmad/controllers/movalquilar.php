@@ -74,5 +74,7 @@ if(isset($_POST['alquilar'])){
 }
 
 include_once "../views/formularioAlquilar.php";
+
+$conn = null;
 ?>
 

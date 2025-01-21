@@ -8,9 +8,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     include_once "models/obtenerCliente.php";
     $resultado = obtenerCliente($conn, $email);
-    echo "<pre>";
-    var_dump($resultado);
-    echo "</pre>";
 
     if (!empty($resultado)) {
         if($clave != $resultado['idcliente']) {
@@ -31,4 +28,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 
 include_once "views/formularioLogin.php";
+
+$conn = null;
 ?>
