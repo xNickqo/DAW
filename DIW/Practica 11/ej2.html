@@ -33,9 +33,8 @@
         name="nombre" 
         placeholder="Nombre de la persona"
         pattern="/^[A-Za-záéíóúöñ][A-Za-záéíóúöñ\s\.\-\º\ª]{1,23}[A-Za-záéíóúöñ]$/i"
-        title="Hola"  
+        title="Nombre"  
         form="formulario"
-        autofocus
         required
         id="nombre">
 
@@ -49,6 +48,13 @@
         pattern="^[A-Za-záéíóúöñ][A-Za-záéíóúöñ\s\.\-]{4,28}[A-Za-záéíóúöñ]$" 
         required
         id="apellidos">
+
+        <div id="dialog" title="Editar valores">
+            <label for="dialog_nombre">Nombre:</label>
+            <input type="text" id="dialog_nombre" name="dialog_nombre"><br>
+            <label for="dialog_apellidos">Apellidos:</label>
+            <input type="text" id="dialog_apellidos" name="dialog_apellidos">
+        </div>
 
         <br>
 
@@ -119,7 +125,7 @@
 
         <label for="fechaNac">Fecha de nacimiento</label>
         <input 
-        type="date" 
+        type="text" 
         name="fechaNac"
         id="fechaNac">
 
@@ -186,10 +192,12 @@
         <br>
 
         <label for="hrSm">Horas semanales de Trabajo</label>
-        <input 
+        <!--<input 
         type="range" 
         name="horasSemanales" 
-        value="2" id="hrSm">
+        value="2" id="hrSm">-->
+
+        <div name="horasSemanales" id="hrSm"></div>
 
         <span id="horasDisplay">
             <output name="x" for="horasSemanales">2</output>
@@ -198,7 +206,7 @@
         <br>
 
         <label for="prHt">Precio de la hora trabajada</label>
-        <input 
+        <!--<input 
         type="number" 
         name="precioHora" 
         value="5" 
@@ -206,6 +214,11 @@
         min="3"
         max="15"
         step="2"
+        id="prHt"
+        required>-->
+
+        <input type="text" 
+        name="precioHora" 
         id="prHt"
         required>
 
@@ -221,6 +234,7 @@
         <input 
         type="submit"
         value="Enviar"
+        id="enviar"
         formaction=""
         formenctype="application/x-www-form-urlencoded"
         formmethod="post"
