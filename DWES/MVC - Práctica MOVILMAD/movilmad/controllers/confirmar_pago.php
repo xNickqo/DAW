@@ -2,7 +2,7 @@
 
 session_start();
 
-include_once "apiRedsys/apiRedsys.php";
+include_once "../apiRedsys/apiRedsys.php";
 $miObj = new RedsysAPI;
 
 include_once "../db/conexionBBDD.php";
@@ -28,6 +28,7 @@ if (!empty( $_POST ) ) {
 	if ($firma === $signatureRecibida){
 		include_once "../models/actualizarAlquileres.php";
 		actualizarAlquileres($conn, $fechaDevolucion, $precioTotal, $matricula);
+		echo "Pago realizado con exito";
 	} else {
 		echo "FIRMA KO";
 	}
@@ -45,6 +46,7 @@ if (!empty( $_POST ) ) {
 		if ($firma === $signatureRecibida){
 			include_once "../models/actualizarAlquileres.php";
 			actualizarAlquileres($conn, $fechaDevolucion, $precioTotal, $matricula);
+			echo "Pago realizado con exito";
 		} else {
 			echo "FIRMA KO";
 		}
@@ -57,6 +59,6 @@ if (!empty( $_POST ) ) {
 ?>
 <html>
 	<body>
-		<br><br><a href="pe_inicio.php">Volver al inicio</a><br><br>
+		<br><br><a href="../index.php">Volver al inicio</a><br><br>
 	</body>
 </html>

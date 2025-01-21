@@ -29,7 +29,7 @@ if(isset($_POST['devolver'])){
 		$_SESSION['precioTotal'] = $precioTotal;
 		$_SESSION['matricula'] = $_POST['vehiculos'];
 
-		include_once "apiRedsys/apiRedsys.php";
+		include_once "../apiRedsys/apiRedsys.php";
 		$miObj = new RedsysAPI;
 	
 		$fuc="263100000";
