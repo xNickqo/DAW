@@ -1,19 +1,14 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['usuario'])) {
-	header("Location: movinicio.php");
-	exit();
-}
+include_once "../controllers/gestionSesiones.php";
 
 //Si el carrito no existe lo creamos
 if (!isset($_SESSION['carrito']))
 	$_SESSION['carrito'] = array();
 
-
-//Obtenemos los vehiculos disponibles para mostrarlo en un desplegable en la vista
 include_once "../db/conexionBBDD.php";
 $conn = conexionBBDD();
+
+//Obtenemos los vehiculos disponibles para mostrarlo en un desplegable en la vista
 include_once "../models/obtenerVehiculosDisponibles.php";
 $resultado = obtenerVehiculosDisponibles($conn);
 
@@ -45,31 +40,12 @@ if(isset($_POST['vaciar'])){
 }
 
 //Realizar alquiler
-if(isset($_POST['alquilar'])){
+if(isset($_POST['alquilar'])) {
 	if (count($_SESSION['carrito']) > 0) {
-		include_once "../db/conexionBBDD.php";
-		$conn = conexionBBDD();
+		include_once "../models/insertarActualizarAlquiler.php";
+		$mensaje = insertarActualizarAlquiler($conn);
 
-		$conn->beginTransaction();
-
-		try{
-			include_once "../models/insertarAlquiler.php";
-			insertarAlquiler($conn);
-
-			include_once "../models/actualizarVehiculosDisponibles.php";
-			actualizarVehiculosDisponibles($conn);
-			
-			$_SESSION['carrito'] = array();
-			
-			$conn->commit();
-
-			$mensaje = "¡Alquiler realizado con exito!";
-		}catch(PDOException $e){
-			$conn->rollBack();
-			$mensaje = "mensaje en la consulta: ". $e->getMessage();
-		}
-
-		$conn = null;
+		$_SESSION['carrito'] = array();
 	}
 }
 

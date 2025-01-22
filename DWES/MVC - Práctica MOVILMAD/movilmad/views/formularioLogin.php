@@ -25,6 +25,7 @@
                         </div>				
                         
                         <input type="submit" name="submit" value="Login" class="btn btn-warning disabled">
+                        <input type="submit" name="registro" value="Registro" class="btn btn-warning disabled">
                     </form>
                 
                     <?php

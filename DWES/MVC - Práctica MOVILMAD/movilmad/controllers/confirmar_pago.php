@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 include_once "../apiRedsys/apiRedsys.php";
