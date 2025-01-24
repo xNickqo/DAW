@@ -1,0 +1,17 @@
+body {
+	background-color:#9E1010;
+	background-clip:content-box;
+	font-family:calibri;
+	font-size:14pt;
+	margin-top:2%;
+	margin-left:5%;
+	margin-right:3%;
+	padding: 1%;
+	color:white;
+}
+img {
+	width:20%;
+}
+h1, h2, h3 {
+	color:#07BADA;
+}

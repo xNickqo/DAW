@@ -5,15 +5,13 @@ function inicio(){
     $( "input" ).tooltip();
     $( "#enviar" ).button();
 
-    $("#nombre, #apellidos").on("focus", function () {
-        if($("#dialog").dialog("isOpen"))
-            $("#dialog").dialog("option", "hidden", false);
-        else
-            $("#dialog").dialog("open");
+    $("#nombre, #apellidos").on("click", function () {
+        $("#dialog").dialog("open");
     });
 
     $("#dialog").dialog({
         autoOpen: false,
+        model: true,
         buttons: {
             "Aceptar": function () {
                 let nombreDialog = $("#dialog_nombre").val();
@@ -22,13 +20,26 @@ function inicio(){
                 $("#nombre").val(nombreDialog); 
                 $("#apellidos").val(apellidosDialog); 
 
-                $("#dialog").dialog("option", "hidden", true);
+                $("#dialog").dialog("close");
             },
             "Cancelar": function () {
-                $("#dialog").dialog("option", "hidden", true);
+                $("#dialog").dialog("close");
             }
         }
     });
+
+    function actualizarSueldo() {
+        let horas = $("#hrSm").slider("value");
+        let precioHora = $("#prHt").val();
+
+        console.log('Horas:', horas);
+        console.log('Precio por hora:', precioHora);
+        
+        let sueldo = horas * precioHora;
+        console.log('Sueldo calculado:', sueldo);
+
+        $("#sueldo").text(sueldo)
+    }
 
     $( "#hrSm" ).slider({
         value:2, 
@@ -36,14 +47,25 @@ function inicio(){
         max:40, 
         step:1, 
         orientation:"horizontal",
-
+        slide: function() {
+            let valorHoras = $(this).slider("value");
+            $("#horasDisplay").text(valorHoras);
+            actualizarSueldo();
+        },
+        change: function() {
+            actualizarSueldo();
+        }
     }
     );
 
-    $( "#prHt" ).spinner({ 
+    $( "#prHt" ).spinner({
+        value: 5,
         min:5, 
         max:40, 
-        step:2
+        step:2,
+        change: function() {
+            actualizarSueldo();
+        }
     }
     );
 
