@@ -5,60 +5,96 @@ if (document.addEventListener) {
 }
 
 function inicio() {
-    let boton = document.querySelector("input[type='button']"); // Asegúrate de que sea un botón.
-    
-    if (document.addEventListener) {
-        boton.addEventListener("click", enviarPeticion);
-    } else if (document.attachEvent) {
-        boton.attachEvent("onclick", enviarPeticion);
+
+    cargarMarcasYDimensiones();
+
+    if(document.addEventListener){
+        document.getElementById("marca").addEventListener("change", obtenerPrecio);
+    }else if(document.attachEvent){
+        document.getElementById("marca").addEventListener("change", obtenerPrecio);
+    }
+
+    if(document.addEventListener){
+        document.getElementById("dimensiones").addEventListener("change", obtenerPrecio);
+    }else if(document.attachEvent){
+        document.getElementById("dimensiones").addEventListener("change", obtenerPrecio);
     }
 }
 
-function enviarPeticion() {
-    // Capturamos los valores del formulario
-    let marca = document.getElementById("marca").value;
-    let dimensiones = document.getElementById("dimensiones").value;
+function cargarMarcasYDimensiones() {
 
-    // Construimos el XML
-    let cadenaXML = `
-        <DatosTelevisores>
-            <marca>${marca}</marca>
-            <dimensiones>${dimensiones}</dimensiones>
-            <precio>600€</precio>
-        </DatosTelevisores>
-    `;
-
-    // Creamos el objeto XMLHttpRequest
     let peticion = new XMLHttpRequest();
-    if (window.XMLHttpRequest) { 
+    if (window.XMLHttpRequest){ 
         peticion = new XMLHttpRequest(); 
-    } else if (window.ActiveXObject) { 
+    }else if (window.ActiveXObject){ 
         peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
     }
 
-    // Configuramos la solicitud
-    peticion.open("POST", "php/ej5.php", true);
-    peticion.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    // Manejamos la respuesta
-    peticion.onreadystatechange = function () {
+    peticion.open("GET", "php/ej5a.php", true);
+    
+    peticion.onreadystatechange = function() {
         if (peticion.readyState === 4 && peticion.status === 200) {
+
             let respuestaXML = peticion.responseXML;
             
             if (respuestaXML) {
-                let datosTelevisores = respuestaXML.getElementsByTagName("DatosTelevisores")[0];
-                let marcaRespuesta = datosTelevisores.getElementsByTagName("marca")[0].textContent;
-                let dimensionesRespuesta = datosTelevisores.getElementsByTagName("dimensiones")[0].textContent;
-                let precioRespuesta = datosTelevisores.getElementsByTagName("precio")[0].textContent;
+                let marcas = respuestaXML.getElementsByTagName("marca");
+                let dimensiones = respuestaXML.getElementsByTagName("dimensiones");
 
-                // Mostramos los datos
-                alert(`Marca: ${marcaRespuesta}\nDimensiones: ${dimensionesRespuesta}\nPrecio: ${precioRespuesta}`);
-            } else {
-                alert("La respuesta del servidor no es un XML válido.");
+                // Llenar el select de marcas
+                let marcaSelect = document.getElementById("marca");
+                for (let i = 0; i < marcas.length; i++) {
+                    let option = document.createElement("option");
+                    option.value = marcas[i].textContent;
+                    option.textContent = marcas[i].textContent;
+                    marcaSelect.appendChild(option);
+                }
+
+                // Llenar el select de dimensiones
+                let dimensionesSelect = document.getElementById("dimensiones");
+                for (let i = 0; i < dimensiones.length; i++) {
+                    let option = document.createElement("option");
+                    option.value = dimensiones[i].textContent;
+                    option.textContent = dimensiones[i].textContent;
+                    dimensionesSelect.appendChild(option);
+                }
             }
         }
     };
+    peticion.send();
+}
 
-    // Enviamos los datos
-    peticion.send(cadenaXML);
+// Obtener el precio cuando se seleccionen marca y dimensiones
+function obtenerPrecio() {
+    let marca = document.getElementById("marca").value;
+    let dimensiones = document.getElementById("dimensiones").value;
+    
+    if (marca && dimensiones) {
+        let cadenaXML = `<datos><DatosTelevisores><marca>${marca}</marca><dimensiones>${dimensiones}</dimensiones></DatosTelevisores></datos>`;
+
+        let peticion = new XMLHttpRequest();
+        if (window.XMLHttpRequest){ 
+            peticion = new XMLHttpRequest(); 
+        }else if (window.ActiveXObject){ 
+            peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
+        }
+
+        peticion.open("POST", "php/ej5b.php", true);
+
+        peticion.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        peticion.onreadystatechange = function() {
+            if (peticion.readyState === 4 && peticion.status === 200) {
+                let respuestaXML = peticion.responseXML;
+                if (respuestaXML) {
+                    let precio = respuestaXML.getElementsByTagName("precio")[0].textContent;
+                    document.getElementById("precio").value = precio;
+                }
+            }
+        };
+
+        peticion.send(cadenaXML);
+    } else {
+        document.getElementById("precio").value = "";
+    }
 }
