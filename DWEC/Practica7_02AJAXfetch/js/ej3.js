@@ -26,23 +26,30 @@ function enviarPeticionAJAX(evento){
 
     if (nombre.value != '' && apellidos.value != '' && modulo.value != '' &&  nota.value != '') {
 
-        let peticion = new XMLHttpRequest();
+        let params = 'nombre=' + encodeURIComponent(nombre.value) +
+                       '&apellidos=' + encodeURIComponent(apellidos.value) +
+                       '&modulo=' + encodeURIComponent(modulo.value) +
+                       '&nota=' + encodeURIComponent(nota.value);
 
-        if (window.XMLHttpRequest){ 
-            peticion = new XMLHttpRequest(); 
-        }else if (window.ActiveXObject){ 
-            peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
-        }
-
-        peticion.onreadystatechange = function() {
-            if (peticion.readyState == 4 && peticion.status == 200) {
-                nota_ro.value = peticion.responseText.trim();
+        fetch('php/ej3.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: params
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud");
             }
-        };
-
-        peticion.open("POST", 'php/ej3.php', true);
-        peticion.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-        peticion.send('nombre='+nombre.value+'&apellidos'+apellidos.value+'&modulo='+modulo.value+'&nota='+nota.value);
+            return response.text();
+        })
+        .then(texto => {
+            nota_ro.value = texto.trim();
+        })
+        .catch(error => {
+            console.error("Error en la petición:", error);
+        });
     } else {
         alert("Por favor, complete todos los campos.");
     }

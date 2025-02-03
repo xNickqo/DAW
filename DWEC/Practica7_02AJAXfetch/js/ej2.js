@@ -6,11 +6,11 @@ else if (document.attachEvent)
 function inicio(){
 
     let obtenerNotaBtn = document.querySelector("input[type='submit']");
-    obtenerNotaBtn.addEventListener("click", enviarPeticionAJAX);
+    obtenerNotaBtn.addEventListener("click", enviarPeticionFetch);
 
 }
 
-function enviarPeticionAJAX(evento) {
+function enviarPeticionFetch(evento) {
     evento.preventDefault();
 
     let nombre = document.getElementById("nombre");
@@ -20,26 +20,23 @@ function enviarPeticionAJAX(evento) {
 
     if (nombre.value != '' && apellidos.value != '' && modulo.value != '') {
 
-        let peticion = new XMLHttpRequest();
-
-        if (window.XMLHttpRequest){ 
-            peticion = new XMLHttpRequest(); 
-        }else if (window.ActiveXObject){ 
-            peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
-        }
-
-        peticion.onreadystatechange = function() {
-            if (peticion.readyState == 4 && peticion.status == 200) {
-                nota.value = peticion.responseText.trim();
-            }
-        };
-
         let url = 'php/ej2.php?nombre=' + encodeURIComponent(nombre.value) +
                   '&apellidos=' + encodeURIComponent(apellidos.value) +
                   '&modulo=' + encodeURIComponent(modulo.value);
 
-        peticion.open("GET", url, true);
-        peticion.send();
+     
+        fetch(url).then(function(respuesta) {
+            if (!respuesta.ok) {
+                throw new Error("Error en la petición");
+            }
+            return respuesta.text(); 
+        })
+        .then(function(texto) {
+            nota.value = texto.trim();
+        })
+        .catch(function(error) {
+            console.error("Error en la petición:", error);
+        });
     } else {
         alert("Por favor, complete todos los campos.");
     }

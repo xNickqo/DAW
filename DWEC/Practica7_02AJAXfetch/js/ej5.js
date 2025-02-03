@@ -22,27 +22,26 @@ function inicio() {
 }
 
 function cargarMarcasYDimensiones() {
-
-    let peticion = new XMLHttpRequest();
-    if (window.XMLHttpRequest){ 
-        peticion = new XMLHttpRequest(); 
-    }else if (window.ActiveXObject){ 
-        peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
-    }
-
-    peticion.open("GET", "php/ej5a.php", true);
-    
-    peticion.onreadystatechange = function() {
-        if (peticion.readyState === 4 && peticion.status === 200) {
-
-            let respuestaXML = peticion.responseXML;
-            
+    fetch("php/ej5a.php")
+        .then(response => {
+            if (!response.ok) 
+                throw new Error("Error en la solicitud");
+            return response.text();
+        })
+        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+        .then(respuestaXML => {
             if (respuestaXML) {
                 let marcas = respuestaXML.getElementsByTagName("marca");
                 let dimensiones = respuestaXML.getElementsByTagName("dimensiones");
 
-                // Llenar el select de marcas
                 let marcaSelect = document.getElementById("marca");
+                let dimensionesSelect = document.getElementById("dimensiones");
+
+                // Limpiar opciones previas
+                marcaSelect.innerHTML = '<option value="">Seleccione una marca</option>';
+                dimensionesSelect.innerHTML = '<option value="">Seleccione dimensiones</option>';
+
+                // Llenar el select de marcas
                 for (let i = 0; i < marcas.length; i++) {
                     let option = document.createElement("option");
                     option.value = marcas[i].textContent;
@@ -51,7 +50,6 @@ function cargarMarcasYDimensiones() {
                 }
 
                 // Llenar el select de dimensiones
-                let dimensionesSelect = document.getElementById("dimensiones");
                 for (let i = 0; i < dimensiones.length; i++) {
                     let option = document.createElement("option");
                     option.value = dimensiones[i].textContent;
@@ -59,41 +57,37 @@ function cargarMarcasYDimensiones() {
                     dimensionesSelect.appendChild(option);
                 }
             }
-        }
-    };
-    peticion.send();
+        })
+        .catch(error => console.error("Error en la petición:", error));
 }
 
-// Obtener el precio cuando se seleccionen marca y dimensiones
 function obtenerPrecio() {
     let marca = document.getElementById("marca").value;
     let dimensiones = document.getElementById("dimensiones").value;
-    
+
     if (marca && dimensiones) {
         let cadenaXML = `<datos><DatosTelevisores><marca>${marca}</marca><dimensiones>${dimensiones}</dimensiones></DatosTelevisores></datos>`;
 
-        let peticion = new XMLHttpRequest();
-        if (window.XMLHttpRequest){ 
-            peticion = new XMLHttpRequest(); 
-        }else if (window.ActiveXObject){ 
-            peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
-        }
-
-        peticion.open("POST", "php/ej5b.php", true);
-
-        peticion.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        peticion.onreadystatechange = function() {
-            if (peticion.readyState === 4 && peticion.status === 200) {
-                let respuestaXML = peticion.responseXML;
-                if (respuestaXML) {
-                    let precio = respuestaXML.getElementsByTagName("precio")[0].textContent;
-                    document.getElementById("precio").value = precio;
-                }
+        fetch("php/ej5b.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: cadenaXML,
+        })
+        .then(response => {
+            if (!response.ok) 
+                throw new Error("Error en la solicitud");
+            return response.text();
+        })
+        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+        .then(respuestaXML => {
+            if (respuestaXML) {
+                let precio = respuestaXML.getElementsByTagName("precio")[0]?.textContent || "";
+                document.getElementById("precio").value = precio;
             }
-        };
-
-        peticion.send(cadenaXML);
+        })
+        .catch(error => console.error("Error en la petición:", error));
     } else {
         document.getElementById("precio").value = "";
     }

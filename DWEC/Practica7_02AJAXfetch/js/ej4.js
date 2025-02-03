@@ -26,21 +26,27 @@ function enviarPeticionAJAX(evento){
     if (nombre != '' && apellidos != '' && puestoTrabajo != '') {
         let miformulario = document.getElementById("formulario"); 
         let datos = new FormData(miformulario);
-        let peticion = new XMLHttpRequest();
-        if (window.XMLHttpRequest){ 
-            peticion = new XMLHttpRequest(); 
-        }else if (window.ActiveXObject){ 
-            peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
-        }
 
-        peticion.onreadystatechange = function() {
-            if (peticion.readyState == 4 && peticion.status == 200) {
-                sueldo.value = peticion.responseText.trim();
+        fetch('php/ej4.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: datos
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud");
             }
-        };
+            return response.text();
+        })
+        .then(texto => {
+            sueldo.value = texto.trim();
+        })
+        .catch(error => {
+            console.error("Error en la petición:", error);
+        });
 
-        peticion.open("POST", 'php/ej4.php', true);
-        peticion.send(datos);
     } else {
         alert("Por favor, complete todos los campos.");
     }

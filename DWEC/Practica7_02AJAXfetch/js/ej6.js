@@ -22,23 +22,17 @@ function inicio() {
 }
 
 function cargar() {
-
-    let peticion = new XMLHttpRequest();
-    if (window.XMLHttpRequest){ 
-        peticion = new XMLHttpRequest(); 
-    }else if (window.ActiveXObject){ 
-        peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
-    }
-
-    peticion.open("GET", "php/ej6a.php", true);
-    
-    peticion.onreadystatechange = function() {
-        if (peticion.readyState === 4 && peticion.status === 200) {
-
-            let data = JSON.parse(peticion.responseText);
-            
+    fetch("php/ej6a.php")
+        .then(response => {
+            if (!response.ok) throw new Error("Error en la solicitud");
+            return response.json();
+        })
+        .then(data => {
             let marcaSelect = document.getElementById("marca");
-            data.marcas.forEach(function (marca) {
+            let electrodomesticoSelect = document.getElementById("electrodomestico");
+
+            // Llenar el select de marcas
+            data.marcas.forEach(marca => {
                 let option = document.createElement("option");
                 option.value = marca;
                 option.textContent = marca;
@@ -46,48 +40,42 @@ function cargar() {
             });
 
             // Llenar el select de electrodomésticos
-            let electrodomesticoSelect = document.getElementById("electrodomestico");
-            data.electrodomesticos.forEach(function (electrodomestico) {
+            data.electrodomesticos.forEach(electrodomestico => {
                 let option = document.createElement("option");
                 option.value = electrodomestico;
                 option.textContent = electrodomestico;
                 electrodomesticoSelect.appendChild(option);
             });
-        }
-    };
-    peticion.send();
+        })
+        .catch(error => console.error("Error en la petición:", error));
 }
 
 // Obtener el precio cuando se seleccionen marca y electrodomesticos
 function obtener() {
     let marca = document.getElementById("marca").value;
     let electrodomestico = document.getElementById("electrodomestico").value;
-    
+
     if (marca && electrodomestico) {
-
-        let peticion = new XMLHttpRequest();
-        if (window.XMLHttpRequest){ 
-            peticion = new XMLHttpRequest(); 
-        }else if (window.ActiveXObject){ 
-            peticion = new ActiveXObject("Microsoft.XMLHTTP"); 
-        }
-
-        peticion.open("POST", "php/ej6b.php", true);
-
-        peticion.setRequestHeader("Content-Type","application/json"); 
-
-        peticion.onreadystatechange = function() {
-            if (peticion.readyState === 4 && peticion.status === 200) {
-                let respuestaJSON = JSON.parse(peticion.responseText);
-                if (respuestaJSON) {
-                    document.getElementById("altura").value = respuestaJSON.altura;
-                    document.getElementById("fondo").value = respuestaJSON.fondo;
-                    document.getElementById("ancho").value = respuestaJSON.ancho;
-                }
-            }
-        };
-
         let datos = JSON.stringify({ marca: marca, electrodomestico: electrodomestico });
-        peticion.send(datos);
+
+        fetch("php/ej6b.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: datos,
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Error en la solicitud");
+            return response.json();
+        })
+        .then(respuestaJSON => {
+            if (respuestaJSON) {
+                document.getElementById("altura").value = respuestaJSON.altura || "";
+                document.getElementById("fondo").value = respuestaJSON.fondo || "";
+                document.getElementById("ancho").value = respuestaJSON.ancho || "";
+            }
+        })
+        .catch(error => console.error("Error en la petición:", error));
     }
 }

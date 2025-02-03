@@ -1,9 +1,10 @@
 if (document.addEventListener)
-	window.addEventListener("load",inicio)
+	window.addEventListener("load",inicio);
 else if (document.attachEvent)
 	window.attachEvent("onload",inicio);
 
-function inicio(){
+function inicio() {
+	console.log('Script cargado');
 	let links = document.querySelectorAll("nav a");
     let contenido = document.getElementById("contenido");
 
@@ -31,15 +32,19 @@ function inicio(){
 				headers: {"Content-Type": "application/x-www-form-urlencoded"}, 
 			};
 
-			fetch(archivo, inicial).then(function(respuesta){
-				if(Response.ok)
-					return respuesta.text;
-			}).then(function(texto){
-				contenido.textContent = texto;
-			}).catch(function(error){
-				console.error("Error en la peticion: ", error);
-			});
+			console.log(archivo);
 
+			fetch(archivo, inicial)
+				.then(function(respuesta) {
+					if (respuesta.ok)
+						return respuesta.text();
+				})
+				.then(function(texto) {
+					contenido.innerHTML = texto;
+				})
+				.catch(function(error) {
+					console.error("Error en la petición: ", error);
+				});
 		});
 	}
 }
