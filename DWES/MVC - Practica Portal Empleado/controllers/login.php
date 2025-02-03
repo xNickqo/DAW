@@ -22,6 +22,10 @@ if(isset($_POST['submit'])){
                 exit();
             } else {
                 $mensaje = "El usuario no pertenece al departamento de Recursos Humanos";
+                session_start();
+                $_SESSION['usuario'] = $resultado;
+                header("Location: ../controllers/inicio.php");
+                exit();
             }
         }
     } else {

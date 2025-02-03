@@ -8,11 +8,11 @@
 <body>
     <ul>
         <li><a href="../controllers/altaEmpleado.php">Alta de empleado</a></li>
-        <li><a href="">Alta masiva de empleados</a></li>
-        <li><a href="">Modificar salario</a></li>
-        <li><a href="">Vida laboral</a></li>
-        <li><a href="">Info departamentos</a></li>
-        <li><a href="">Cambio departamentos</a></li>
+        <li><a href="../controllers/altaMasivaEmpleados.php">Alta masiva de empleados</a></li>
+        <li><a href="../controllers/modificarSalario.php">Modificar salario</a></li>
+        <li><a href="../controllers/vidaLaboral.php">Vida laboral</a></li>
+        <li><a href="../controllers/infoDept.php">Info departamentos</a></li>
+        <li><a href="../controllers/cambioDept.php">Cambio departamentos</a></li>
         <li><a href="">Nuevo jefe de departamento</a></li>
         <li><a href="">Baja de empleado</a></li>
     </ul>
