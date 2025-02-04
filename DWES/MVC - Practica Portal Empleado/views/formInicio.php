@@ -13,8 +13,10 @@
         <li><a href="../controllers/vidaLaboral.php">Vida laboral</a></li>
         <li><a href="../controllers/infoDept.php">Info departamentos</a></li>
         <li><a href="../controllers/cambioDept.php">Cambio departamentos</a></li>
-        <li><a href="">Nuevo jefe de departamento</a></li>
-        <li><a href="">Baja de empleado</a></li>
+        <li><a href="../controllers/nuevoJefeDept.php">Nuevo jefe de departamento</a></li>
+        <li><a href="../controllers/bajaEmpleado.php">Baja de empleado</a></li>
+        <li><a href="../controllers/nomina.php">Nomina</a></li>
+        <li><a href="../controllers/historialLaboral.php">Historial laboral</a></li>
     </ul>
 
     <a href="../controllers/logout.php">Cerrar sesion</a>
