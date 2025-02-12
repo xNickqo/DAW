@@ -1,0 +1,40 @@
+<html>
+   <head>
+		<meta charset="utf-8" />
+		<title>Cordoba </title>
+		<link href="estilos/cordoba.css" rel="stylesheet" type="text/css" />
+		<style type="text/css">
+		</style>
+		<script type="text/javascript">
+		</script>
+	</head>
+	<body>
+		<header>
+		</header>
+		<nav>
+		</nav>
+		<main>
+			<section>
+				<article>
+					<div>
+						<div id="contenido">
+							Los orígenes de Córdoba se pierden en el tiempo. Su situación cercana al río y la riqueza de las 
+							tierras de la campiña la configuraron como lugar idóneo para las primeras ocupaciones prehistóricas. 
+							Pero no es hasta el Bronce Final (siglos ix y viii a.C.) cuando se crea el primer asentamiento 
+							propiamente dicho. Con la llegada de fenicios y griegos a la península, la ciudad se reafirma 
+							como un importante centro minero y comercial gracias a la navegabilidad del Guadalquivir. Este 
+							hecho favoreció las relaciones y la difusión artística y comercial, integrando a esta localidad 
+							con las principales urbes del momento.
+						</div>
+						<img src="imagenes/mezquita-cordoba.jpg" />
+					</div>
+				</article>
+			</section>
+		</main>
+		<footer>
+		</footer>
+		<aside>
+		</aside>
+   </body>
+</html>
+     

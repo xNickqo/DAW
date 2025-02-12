@@ -1,0 +1,21 @@
+body {
+	background-color:#982932;
+	background-clip:padding-box;
+	font-family:calibri;
+	font-size:14pt;
+	margin-top:8%;
+	margin-left:15%;
+	margin-right:13%;
+	padding: 3%;
+	color:#5ACE0D;
+}
+img {
+	width:30%;
+}
+h1, h2, h3 {
+	color:#FCF401;
+}
+div {
+	text-indent:15%;
+	line-height:2em;
+}
