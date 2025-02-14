@@ -39,6 +39,10 @@ if (isset($_POST['alta']) && !empty($_SESSION['carrito'])) {
         $conn->beginTransaction();
 
         include_once "../models/obtenerMaxEmp_no.php";
+        // Obtener el emp_no (número de empleado)
+        $n = obtenerMaxEmp_no($conn);
+
+        var_dump($_SESSION['carrito']);
 
         foreach ($_SESSION['carrito'] as $empleado) {
             // Asignar valores del empleado a variables
@@ -50,13 +54,13 @@ if (isset($_POST['alta']) && !empty($_SESSION['carrito'])) {
             $salario = $empleado['salario'];
             $cargo = $empleado['cargo'];
 
-            // Obtener el emp_no (número de empleado)
-            $n = obtenerMaxEmp_no($conn);
-
             include_once "../models/insertarEmple.php";
             include_once "../models/insertarDept.php";
             include_once "../models/insertarSalario.php";
             include_once "../models/insertarTitle.php";
+
+            echo "Usuario" . $nombre . "dado de alta correctamente ID:". $n;
+            $n++;
         }
 
         $_SESSION['carrito'] = array();
