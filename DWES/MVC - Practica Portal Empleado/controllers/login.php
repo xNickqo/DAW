@@ -9,8 +9,12 @@ if(isset($_POST['submit'])){
     include_once "models/obtenerCliente.php";
     $resultado = obtenerCliente($conn, $username);
 
+    var_dump($resultado);
+
     if (!empty($resultado)) {
-        if($clave != $resultado['last_name']) {
+        if (!is_null($resultado['end_date']) && !empty($resultado['end_date'])) {
+            $mensaje = "Este usuario se ha dado de baja";
+        } else if($clave != $resultado['last_name']) {
             $mensaje = "Clave incorrecta";
         } else {
             include_once "models/obtenerDept.php";
