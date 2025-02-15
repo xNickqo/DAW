@@ -263,7 +263,7 @@ function validarDireccion(cadena) {
 function validarLocalidad(cadena) {
 
     let resultado = "";
-    let localidadRegex = /^[a-zA-Záéíóúüñ]([a-zA-Záéíóúüñ ]*[a-záéíóúüñ])?$/i;
+    let localidadRegex = /^[a-záéíóúüñ][a-záéíóúüñ ]+[a-záéíóúüñ]$/i;
 
     if (!localidadRegex.test(cadena))
         return "---[Localidad] es incorrecta.\n";
@@ -274,7 +274,7 @@ function validarLocalidad(cadena) {
 function validarCodigoPostal(codigoPostal) {
 
     let resultado = "";
-    let codigoPostalRegex = /^(0[1-9]|[1-4][0-9]|5[0-2])\d{3}$/;
+    let codigoPostalRegex = /^(1[0-9]{3}|2[0-9]{4}|3[0-9]{4}|4[0-9]{4}|5[0-2][0-9]{3})$/;
 
     if(!codigoPostalRegex.test(codigoPostal))
         resultado = "---[Codigo postal] es incorrecto \n";
@@ -353,7 +353,7 @@ function validarFax(numero) {
 
 function validarFecha(cadena) {
     //d/m/aa o dd/mm/aaaa
-    let regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/(\d{2}|\d{4})$/;
+    let regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{2}|\d{4})$/;
     if (!regex.test(cadena)) 
         return "---[Fecha] La fecha debe tener el formato día/mes/año, donde día y mes pueden tener uno o dos dígitos y el año puede ser de 2 o 4 dígitos.\n";
 

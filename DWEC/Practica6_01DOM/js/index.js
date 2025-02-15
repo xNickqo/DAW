@@ -98,14 +98,17 @@ function registro() {
     if(!existeCookie(nombre, contrasena)) {
         if ((regexNombre.test(nombre)) && (regexContrasena.test(contrasena))) {
             // Crear cookie
-            document.cookie = `${nombre}=${contrasena}; expires=Wed, 31 Dec 2024 00:00:00 GMT;`;
-            alert("Cookie creada con exito");
+            document.cookie = `${nombre}=${contrasena}; expires=Wed, 31 Dec 2025 00:00:00 GMT;`;
+            console.log("Todas las cookies:\n"+document.cookie);
+            console.log("Cookie creada");
+            alert("Cookie creada con éxito");
             ocultarFormularioRegistro();
+            mostrarFormularioInicio();
         } else {
-            alert("Error nombre o contraseña");
+            alert("Error: nombre o contraseña no válidos");
         }
     } else {
-        alert ("La cookie ya existe, no puedes registrarla de nuevo");
+        alert("La cookie ya existe, no puedes registrarla de nuevo");
     }
 }
 
@@ -215,7 +218,7 @@ function crearDefiniciones() {
 }
 
 function crearLocalidades() {
-    let loc = document.getElementById("loc").value.trim();
+    let loc = document.getElementById("localidad").value.trim();
     let listaLoc = document.getElementById("listaLoc");
 
     if (loc.length > 0) {
@@ -223,7 +226,7 @@ function crearLocalidades() {
         let lista = Array.from(listaLoc.getElementsByTagName("li"));
         
         // Suscar si la loc ya existe
-        if (loc === lista.some(item => item.textContent)) {
+        if (lista.some(item => item.textContent === loc)) {
             alert("La loc que has introducido ya existe");
             return;
         }
@@ -242,6 +245,7 @@ function crearLocalidades() {
                 inserted = true;
                 break;
             }
+            i+=1;
         }
 
         // Si no se insertó, significa que la loc es la mayor y va al final
@@ -264,20 +268,17 @@ function crearTablaCoches() {
 
     if (marca && modelo && precio) {
         let existe = false;
-        let i = 1; // Ignoramos el encabezado de la tabla
+        let i = 1;
         while (i < filas.length) {
             let celdas = filas.item(i).getElementsByTagName("td");
-
             let marcaExistente = celdas[0].textContent;
             let modeloExistente = celdas[1].textContent;
-
-            // Si la marca y modelo ya existen, actualizamos el precio
             if (marcaExistente === marca && modeloExistente === modelo) {
                 celdas[2].textContent = precio;
                 existe = true;
                 break;
             }
-            i++;
+            i+=1;
         }
 
         if (!existe) {
