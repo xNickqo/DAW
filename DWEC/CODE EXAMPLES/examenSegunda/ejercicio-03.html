@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta name="author" content="Nicolas Lopez Flores" />	
+		<meta charset="utf-8" />
+		<link href="css/ejercicio-03.css" rel="stylesheet" type="text/css" />
+		<title>Examen Evaluación Extraordinaria Ejercicio - Ejercicio Nº 3</title>
+		<script src="jquery/jquery-3.7.1.min.js"></script>
+		<script src="jquery/jquery-3.7.1.js"></script>
+		<script src="js/ej3.js"></script>
+
+	</head>
+	<body>
+		<header>
+			<h1>Examen evaluación extraordinaria de Junio - Ejercicio Nº 3</h1>
+		</header>
+		<nav>
+		</nav>
+		<main>
+			<section>
+				<article>
+					<div>
+						<div>
+							<table id="coches">
+								<thead>
+									<tr>
+										<th>Marca</th>
+										<th>Modelo </th>
+										<th>Precio</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Seat</td>
+										<td>León</td>
+										<td>13500</td>
+									</tr>
+									<tr>
+										<td>Seat</td>
+										<td>Arosa</td>
+										<td>20200</td>
+									</tr>
+									<tr>
+										<td>Volkwagen</td>
+										<td>Passat</td>
+										<td>32000</td>
+									</tr>
+									<tr>
+										<td>Volkwagen</td>
+										<td>Tiguan</td>
+										<td>25000</td>
+									</tr>
+									<tr>
+										<td>Toyota</td>
+										<td>Raw 4</td>
+										<td>34000</td>
+									</tr>
+									<tr>
+										<td>Nixan</td>
+										<td>X-Trail</td>
+										<td>30000</td>
+									</tr>
+									
+								</tbody>
+							</table>
+							<input type="button" value="Aplicar" id="aplicar" name="aplicar" />
+						</div>
+						<div class="salamanca">
+							Salamanca es una ciudad espa&ntilde;ola, capital de la provincia hom&oacute;nima, situada
+							en la comunidad aut&oacute;noma de Castilla y Le&oacute;n. Tiene una poblaci&oacute;n de 
+							152.048 habitantes, y su &aacute;rea metropolitana alcanza los 228.881 (datos del INE a 1
+							de enero de 2012), lo que la convierte en la segunda &aacute;rea m&aacute;s poblada de la 
+							comunidad tras Valladolid y la 5. del interior espa&ntilde;ol (tomando las comunidades aut&oacute;nomas
+							que carecen de litoral). Est&aacute; situada en la comarca del Campo de Salamanca, junto al r&iacute;o Tormes. <br />
+							Salamanca alberga la universidad, en activo, m&aacute;s antigua de Espa&ntilde;a, la Universidad de Salamanca, creada 
+							en 1218 por Alfonso IX de Le&oacute;n y que fue la primera de Europa que ostent&oacute; el t&iacute;tulo de Universidad
+							por el edicto de 1253 de Alfonso X el Sabio y la bula del Papa Alejandro IV en 1255. Durante la &eacute;poca en la que 
+							fue una de las universidades m&aacute;s prestigiosas de occidente se hizo popular la frase: "Quod natura non dat, 
+							Salmantica non pr&aelig;stat" que significa "Lo que la naturaleza no da, Salamanca no presta". <br />
+							Salamanca est&aacute; ligada a la Historia Universal por nombres propios como: Antonio de Nebrija, Crist&oacute;bal
+							Col&oacute;n, Fernando de Rojas, Francisco de Vitoria y la Escuela de Salamanca, Fray Luis de Le&oacute;n, o Miguel 
+							de Unamuno. Incluso Miguel de Cervantes Saavedra afirma en su libro El licenciado Vidriera:
+						</div>
+						<div>
+							<table id="ciudades">
+								<thead>
+								</thead>
+								<tbody>
+									<tr> <td>&Aacute;lava</td>				<td>Albacete</td> 			<td>Alicante</td>			<td>Almer&iacute;a</td> </tr>
+									<tr> <td>Asturias</td>					<td>&Aacute;vila</td>		<td>Badajoz</td>			<td>Barcelona</td> </tr>
+									<tr> <td>Burgos</td>					<td>C&aacute;ceres</td> 	<td>C&aacute;diz</td>		<td>Cantabria</td> </tr>
+									<tr> <td>Castell&oacute;n</td>  		<td>Ceuta</td> 				<td>Ciudad Real</td>		<td>C&oacute;rdoba</td> </tr>
+									<tr> <td>A Coru&ntilde;a</td> 			<td>Cuenca</td>				<td>Gerona</td>				<td>Granada</td> </tr> 
+									<tr> <td>Guadalajara</td> 				<td>Guip&uacute;zcoa</td>	<td>Huelva</td>				<td>Huesca</td> </tr>
+									<tr> <td>Islas Baleares</td>			<td>Ja&eacute;n</td>		<td>Le&oacute;n</td>		<td>Ll&eacute;ida</td> </tr>
+									<tr> <td>Lugo</td>						<td>Madrid</td>				<td>M&aacute;laga</td>		<td>Melilla</td> </tr>
+									<tr> <td>Murcia</td>					<td>Navarra</td>			<td>Ourense</td>			<td>Palencia</td> </tr>
+									<tr> <td>Las Palmas de Gran Canaria</td> 				<td>Pontevedra</td>			<td>La Rioja</td>			<td>Salamanca</td> </tr>
+									<tr> <td>Santa Cruz de Tenerife</td>	<td>Segovia</td>			<td>Sevilla</td>			<td>Soria</td> </tr>
+									<tr> <td>Tarragona</td>					<td>Teruel</td>				<td>Toledo</td>				<td>Valencia</td> </tr>
+									<tr> <td>Valladolid</td>				<td>Vizcaya</td>			<td>Zamora</td>				<td>Zaragoza</td> </tr>
+								</tbody>
+							</table>		
+							<select multiple id="comunidades">
+								<option>Galicia</option>
+								<option>Asturias</option>
+								<option>Cantabria</option>
+								<option>Pa&iacute;s Vasco</option>
+								<option>Navarra</option>
+								<option>Arag&oacute;n</option>
+								<option>Catalu&ntilde;a</option>
+								<option>Comunidad Valenciana</option>
+								<option>La Rioja</option>
+								<option>Castilla-Le&oacute;n</option>
+								<option>Castilla-La Mancha</option>
+								<option>Extremadura</option>
+								<option>Murcia</option>
+								<option>Andalucia</option>
+								<option>Islas Canarias</option>
+								<option>Islas Baleares</option>
+								<option>Madrid</option>
+								<option>Ceuta</option>
+								<option>Melilla</option>
+							</select> <br />
+							<input type="button" value="Cambiar" name="cambiar" id="cambiar" />
+						</div>
+					</div>
+				</article>
+			</section>
+		</main>
+		<footer>
+		</footer>
+		<aside>
+		</aside>
+	</body>
+</html>
+	   

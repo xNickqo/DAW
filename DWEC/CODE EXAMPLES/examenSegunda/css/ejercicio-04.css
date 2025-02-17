@@ -1,0 +1,22 @@
+body{
+	font-famili:cambria;
+	font-size:14pt;
+	line-height:2rem;
+	background-color:green;
+	color:white;
+	margin-top:5%;
+	margin-left:10%;
+}
+table {
+	border:1px solid blue;
+}
+table td , table th {
+	border:1px solid red;
+}
+label + input {
+	position:absolute;
+	left:30%;
+}
+table td{
+	text-align:center;
+}

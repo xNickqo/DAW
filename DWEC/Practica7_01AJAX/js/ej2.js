@@ -13,9 +13,9 @@ function inicio(){
 function enviarPeticionAJAX(evento) {
     evento.preventDefault();
 
-    let nombre = document.getElementById("nombre");
-    let apellidos = document.getElementById("apellidos");
-    let modulo = document.getElementById("modulo");
+    let nombre = document.getElementById("nombre").value;
+    let apellidos = document.getElementById("apellidos").value;
+    let modulo = document.getElementById("modulo").value;
     let nota = document.getElementById("nota");
 
     if (nombre.value != '' && apellidos.value != '' && modulo.value != '') {
@@ -34,9 +34,7 @@ function enviarPeticionAJAX(evento) {
             }
         };
 
-        let url = 'php/ej2.php?nombre=' + encodeURIComponent(nombre.value) +
-                  '&apellidos=' + encodeURIComponent(apellidos.value) +
-                  '&modulo=' + encodeURIComponent(modulo.value);
+        let url = 'php/ej2.php?nombre='+nombre+'&apellidos='+apellidos+'&modulo='+modulo;
 
         peticion.open("GET", url, true);
         peticion.send();

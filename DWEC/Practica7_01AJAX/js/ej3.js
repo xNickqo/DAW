@@ -18,10 +18,10 @@ function inicio(){
 function enviarPeticionAJAX(evento){
     evento.preventDefault();
 
-    let nombre = document.getElementById("nombre");
-    let apellidos = document.getElementById("apellidos");
-    let modulo = document.getElementById("modulo");
-    let nota = document.getElementById("nota");
+    let nombre = document.getElementById("nombre").value;
+    let apellidos = document.getElementById("apellidos").value;
+    let modulo = document.getElementById("modulo").value;
+    let nota = document.getElementById("nota").value;
     let nota_ro = document.getElementById("nota_ro");
 
     if (nombre.value != '' && apellidos.value != '' && modulo.value != '' &&  nota.value != '') {
@@ -42,7 +42,7 @@ function enviarPeticionAJAX(evento){
 
         peticion.open("POST", 'php/ej3.php', true);
         peticion.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-        peticion.send('nombre='+nombre.value+'&apellidos'+apellidos.value+'&modulo='+modulo.value+'&nota='+nota.value);
+        peticion.send('nombre='+nombre+'&apellidos'+apellidos+'&modulo='+modulo+'&nota='+nota);
     } else {
         alert("Por favor, complete todos los campos.");
     }

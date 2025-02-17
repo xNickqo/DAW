@@ -1,0 +1,19 @@
+:root{
+	background-color:blue;
+	color:white;
+	margin-top:3%;
+	margin-left:10%;
+	line-height:1.7rem;
+}
+fieldset {
+	width:45%;
+}
+label + select {
+	margin-left:2%;
+}
+select + label {
+	margin-left:3%;
+}
+label + input {
+	margin-left:2%;
+}

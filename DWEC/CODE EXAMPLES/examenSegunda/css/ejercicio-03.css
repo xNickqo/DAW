@@ -1,0 +1,22 @@
+:root {
+	font-family:Calibri;
+	font-size:12pt;
+	font-weight:bold;
+	color:white;
+	background-color:blue;
+	line-height:1.75rem;
+}
+table, th, td {
+				border:solid 1px black;
+			}
+
+.saltarina {
+	font-family: 'Calibri', sans-serif;
+	font-size: 24pt;
+	background-color: blue;
+	color: white;
+
+	
+	border: 1px solid white;
+}
+			

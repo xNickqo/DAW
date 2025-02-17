@@ -1,0 +1,20 @@
+España	
+"Asturias", "Galicia", "Cantabria", "País Vasco", "Navarra", "Aragón", "Cataluña", "Castilla y León", "Madrid", "La Rioja", "Extremadura", "Castilla La Mancha", "Valencia", "Murcia", "Andalucía", "Canarias", "Baleares"
+
+Alemania
+"Baden-Wurtemberg", "Baviera", "Berlín", "Brandeburgo", "Bremen", "Hamburgo", "Hesse", "Mecklemburgo-Pomerania Occidental", "Baja Sajonia", "Renania del Norte-Westfalia", "Renania-Palatinado", "Sarre", "Sajonia", "Sajonia-Anhalt", "Schleswig-Holstein", "Turingia"
+
+Grecia
+"Tracia", "Macedonian", "Tesalia", "Epiro", "Grecia Central", "Peloponeso", "Islas del Egeo", "Islas Jónicas", "Creta"
+
+Inglaterra
+"Gran Londres (Greater London)", "Sudeste de Inglaterra (South East England)", "Sudoeste de Inglaterra (South West England)", "Midlands del Oeste (West Midlands)", "Noroeste de Inglaterra (North West England)", "Nordeste de Inglaterra (North East England)", "Yorkshire y Humber (Yorkshire and the Humber)", "Midlands Oriental (East Midlands)", "Inglaterra mega (East of England)"
+
+Portugal
+"Algarve", "Alto Alentejo", "Baixo Alentejo", "Beira Alta", "BeiraBaixa", "Beira Litoral", "Douro Litoral", "Estremadura", "Minho", "Ribatejo", "Trás-os-Montes", "Alto Douro"
+
+Italia
+"Abruzzo", "Basilicata", "Calabria", "Campania", "Cerdeña", "Emilia Romagna", "FriuliVeneziaGiulia", "Lazio", "Liguria", "Lombardia", "Marche", "Molise", "Piamonte", "Puglia", "Sicilia", "Toscana", "Trentino Alto Adige", "Umbria", "Valle d'Aosta", "Veneto"
+
+Francia
+"Alsacia", "Aquitania", "Auvernia", "Borgoña", "Bretaña", "Valle del Loira", "Champagne-Ardenas", "Córcega", "Franche-Comte", "Paris / Ile de France", "Languedoc - Roussillon", "Limousin", "Lorena", "Midi-Pyrénées", "Nord Pas-de-Calais", "Normandía", "País del Loira", "Picardía", "Poitou-Charentes", "Provenza-Alpes-Costa Azul", "Rhône-Alpes", "Riviera Costa Azul"

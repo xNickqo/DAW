@@ -1,0 +1,50 @@
+:root {
+	font-family:Calibri;
+	font-size:12pt;
+	font-weight:bold;
+	color:white;
+	background-color:blue;
+	line-height:1.75rem;
+}
+
+h2 {
+	text-align:center;
+}
+
+form > label {
+	position:absolute;
+	left:10%; 
+}
+
+form > input {
+	position:absolute;
+	left:50%; 
+}
+
+form  fieldset {
+	position:absolute;
+	position:0%;
+	width:40%;
+}
+
+form > div >div:first-child{
+	position:absolute;
+	left:5%;
+	width:25%;
+}
+
+form > div >div:nth-of-type(2){
+	position:absolute;
+	left:25%;
+	width:45%;
+}
+
+form > div > div:last-child{
+	position:absolute;
+	left:70%;
+}
+input[type="submit"] {
+	position:absolute;
+	align:center;
+	bottom:50px;
+}

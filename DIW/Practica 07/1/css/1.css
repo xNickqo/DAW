@@ -39,7 +39,7 @@ img{
     /*Sentido de la animación.*/
     animation-direction: normal;
     -o-animation-direction: normal;
-    -mozo-animation-direction: normal;
+    -moz-animation-direction: normal;
     -webkit-animation-direction: normal;
 
     /*Retardo de la animación.*/
