@@ -1,0 +1,47 @@
+#animacion {
+    background-image: url(../imagenes/andandoej1.png);
+    height: 150px;
+    width: 80px;
+    background-repeat:no-repeat;
+
+    animation: andando 0.8s steps(7) infinite;
+    -moz-animation: andando 0.8s steps(7) infinite;
+    -o-animation: andando 0.8s steps(7) infinite;
+    -webkit-animation: andando 0.8s steps(7) infinite;
+}
+
+@keyframes andando {
+    from { 
+        background-position: 0 0;
+    }
+    to{
+        background-position: -560px 0;
+    }
+}
+
+@-moz-keyframes andando {
+    from { 
+        background-position: 0 0;
+    }
+    to{
+        background-position: -560px 0;
+    }
+}
+
+@-o-keyframes andando {
+    from { 
+        background-position: 0 0;
+    }
+    to{
+        background-position: -560px 0;
+    }
+}
+
+@-webkit-keyframes andando {
+    from { 
+        background-position: 0 0;
+    }
+    to{
+        background-position: -560px 0;
+    }
+}
