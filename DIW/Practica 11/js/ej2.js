@@ -10,8 +10,17 @@ function inicio(){
     });
 
     $("#dialog").dialog({
+        resizable: true,
         autoOpen: false,
         model: true,
+        show: {
+            effect: "blind",
+            duration: 1000
+          },
+          hide: {
+            effect: "explode",
+            duration: 1000
+          },
         buttons: {
             "Aceptar": function () {
                 let nombreDialog = $("#dialog_nombre").val();

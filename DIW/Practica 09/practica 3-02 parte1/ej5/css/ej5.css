@@ -7,18 +7,18 @@
     width:236px;
     height:357px;
     background-position: -19px -26px;
-    border:solid red
+    border: 1px solid red;
 }
 
 .segundo{
     width: 236px;
     height:332px;
     background-position: -341px -27px;
-    border:dotted blue
+    border: 6px dotted palevioletred;
 }
 .tercero{
     width:316px;
     height:337px;
     background-position: -627px -30px;
-    border: dashed blueviolet;
+    border: 2px dashed blue;
 }

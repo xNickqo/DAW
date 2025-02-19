@@ -1,5 +1,7 @@
 $(window).on("load", inicio);
 
 function inicio(){
-    $("#tabs").tabs();
+    $("#tabs").tabs({
+        collapsible: true
+    });
 }
