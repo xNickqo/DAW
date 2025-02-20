@@ -1,0 +1,34 @@
+<?php
+include_once "controllers/error.php";
+include_once "db/conexionBBDD.php";
+$conn = conexionBBDD();
+
+if(isset($_POST['submit'])){
+    $username = $_POST['username'];
+    $clave = $_POST['password'];
+
+    include_once "models/obtenerCliente.php";
+    $cliente = obtenerCliente($conn, $username);
+
+    echo "<pre>";
+    var_dump($cliente);
+    echo "</pre>";
+
+    if (!empty($cliente)) {
+        if($clave != $cliente['LastName']) {
+            $mensaje = "Clave incorrecta";
+        } else {         
+            session_start();
+            $_SESSION['usuario'] = $cliente;
+            header("Location: controllers/inicio.php");
+            exit();
+        }
+    } else {
+        $mensaje =  "El usuario no existe.";
+    }
+}
+
+include_once "views/formLogin.php";
+
+$conn = null;
+?>
