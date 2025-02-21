@@ -13,6 +13,8 @@ if (!isset($_SESSION['carrito'])) {
 }
 
 if (isset($_POST['añadir'])) {
+    //$track = unserialize(htmlspecialchars_decode($_POST['canciones']));
+
     // Separar los datos de la canción seleccionada usando explode()
     $trackData = explode("|", $_POST['canciones']);
 
@@ -39,11 +41,11 @@ if (isset($_POST['añadir'])) {
         if (!$exists) {
             $_SESSION['carrito'][] = $track;
         } else {
-            $mensaje = "Error: La canción ya está en el carrito.";
+            trigger_error("La canción ya está en el carrito.", E_USER_NOTICE);
         }
 
     } else {
-        $mensaje = "Los datos de la canción no están completos o son inválidos.";
+        trigger_error("Error al procesar la canción seleccionada.", E_USER_WARNING);
     }
 }
 
@@ -80,7 +82,7 @@ foreach ($_SESSION['carrito'] as $track) {
             <option value="">Selecciona una canción</option>
             <?php
                 foreach ($canciones as $track) {
-                    // Concatenar los valores de la canción con "|"
+                    //$trackValue = htmlspecialchars(serialize($_POST['canciones']));
                     $trackValue = $track["Name"] . "|" . $track["Composer"] . "|" . $track["Milliseconds"] . "|" . $track["Bytes"] . "|" . $track["UnitPrice"];
                     echo "<option value='".$trackValue."'>".$track["Name"]." | ".$track["Composer"]." | ".$track['Milliseconds']."ms | ".$track['Bytes']."Bytes | ".$track['UnitPrice']."€</option>";
                 }
@@ -98,12 +100,6 @@ foreach ($_SESSION['carrito'] as $track) {
             } else {
                 echo '<p>No hay canciones en el carrito.</p>';
             }
-        ?>
-
-
-        <?php
-            if(isset($mensaje))
-                echo $mensaje;
         ?>
 
         <br>
