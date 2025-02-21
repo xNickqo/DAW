@@ -1,5 +1,9 @@
 <?php
 include_once "../controllers/gestionSesiones.php";
+echo "<pre> SESSION: <br>";
+print_r($_SESSION['usuario']);
+echo "</pre>";
+
 include_once "../controllers/error.php";
 
 include_once "../db/conexionBBDD.php";
@@ -7,6 +11,11 @@ $conn = conexionBBDD();
 
 include_once "../models/obtenerAllTracks.php";
 $canciones = obtenerAllTracks($conn);
+
+echo "<pre> ESTRUCTURA CANCIONES: <br>";
+print_r($canciones[0]);
+echo "</pre>";
+
 
 if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
@@ -19,13 +28,14 @@ if (isset($_POST['añadir'])) {
     $trackData = explode("|", $_POST['canciones']);
 
     // Verificamos que la separación se haya hecho correctamente
-    if (count($trackData) === 5) {
+    if (count($trackData) === 6) {
         $track = [
-            'Name' => $trackData[0],
-            'Composer' => $trackData[1],
-            'Milliseconds' => $trackData[2],
-            'Bytes' => $trackData[3],
-            'UnitPrice' => $trackData[4]
+            'TrackId' => $trackData[0],
+            'Name' => $trackData[1],
+            'Composer' => $trackData[2],
+            'Milliseconds' => $trackData[3],
+            'Bytes' => $trackData[4],
+            'UnitPrice' => $trackData[5]
         ];
 
         // Verificar si la canción ya está en el carrito (por el nombre de la canción)
@@ -49,11 +59,11 @@ if (isset($_POST['añadir'])) {
     }
 }
 
-/*
-echo "<pre>";
+
+echo "<pre> CARRITO: <br>";
 print_r($_SESSION['carrito']);
 echo "</pre>";
-*/
+
 
 // Calcular el precio total
 $totalPrice = 0;
@@ -66,11 +76,11 @@ if (isset($_POST['comprar'])) {
     $miObj = new RedsysAPI;
 
     $fuc="263100000";
-    $terminal="5";
+    $terminal="42";
     $moneda="978";
     $trans="0";
     $url="";
-    $urlOKKO="http://192.168.206.212/DAW/DWES/MVC-PortalMusica/controllers/confirmar_pago.php";
+    $urlOKKO="http://localhost/DAW/DWES/MVC-PortalMusica/controllers/confirmar_pago.php";
     $id=time();
     $amount=$totalPrice*100;
 
@@ -93,6 +103,8 @@ if (isset($_POST['comprar'])) {
     $params = $miObj->createMerchantParameters();
     $signature = $miObj->createMerchantSignature($kc);
 
+    $_SESSION['totalPrice'] = $totalPrice;
+
     ?>
 
     <form style="opacity: 0" id="formu" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" >
@@ -107,8 +119,11 @@ if (isset($_POST['comprar'])) {
     </script>
     <?php
 
+}
 
+if(isset($_POST['vaciar'])){
     $_SESSION['carrito'] = [];
+    
 }
 
 ?>
@@ -131,7 +146,7 @@ if (isset($_POST['comprar'])) {
             <?php
                 foreach ($canciones as $track) {
                     //$trackValue = htmlspecialchars(serialize($_POST['canciones']));
-                    $trackValue = $track["Name"] . "|" . $track["Composer"] . "|" . $track["Milliseconds"] . "|" . $track["Bytes"] . "|" . $track["UnitPrice"];
+                    $trackValue = $track["TrackId"] . "|" . $track["Name"] . "|" . $track["Composer"] . "|" . $track["Milliseconds"] . "|" . $track["Bytes"] . "|" . $track["UnitPrice"];
                     echo "<option value='".$trackValue."'>".$track["Name"]." | ".$track["Composer"]." | ".$track['Milliseconds']."ms | ".$track['Bytes']."Bytes | ".$track['UnitPrice']."€</option>";
                 }
             ?>
@@ -152,6 +167,8 @@ if (isset($_POST['comprar'])) {
 
         <br>
         <input type="submit" name="añadir" value="Añadir">
+        <br>
+        <input type="submit" name="vaciar" value="Vaciar Carrito">
         <br><br><br>
 
         <?php
