@@ -41,7 +41,7 @@ if (isset($_POST['añadir'])) {
         if (!$exists) {
             $_SESSION['carrito'][] = $track;
         } else {
-            trigger_error("La canción ya está en el carrito.", E_USER_NOTICE);
+            trigger_error("La canción ya está en el carrito.", E_USER_WARNING);
         }
 
     } else {
@@ -55,15 +55,62 @@ print_r($_SESSION['carrito']);
 echo "</pre>";
 */
 
-if (isset($_POST['comprar'])) {
-    $_SESSION['carrito'] = [];
-}
-
 // Calcular el precio total
 $totalPrice = 0;
 foreach ($_SESSION['carrito'] as $track) {
     $totalPrice += $track['UnitPrice'];
 }
+
+if (isset($_POST['comprar'])) {
+    include_once "../apiRedsys/apiRedsys.php";
+    $miObj = new RedsysAPI;
+
+    $fuc="263100000";
+    $terminal="5";
+    $moneda="978";
+    $trans="0";
+    $url="";
+    $urlOKKO="http://192.168.206.212/DAW/DWES/MVC-PortalMusica/controllers/confirmar_pago.php";
+    $id=time();
+    $amount=$totalPrice*100;
+
+    $miObj->setParameter("DS_MERCHANT_AMOUNT", $amount);
+    $miObj->setParameter("DS_MERCHANT_ORDER", $id);
+    $miObj->setParameter("DS_MERCHANT_MERCHANTCODE", $fuc);
+    $miObj->setParameter("DS_MERCHANT_CURRENCY", $moneda);
+    $miObj->setParameter("DS_MERCHANT_TRANSACTIONTYPE", $trans);
+    $miObj->setParameter("DS_MERCHANT_TERMINAL", $terminal);
+    $miObj->setParameter("DS_MERCHANT_MERCHANTURL", $url);
+    $miObj->setParameter("DS_MERCHANT_URLOK", $urlOKKO);
+    $miObj->setParameter("DS_MERCHANT_URLKO", $urlOKKO);
+
+    //Datos de configuración
+    $version="HMAC_SHA256_V1";
+    $kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7';
+
+    //Se generan los parámetros de la petición
+    $request = "";
+    $params = $miObj->createMerchantParameters();
+    $signature = $miObj->createMerchantSignature($kc);
+
+    ?>
+
+    <form style="opacity: 0" id="formu" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" >
+        Ds_Merchant_SignatureVersion <input type="text" name="Ds_SignatureVersion" value="<?php echo $version; ?>"/></br>
+        Ds_Merchant_MerchantParameters <input type="text" name="Ds_MerchantParameters" value="<?php echo $params; ?>"/></br>
+        Ds_Merchant_Signature <input type="text" name="Ds_Signature" value="<?php echo $signature; ?>"/></br>
+        <input type="submit" value="Enviar" >
+    </form>
+
+    <script type="text/javascript">
+        document.getElementById('formu').submit();
+    </script>
+    <?php
+
+
+    $_SESSION['carrito'] = [];
+}
+
 ?>
 
 <html>
@@ -76,7 +123,8 @@ foreach ($_SESSION['carrito'] as $track) {
 
 <body>
 
-    <form action="" method="post">    
+    <form action="" method="post">
+        <h2>Compra de caciones</h2>  
         Elije una canción 
         <select name="canciones" id="canciones">
             <option value="">Selecciona una canción</option>
@@ -94,7 +142,7 @@ foreach ($_SESSION['carrito'] as $track) {
             if (!empty($_SESSION['carrito'])) {
                 echo '<ul>';
                 foreach ($_SESSION['carrito'] as $track) {
-                    echo '<li><b>' . $track['Name'] . '</b> | ' . $track['Composer'] . ' | ' . $track['UnitPrice'] . '€</li>';
+                    echo '<li><b>' . $track['Name'] . '</b> | '. $track['UnitPrice'] . '€</li>';
                 }
                 echo '</ul>';
             } else {

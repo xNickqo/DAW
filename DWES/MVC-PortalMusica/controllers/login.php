@@ -16,7 +16,7 @@ if(isset($_POST['submit'])){
 
     if (!empty($cliente)) {
         if($clave != $cliente['LastName']) {
-            $mensaje = "Clave incorrecta";
+            trigger_error("Clave incorrecta", E_USER_WARNING);
         } else {         
             session_start();
             $_SESSION['usuario'] = $cliente;
@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
             exit();
         }
     } else {
-        $mensaje =  "El usuario no existe.";
+        trigger_error("El usuario no existe", E_USER_WARNING);
     }
 }
 
