@@ -3,9 +3,7 @@ include_once "../controllers/gestionSesiones.php";
 include_once "../apiRedsys/apiRedsys.php";
 $miObj = new RedsysAPI;
 
-include_once "../db/conexionBBDD.php";
-$conn = conexionBBDD();
-
+/*
 echo "<pre> CARRITO: <br>";
 print_r($_SESSION['carrito']);
 echo "</pre>";
@@ -17,6 +15,7 @@ echo "</pre>";
 echo "<pre> PRECIO TOTAL: <br>";
 print_r($_SESSION['totalPrice']);
 echo "</pre>";
+*/
 
 if (!empty( $_POST ) ) {		
     $version = $_POST["Ds_SignatureVersion"];
@@ -48,6 +47,9 @@ if (!empty( $_POST ) ) {
         $firma = $miObj->createMerchantSignatureNotif($kc,$datos);
 
         if ($firma === $signatureRecibida){
+            include_once "../db/conexionBBDD.php";
+            $conn = conexionBBDD();
+
             // Datos del cliente y carrito
             $customerId = $_SESSION['usuario']['CustomerId'];
             $totalPrice = $_SESSION['totalPrice'];
@@ -62,77 +64,21 @@ if (!empty( $_POST ) ) {
             try {
                 $conn->beginTransaction();
 
-				function obtenerMaxInvoiceId($conn) {
-                    try {
-                        $sql = "SELECT MAX(InvoiceId) FROM invoice";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->execute();
-                        $invoiceId = $stmt->fetchColumn();
-                        $invoiceId = (int)$invoiceId + 1;
-                        echo "Nuevo invoiceId ". $invoiceId . "<br>";
-                        return $invoiceId;
-                    } catch(PDOException $e) {
-                        trigger_error("Error al obtener el nuevo id en la tabla invoice: ".$e->getMessage(), E_ERROR);
-                    }
-                }
-				
+				include_once "../models/obtenerMaxId.php";
 				$invoiceId = obtenerMaxInvoiceId($conn);
 
+				// Insertar en Invoice
+                include_once "../models/insertarInvoice.php";
+                insertarInvoice($conn, $invoiceId, $customerId, $billingAddress, $billingCity, $billingState, $billingCountry, $billingPostalCode, $totalPrice);
 
-				// Insertar la factura (Invoice)
-				$sqlInvoice = "INSERT INTO Invoice(InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total) 
-								VALUES (:invoiceId, :customerId, NOW(), :billingAddress, :billingCity, :billingState, :billingCountry, :billingPostalCode, :totalPrice)";
-				
-				$stmtInvoice = $conn->prepare($sqlInvoice);
-
-				$stmtInvoice->bindValue(':invoiceId', $invoiceId, PDO::PARAM_INT);
-				$stmtInvoice->bindValue(':customerId', $customerId, PDO::PARAM_INT);
-				$stmtInvoice->bindValue(':billingAddress', $billingAddress, PDO::PARAM_STR);
-				$stmtInvoice->bindValue(':billingCity', $billingCity, PDO::PARAM_STR);
-				$stmtInvoice->bindValue(':billingState', $billingState, PDO::PARAM_STR);
-				$stmtInvoice->bindValue(':billingCountry', $billingCountry, PDO::PARAM_STR);
-				$stmtInvoice->bindValue(':billingPostalCode', $billingPostalCode, PDO::PARAM_STR);
-				$stmtInvoice->bindValue(':totalPrice', $totalPrice, PDO::PARAM_STR);
-				
-				$stmtInvoice->execute();
-
-
-				function obtenerMaxInvoiceLineId($conn) {
-					try{
-						$sql = "SELECT MAX(InvoiceLineId) FROM invoiceline";
-						$stmt = $conn->prepare($sql);
-						$stmt->execute();
-						$invoiceLineId = $stmt->fetchColumn();
-						$invoiceLineId = (int)$invoiceLineId + 1;
-						echo "Nuevo invoiceLineId ". $invoiceLineId . "\n";
-						return $invoiceLineId;
-					} catch(PDOException $e) {
-						trigger_error("Error al obtener el nuevo id en la tabla invoiceLine".$e->getMessage(), E_ERROR);
-					}
-				}
-
-		
 				$invoiceLineId = obtenerMaxInvoiceLineId($conn);
-				$quantity = 1;
-                
-				// Insertar en invoiceLine
-				$sqlInvoiceLine = "INSERT INTO InvoiceLine(InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity) 
-				VALUES (:invoiceLineId, :invoiceId, :trackId, :unitPrice, :quantity)";
-				
-				$stmtInvoiceLine = $conn->prepare($sqlInvoiceLine);
 
-				foreach ($_SESSION['carrito'] as $item) {
-					var_dump($invoiceLineId, $invoiceId, $item['TrackId'], $item['UnitPrice'], $quantity);
-
-					$stmtInvoiceLine->bindValue(':invoiceLineId', $invoiceLineId, PDO::PARAM_INT);
-					$stmtInvoiceLine->bindValue(':invoiceId', $invoiceId, PDO::PARAM_INT);
-					$stmtInvoiceLine->bindValue(':trackId', $item['TrackId'], PDO::PARAM_INT);
-					$stmtInvoiceLine->bindValue(':unitPrice', $item['UnitPrice'], PDO::PARAM_STR);
-					$stmtInvoiceLine->bindValue(':quantity', $quantity, PDO::PARAM_INT);
-					$stmtInvoiceLine->execute();
-					$invoiceLineId++;
-				}
-
+                // Recorrer el carrito y agregar las líneas de la factura en InvoiceLine
+                include_once "../models/insertarInvoiceLine.php";
+                foreach ($_SESSION['carrito'] as $item) {
+                    insertarInvoiceLine($conn, $invoiceLineId, $invoiceId, $item['TrackId'], $item['UnitPrice'], $item['quantity']);
+                    $invoiceLineId++;
+                }
 
                 // Vaciar el carrito después de realizar la compra
                 $_SESSION['carrito'] = [];
@@ -140,13 +86,13 @@ if (!empty( $_POST ) ) {
                 $conn->commit();
 
                 echo "Pago realizado con exito";
-                echo "\nFactura generada correctamente.";
             } catch (PDOException $e) {
                 $conn->rollBack();
                 trigger_error("Error al procesar la factura: " . $e->getMessage(), E_USER_ERROR);
             }
+            $conn = null;
         } else {
-            echo "FIRMA KO";
+            trigger_error("Firma KO", E_USER_NOTICE);
         }
     } else {
         die("No se recibió respuesta");

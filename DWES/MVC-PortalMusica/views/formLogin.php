@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +18,5 @@
         <br>
         <input type="submit" name="submit" value="Login">
     </form>
-
-    <?php
-        if(isset($mensaje))
-            echo $mensaje;
-    ?>
 </body>
 </html>

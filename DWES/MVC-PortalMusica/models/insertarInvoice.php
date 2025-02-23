@@ -1,23 +1,22 @@
-<?
+<?php
+ // Insertar la factura (Invoice)
 function insertarInvoice($conn, $invoiceId, $customerId, $billingAddress, $billingCity, $billingState, $billingCountry, $billingPostalCode, $totalPrice){
-    try{
-    
-        // Insertar la factura (Invoice)
-        $sql = "INSERT INTO Invoice(InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total) 
-                VALUES (:invoiceId, :customerId, NOW(), :billingAddress, :billingCity, :billingState, :billingCountry, :billingPostalCode, :totalPrice)";
-    
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':invoiceId', $invoiceId);
-        $stmt->bindParam(':customerId', $customerId);
-        $stmt->bindParam(':billingAddress', $billingAddress);
-        $stmt->bindParam(':billingCity', $billingCity);
-        $stmt->bindParam(':billingState', $billingState);
-        $stmt->bindParam(':billingCountry', $billingCountry);
-        $stmt->bindParam(':billingPostalCode', $billingPostalCode);
-        $stmt->bindParam(':totalPrice', $totalPrice);
-        $stmt->execute();
-    } catch (PDOException $e){
-        echo "Error en la insercion de invoice: ".$e->getMessage();
-    }
+
+    $sql = "INSERT INTO Invoice(InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingState, BillingCountry, BillingPostalCode, Total) 
+            VALUES (:invoiceId, :customerId, NOW(), :billingAddress, :billingCity, :billingState, :billingCountry, :billingPostalCode, :totalPrice)";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindValue(':invoiceId', $invoiceId, PDO::PARAM_INT);
+    $stmt->bindValue(':customerId', $customerId, PDO::PARAM_INT);
+    $stmt->bindValue(':billingAddress', $billingAddress, PDO::PARAM_STR);
+    $stmt->bindValue(':billingCity', $billingCity, PDO::PARAM_STR);
+    $stmt->bindValue(':billingState', $billingState, PDO::PARAM_STR);
+    $stmt->bindValue(':billingCountry', $billingCountry, PDO::PARAM_STR);
+    $stmt->bindValue(':billingPostalCode', $billingPostalCode, PDO::PARAM_STR);
+    $stmt->bindValue(':totalPrice', $totalPrice, PDO::PARAM_STR);
+
+    $stmt->execute();
+
 }
 ?>

@@ -1,5 +1,6 @@
 <?php
 include_once "../controllers/gestionSesiones.php";
+
 echo "<pre> SESSION: <br>";
 print_r($_SESSION['usuario']);
 echo "</pre>";
@@ -12,9 +13,11 @@ $conn = conexionBBDD();
 include_once "../models/obtenerAllTracks.php";
 $canciones = obtenerAllTracks($conn);
 
+/*
 echo "<pre> ESTRUCTURA CANCIONES: <br>";
 print_r($canciones[0]);
 echo "</pre>";
+*/
 
 
 if (!isset($_SESSION['carrito'])) {
@@ -29,29 +32,31 @@ if (isset($_POST['añadir'])) {
 
     // Verificamos que la separación se haya hecho correctamente
     if (count($trackData) === 6) {
+
         $track = [
             'TrackId' => $trackData[0],
             'Name' => $trackData[1],
             'Composer' => $trackData[2],
             'Milliseconds' => $trackData[3],
             'Bytes' => $trackData[4],
-            'UnitPrice' => $trackData[5]
+            'UnitPrice' => $trackData[5],
+            'quantity' => 1
         ];
 
-        // Verificar si la canción ya está en el carrito (por el nombre de la canción)
+        // Verificar si la canción ya está en el carrito
         $exists = false;
-        foreach ($_SESSION['carrito'] as $existingTrack) {
-            if ($existingTrack['Name'] === $track['Name']) {
+        foreach ($_SESSION['carrito'] as &$existingTrack) { 
+            if ($existingTrack['TrackId'] === $trackData[0]) {
+                //Si ya existe en el carrito le sumamos la cantidad
+                $existingTrack['quantity'] += 1;
                 $exists = true;
                 break;
             }
         }
 
-        // Si la canción no existe, añadirla al carrito
+        // Si la canción no existe en el carrito, agregarla
         if (!$exists) {
             $_SESSION['carrito'][] = $track;
-        } else {
-            trigger_error("La canción ya está en el carrito.", E_USER_WARNING);
         }
 
     } else {
@@ -59,16 +64,16 @@ if (isset($_POST['añadir'])) {
     }
 }
 
-
+/*
 echo "<pre> CARRITO: <br>";
 print_r($_SESSION['carrito']);
 echo "</pre>";
+*/
 
-
-// Calcular el precio total
+// Calcular el precio total considerando la cantidad
 $totalPrice = 0;
 foreach ($_SESSION['carrito'] as $track) {
-    $totalPrice += $track['UnitPrice'];
+    $totalPrice += $track['UnitPrice'] * $track['quantity'];
 }
 
 if (isset($_POST['comprar'])) {
@@ -82,7 +87,7 @@ if (isset($_POST['comprar'])) {
     $url="";
     $urlOKKO="http://localhost/DAW/DWES/MVC-PortalMusica/controllers/confirmar_pago.php";
     $id=time();
-    $amount=$totalPrice*100;
+    $amount = $totalPrice*100;
 
     $miObj->setParameter("DS_MERCHANT_AMOUNT", $amount);
     $miObj->setParameter("DS_MERCHANT_ORDER", $id);
@@ -103,6 +108,7 @@ if (isset($_POST['comprar'])) {
     $params = $miObj->createMerchantParameters();
     $signature = $miObj->createMerchantSignature($kc);
 
+    //Creamos una sesion nueva con el precioTotal para usarla en confirmar_compra.php
     $_SESSION['totalPrice'] = $totalPrice;
 
     ?>
@@ -121,67 +127,13 @@ if (isset($_POST['comprar'])) {
 
 }
 
+//Si pulsamos en el boton vaciar, se vaciara la sesion del carrito
 if(isset($_POST['vaciar'])){
     $_SESSION['carrito'] = [];
     
 }
 
+include_once "../views/formDownmusic.php";
+
+$conn = null;
 ?>
-
-<html>
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Descarga de música</title>
- </head>
-
-<body>
-
-    <form action="" method="post">
-        <h2>Compra de caciones</h2>  
-        Elije una canción 
-        <select name="canciones" id="canciones">
-            <option value="">Selecciona una canción</option>
-            <?php
-                foreach ($canciones as $track) {
-                    //$trackValue = htmlspecialchars(serialize($_POST['canciones']));
-                    $trackValue = $track["TrackId"] . "|" . $track["Name"] . "|" . $track["Composer"] . "|" . $track["Milliseconds"] . "|" . $track["Bytes"] . "|" . $track["UnitPrice"];
-                    echo "<option value='".$trackValue."'>".$track["Name"]." | ".$track["Composer"]." | ".$track['Milliseconds']."ms | ".$track['Bytes']."Bytes | ".$track['UnitPrice']."€</option>";
-                }
-            ?>
-        </select>
-
-        <!-- Mostrar el carrito -->
-        <?php 
-            if (!empty($_SESSION['carrito'])) {
-                echo '<ul>';
-                foreach ($_SESSION['carrito'] as $track) {
-                    echo '<li><b>' . $track['Name'] . '</b> | '. $track['UnitPrice'] . '€</li>';
-                }
-                echo '</ul>';
-            } else {
-                echo '<p>No hay canciones en el carrito.</p>';
-            }
-        ?>
-
-        <br>
-        <input type="submit" name="añadir" value="Añadir">
-        <br>
-        <input type="submit" name="vaciar" value="Vaciar Carrito">
-        <br><br><br>
-
-        <?php
-            if(isset($totalPrice))
-                echo "<b>Precio total: ".number_format($totalPrice, 2)."€</b>";
-        ?>
-
-        <br>
-        <input type="submit" name="comprar" value="Comprar">
-    </form>
-    
-    <a href="../controllers/inicio.php">Volver a la Página Principal</a><br>
-    <a href="../controllers/logout.php">Cerrar Sesión</a>
-
-</body>
-</html>

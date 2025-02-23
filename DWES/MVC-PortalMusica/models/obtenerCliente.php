@@ -9,7 +9,6 @@ function obtenerCliente($conn, $email) {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch(PDOException $e) {
         trigger_error("Error en la obtencion de los datos del usuario: " . $e->getMessage(), E_USER_ERROR);
-        return null;
     }
 }
 ?>

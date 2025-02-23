@@ -1,9 +1,10 @@
 <?php
 include_once "controllers/error.php";
-include_once "db/conexionBBDD.php";
-$conn = conexionBBDD();
 
 if(isset($_POST['submit'])){
+    include_once "db/conexionBBDD.php";
+    $conn = conexionBBDD();
+
     $username = $_POST['username'];
     $clave = $_POST['password'];
 
