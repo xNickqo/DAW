@@ -12,6 +12,10 @@ if(isset($_POST['mostrar'])){
     $inicio = $_POST['inicio'];
     $fin = $_POST['fin'];
 
+    if ($inicio > $fin) {
+        trigger_error("La fecha de inicio no puede ser posterior a la fecha de fin.", E_USER_WARNING);
+    }
+
     include_once "../db/conexionBBDD.php";
     $conn = conexionBBDD();
 

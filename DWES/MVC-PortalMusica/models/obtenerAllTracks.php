@@ -2,7 +2,7 @@
 //Obtener todos los datos de 100 canciones aleatorias de la tabla tracks
 function obtenerAllTracks($conn) {
     try {
-        $sql = 'SELECT * FROM track ORDER BY RAND() LIMIT 100';
+        $sql = 'SELECT TrackId, Name, Composer, UnitPrice FROM track ORDER BY RAND() LIMIT 100';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

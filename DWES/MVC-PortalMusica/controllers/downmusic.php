@@ -31,15 +31,12 @@ if (isset($_POST['añadir'])) {
     $trackData = explode("|", $_POST['canciones']);
 
     // Verificamos que la separación se haya hecho correctamente
-    if (count($trackData) === 6) {
+    if (count($trackData) === 3) {
 
         $track = [
             'TrackId' => $trackData[0],
             'Name' => $trackData[1],
-            'Composer' => $trackData[2],
-            'Milliseconds' => $trackData[3],
-            'Bytes' => $trackData[4],
-            'UnitPrice' => $trackData[5],
+            'UnitPrice' => $trackData[2],
             'quantity' => 1
         ];
 
@@ -76,7 +73,7 @@ foreach ($_SESSION['carrito'] as $track) {
     $totalPrice += $track['UnitPrice'] * $track['quantity'];
 }
 
-if (isset($_POST['comprar'])) {
+if (isset($_POST['comprar']) && $totalPrice != 0) {
     include_once "../apiRedsys/apiRedsys.php";
     $miObj = new RedsysAPI;
 
@@ -130,7 +127,7 @@ if (isset($_POST['comprar'])) {
 //Si pulsamos en el boton vaciar, se vaciara la sesion del carrito
 if(isset($_POST['vaciar'])){
     $_SESSION['carrito'] = [];
-    
+    $totalPrice = 0;
 }
 
 include_once "../views/formDownmusic.php";

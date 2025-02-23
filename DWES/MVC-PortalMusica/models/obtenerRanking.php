@@ -1,5 +1,5 @@
 <?php
-/* Funcion para obtener el ranking de descargas de canciones entre dos fechas */
+/* Funcion para obtener el ranking de descargas de canciones entre dos fechas  */
 function obtenerRanking($conn, $inicio, $final) {
     try {
         $sql = 'SELECT t.Name, SUM(il.Quantity) AS Downloads

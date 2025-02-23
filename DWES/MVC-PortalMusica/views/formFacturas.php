@@ -19,29 +19,20 @@
         <br>
     </form>
     
+    <?php if(!empty($res)){ ?>
     <table border=1>
         <thead>
             <th>InvoiceId</th>
             <th>InvoiceDate</th>
-            <th>BillingAddress</th>
-            <th>BillingCity</th>
-            <th>BillingState</th>
-            <th>BillingCountry</th>
-            <th>BillingPostalCode</th>
             <th>Total</th>
         </thead>
         <tbody>
             <?php
-                if(!empty($res)){
+
                     foreach($res as $factura){
                         echo "<tr>";
                             echo "<td>" . htmlspecialchars($factura['InvoiceId']) . "</td>";
                             echo "<td>" . htmlspecialchars($factura['InvoiceDate']) . "</td>";
-                            echo "<td>" . htmlspecialchars($factura['BillingAddress']) . "</td>";
-                            echo "<td>" . htmlspecialchars($factura['BillingCity']) . "</td>";
-                            echo "<td>" . htmlspecialchars($factura['BillingState']) . "</td>";
-                            echo "<td>" . htmlspecialchars($factura['BillingCountry']) . "</td>";
-                            echo "<td>" . htmlspecialchars($factura['BillingPostalCode']) . "</td>";
                             echo "<td>" . htmlspecialchars($factura['Total']) . "€</td>";
                         echo "</tr>";
                     }

@@ -11,14 +11,17 @@
 
     <form action="" method="post">
         <h2>Compra de caciones</h2>  
-        Elije una canción 
+        <label for="canciones">Elije una cancion: </label>
         <select name="canciones" id="canciones">
             <option value="">Selecciona una canción</option>
             <?php
                 foreach ($canciones as $track) {
                     //$trackValue = htmlspecialchars(serialize($_POST['canciones']));
-                    $trackValue = $track["TrackId"] . "|" . $track["Name"] . "|" . $track["Composer"] . "|" . $track["Milliseconds"] . "|" . $track["Bytes"] . "|" . $track["UnitPrice"];
-                    echo "<option value='".$trackValue."'>".$track["Name"]." | ".$track["Composer"]." | ".$track['Milliseconds']."ms | ".$track['Bytes']."Bytes | ".$track['UnitPrice']."€</option>";
+                    $trackValue = $track["TrackId"] . "|" . $track["Name"] . "|" . $track["UnitPrice"];
+                    echo "<option value='" . htmlspecialchars($trackValue) . "'>" 
+                     . htmlspecialchars($track["Name"]) . " | " 
+                     . htmlspecialchars($track["Composer"]) . " | " 
+                     . htmlspecialchars($track['UnitPrice']) . "€</option>";
                 }
             ?>
         </select>
@@ -28,7 +31,9 @@
             if (!empty($_SESSION['carrito'])) {
                 echo '<ul>';
                 foreach ($_SESSION['carrito'] as $track) {
-                    echo '<li><b>' . $track['Name'] . '</b> | '. $track['UnitPrice'] . '€ x '. $track['quantity'] .'</li>';
+                    echo '<li><b>' . htmlspecialchars($track['Name']) 
+                    . '</b> | '. htmlspecialchars($track['UnitPrice'])
+                    . '€ x '. htmlspecialchars($track['quantity']) .'</li>';
                 }
                 echo '</ul>';
             }
@@ -36,21 +41,14 @@
 
         <br>
         <input type="submit" name="añadir" value="Añadir al carrito">
-        <br>
 
         <?php if (!empty($_SESSION['carrito'])) { ?>
-            <input type="submit" name="vaciar" value="Vaciar Carrito">
+        <input type="submit" name="vaciar" value="Vaciar Carrito">
         <?php } ?>
-
-
-
 
         <br><br><br>
 
-        <?php
-            if(isset($totalPrice))
-                echo "<b>Precio total: ".number_format($totalPrice, 2)."€</b>";
-        ?>
+        <b>Precio total: <?php echo number_format($totalPrice, 2); ?>€</b>
 
         <br>
         <input type="submit" name="comprar" value="Comprar">

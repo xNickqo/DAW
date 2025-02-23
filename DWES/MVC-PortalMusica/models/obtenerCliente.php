@@ -2,7 +2,8 @@
 // Función que verifica si un usuario existe en la base de datos.
 function obtenerCliente($conn, $email) {
     try {
-        $sql = "SELECT * FROM customer WHERE email = :email";
+        $sql = "SELECT CustomerId, FirstName, LastName, Address, City, State, Country, PostalCode, Email 
+                FROM customer WHERE email = :email";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();

@@ -19,6 +19,7 @@
         <br>
     </form>
     
+    <?php if(!empty($res)){ ?>
     <table border=1>
         <thead>
             <th>Name</th>
@@ -26,7 +27,6 @@
         </thead>
         <tbody>
             <?php
-                if(!empty($res)){
                     foreach($res as $track){
                         echo "<tr>";
                             echo "<td>" . htmlspecialchars($track['Name']) . "</td>";

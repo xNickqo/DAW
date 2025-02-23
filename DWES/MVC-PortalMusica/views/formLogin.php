@@ -9,7 +9,7 @@
 <body>
     <h1>Login</h1>
       
-    <form id="" name="" action="" method="post">
+    <form action="" method="post">
         Username (Email): 
         <input type="text" name="username" placeholder="username">
         <br>

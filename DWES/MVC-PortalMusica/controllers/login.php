@@ -2,18 +2,14 @@
 include_once "controllers/error.php";
 
 if(isset($_POST['submit'])){
+    $username = trim($_POST['username']);
+    $clave = trim($_POST['password']);
+
     include_once "db/conexionBBDD.php";
     $conn = conexionBBDD();
 
-    $username = $_POST['username'];
-    $clave = $_POST['password'];
-
     include_once "models/obtenerCliente.php";
     $cliente = obtenerCliente($conn, $username);
-
-    echo "<pre>";
-    var_dump($cliente);
-    echo "</pre>";
 
     if (!empty($cliente)) {
         if($clave != $cliente['LastName']) {

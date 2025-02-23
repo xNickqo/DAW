@@ -2,7 +2,7 @@
 /* Funcion para obtener todos los datos de las facturas */
 function obtenerInvoice($conn){
     try {
-        $sql = 'SELECT * FROM invoice WHERE CustomerId = :CustomerId';
+        $sql = 'SELECT InvoiceId, InvoiceDate, Total FROM invoice WHERE CustomerId = :CustomerId';
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':CustomerId', $_SESSION['usuario']['CustomerId'], PDO::PARAM_INT);
         $stmt->execute();
@@ -15,7 +15,7 @@ function obtenerInvoice($conn){
 /* Funcion para obtener todos los datos de las facturas unitarias */
 function obtenerInvoiceFechas($conn, $inicio, $fin) {
     try {
-        $sql = 'SELECT * FROM invoice 
+        $sql = 'SELECT InvoiceId, InvoiceDate, Total FROM invoice 
                 WHERE CustomerId = :CustomerId 
                 AND InvoiceDate BETWEEN :inicio AND :fin';
         
@@ -27,7 +27,7 @@ function obtenerInvoiceFechas($conn, $inicio, $fin) {
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
-        trigger_error("Error en la obtención de las facturas invoiceLine: " . $e->getMessage(), E_USER_ERROR);
+        trigger_error("Error en la obtención de las facturas entre fechas: " . $e->getMessage(), E_USER_ERROR);
     }
 }
 
