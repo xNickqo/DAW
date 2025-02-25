@@ -3,7 +3,11 @@ $(window).on("load", inicio);
 function inicio(){
     $( "#fechaNac" ).datepicker();
     $( "input" ).tooltip();
-    $( "#enviar" ).button();
+    $( "#enviar" ).button({
+        disabled:false,
+        icons:{ primary:"ui-icon-gear", secondary:"ui-icon-triangle-1-s"},
+        label:"Enviar",
+    });
 
     $("#nombre, #apellidos").on("click", function () {
         $("#dialog").dialog("open");
@@ -13,14 +17,8 @@ function inicio(){
         resizable: true,
         autoOpen: false,
         model: true,
-        show: {
-            effect: "blind",
-            duration: 1000
-          },
-          hide: {
-            effect: "explode",
-            duration: 1000
-          },
+        show: { effect: "blind", duration: 1000 },
+        hide: { effect: "explode", duration: 1000 },
         buttons: {
             "Aceptar": function () {
                 let nombreDialog = $("#dialog_nombre").val();
@@ -39,13 +37,11 @@ function inicio(){
 
     function actualizarSueldo() {
         let horas = $("#hrSm").slider("value");
+        //console.log('Horas:', horas);
         let precioHora = $("#prHt").val();
-
-        console.log('Horas:', horas);
-        console.log('Precio por hora:', precioHora);
-        
+        //console.log('Precio por hora:', precioHora);
         let sueldo = horas * precioHora;
-        console.log('Sueldo calculado:', sueldo);
+        //console.log('Sueldo calculado:', sueldo);
 
         $("#sueldo").text(sueldo)
     }
