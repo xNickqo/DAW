@@ -53,6 +53,10 @@ if (isset($_POST['agregar'])) {
             $_SESSION['carrito'][] = $vueloData;
         }
 
+        echo "<pre>";
+        print_r($_SESSION['carrito']);
+        echo "</pre>";
+
     } else {
         trigger_error("Error al procesar el vuelo seleccionado.", E_USER_WARNING);
     }

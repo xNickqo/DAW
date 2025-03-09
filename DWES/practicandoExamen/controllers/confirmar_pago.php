@@ -54,35 +54,27 @@ if (!empty( $_POST ) ) {
             $id_usuario = $_SESSION['usuario']['id'];
             $totalPrice = $_SESSION['totalPrice'];
             
-            foreach($_SESSION['carrito'] as $producto){
-                $stock = $producto['stock'];
-                $id_producto = $producto['id'];
-                $precio_unidad = $producto['precio'];
-                $cantidad = $producto['cantidad'];
-
-            }
             try {
                 $conn->beginTransaction();
 
                 include_once "../models/insertarPedido.php";
                 insertarPedido($conn, $id_usuario, $totalPrice);
 
-                $sql = "SELECT MAX(pedido_id) FROM pedidos";
+                $sql = "SELECT MAX(id) FROM pedidos";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
-                $pedido_id = $stmt->fetchColumn();
-                echo "ID del pedido: ".$pedido_id;
-
+                $pedido_id = $stmt->fetch(PDO::FETCH_COLUMN);
+                
                 include_once "../models/insertarDetallePedido.php";
+                include_once "../models/updateStock.php";
                 foreach ($_SESSION['carrito'] as $item) {
+                    $stock = $item['stock'];
+                    $id_producto = $item['id'];
+                    $precio_unidad = $item['precio'];
+                    $cantidad = $item['cantidad'];
 
-                    insertarDetallePedido($conn, $pedido_id, $id_producto, $cantidad, $precio_unidad);
-
-                    //Actualizar stock disponible
-                    include_once "../models/updateStock.php";
+                    insertarDetallePedido($conn, $pedido_id, $id_producto, $cantidad, $precio_unidad * $cantidad);
                     updateStock($conn, $id_producto, $stock);
-                    
-                    $pedido_id++;
                 }
 
                 // Vaciar el carrito después de realizar la compra
