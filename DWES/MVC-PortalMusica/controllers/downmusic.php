@@ -19,11 +19,12 @@ print_r($canciones[0]);
 echo "</pre>";
 */
 
-
+//Si el carrito no existe lo creamos
 if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
 }
 
+//Añadir canciones al carrito
 if (isset($_POST['añadir'])) {
     //$track = unserialize(htmlspecialchars_decode($_POST['canciones']));
 
@@ -73,6 +74,7 @@ foreach ($_SESSION['carrito'] as $track) {
     $totalPrice += $track['UnitPrice'] * $track['quantity'];
 }
 
+// Compra con Redsys
 if (isset($_POST['comprar']) && $totalPrice != 0) {
     include_once "../apiRedsys/apiRedsys.php";
     $miObj = new RedsysAPI;
@@ -124,12 +126,13 @@ if (isset($_POST['comprar']) && $totalPrice != 0) {
 
 }
 
-//Si pulsamos en el boton vaciar, se vaciara la sesion del carrito
+// Si pulsamos en el boton vaciar, se vaciara la sesion del carrito
 if(isset($_POST['vaciar'])){
     $_SESSION['carrito'] = [];
     $totalPrice = 0;
 }
 
+// Vista
 include_once "../views/formDownmusic.php";
 
 $conn = null;

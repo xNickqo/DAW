@@ -51,43 +51,35 @@ if (!empty( $_POST ) ) {
             $conn = conexionBBDD();
 
             // Datos del cliente y carrito
-            $customerId = $_SESSION['usuario']['CustomerId'];
+            $id_usuario = $_SESSION['usuario']['id'];
             $totalPrice = $_SESSION['totalPrice'];
+            $stock = $_SESSION['carrito']['stock'];
+            
 
             // Datos de facturación
-            $billingAddress = $_SESSION['usuario']['Address'];
-            $billingCity = $_SESSION['usuario']['City'];
-            $billingState = $_SESSION['usuario']['State'];
-            $billingCountry = $_SESSION['usuario']['Country'];
-            $billingPostalCode = $_SESSION['usuario']['PostalCode'];
+            $id_producto = $_SESSION['carrito']['id'];
+            $precio_unidad = $_SESSION['carrito']['precio'];
+            $cantidad = $_SESSION['carrito']['cantidad'];
 
             try {
                 $conn->beginTransaction();
 
-				include_once "../models/obtenerMaxId.php";
-				$invoiceId = obtenerMaxInvoiceId($conn);
+                include_once "../models/insertarPedido.php";
+                insertarPedido($conn, $id_usuario, $totalPrice);
 
-				// Insertar en Invoice
-                include_once "../models/insertarInvoice.php";
-                insertarInvoice(
-                    $conn, 
-                    $invoiceId, 
-                    $customerId, 
-                    $billingAddress, 
-                    $billingCity, 
-                    $billingState, 
-                    $billingCountry, 
-                    $billingPostalCode, 
-                    $totalPrice
-                );
+                $sql = "SELECT MAX(pedido_id) FROM pedidos";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $pedido_id = $stmt->fetch(PDO::FETCH_ASSOC);
 
-				$invoiceLineId = obtenerMaxInvoiceLineId($conn);
-
-                // Recorrer el carrito y agregar las líneas de la factura en InvoiceLine
-                include_once "../models/insertarInvoiceLine.php";
+                include_once "../models/insertarDetallePedido.php";
                 foreach ($_SESSION['carrito'] as $item) {
-                    insertarInvoiceLine($conn, $invoiceLineId, $invoiceId, $item['TrackId'], $item['UnitPrice'], $item['quantity']);
-                    $invoiceLineId++;
+                    insertarDetallePedido($conn, $pedido_id, $id_producto, $cantidad, $precio_unidad);
+                    //Actualizar stock disponible
+                    include_once "../models/updateStock.php";
+                    updateStock($conn, $id_producto, $stock);
+                    
+                    $pedido_id++;
                 }
 
                 // Vaciar el carrito después de realizar la compra

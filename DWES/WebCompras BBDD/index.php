@@ -2,7 +2,7 @@
     session_start();
 
     if (!isset($_SESSION['usuario'])) {
-        header("Location: portalCompras/comregcli.php");
+        header("Location: portalCompras/comlogincli.php");
         exit();
     }
 ?>
