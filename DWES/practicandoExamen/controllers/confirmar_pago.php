@@ -53,14 +53,14 @@ if (!empty( $_POST ) ) {
             // Datos del cliente y carrito
             $id_usuario = $_SESSION['usuario']['id'];
             $totalPrice = $_SESSION['totalPrice'];
-            $stock = $_SESSION['carrito']['stock'];
             
+            foreach($_SESSION['carrito'] as $producto){
+                $stock = $producto['stock'];
+                $id_producto = $producto['id'];
+                $precio_unidad = $producto['precio'];
+                $cantidad = $producto['cantidad'];
 
-            // Datos de facturación
-            $id_producto = $_SESSION['carrito']['id'];
-            $precio_unidad = $_SESSION['carrito']['precio'];
-            $cantidad = $_SESSION['carrito']['cantidad'];
-
+            }
             try {
                 $conn->beginTransaction();
 
@@ -70,11 +70,14 @@ if (!empty( $_POST ) ) {
                 $sql = "SELECT MAX(pedido_id) FROM pedidos";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
-                $pedido_id = $stmt->fetch(PDO::FETCH_ASSOC);
+                $pedido_id = $stmt->fetchColumn();
+                echo "ID del pedido: ".$pedido_id;
 
                 include_once "../models/insertarDetallePedido.php";
                 foreach ($_SESSION['carrito'] as $item) {
+
                     insertarDetallePedido($conn, $pedido_id, $id_producto, $cantidad, $precio_unidad);
+
                     //Actualizar stock disponible
                     include_once "../models/updateStock.php";
                     updateStock($conn, $id_producto, $stock);

@@ -56,7 +56,7 @@ foreach($_SESSION['carrito'] as $item){
     $precioTotal += $item['cantidad'] * $item['precio'];
 }
 
-if(isset($_POST['comprar']) && $totalPrice != 0){
+if(isset($_POST['comprar']) && $precioTotal != 0){
     include_once "../apiRedsys/apiRedsys.php";
     $miObj = new RedsysAPI;
 
